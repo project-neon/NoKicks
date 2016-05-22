@@ -1,0 +1,12 @@
+# Logs
+logs
+*.log
+
+# Dependency directory
+node_modules
+public/_components
+
+*.DS_Store
+
+# Test data (sigilous)
+test/user.json
