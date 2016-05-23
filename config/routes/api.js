@@ -47,6 +47,8 @@ function config(app, next){
   api.get('/turmas/importar', app.controllers.Turmas.importar);
 	restify('Turmas');
 
+	restify('Alunos');
+
 
 	next();
 }
