@@ -12,10 +12,15 @@ var PluginTimestamp = require('mongoose-timestamp');
  */
 
 var Model = new Schema({
-	name: String,
-	race: String,
-	owner: String,
+	nome: String,
+  username: String,
 
+  curso: String,
+  grade: String,
+  turno: String,
+  campus: String,
+  ingresso: String,
+  coeficientes: Object,
 });
 
 /**
@@ -51,4 +56,4 @@ Model.static({
  * Register
  */
 
-mongoose.model('Pet', Model);
+mongoose.model('Aluno', Model);
