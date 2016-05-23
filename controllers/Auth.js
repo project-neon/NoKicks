@@ -13,6 +13,10 @@ exports.login = function (req, res) {
   //
   //
   // }
+  //
+  if(!user || !pass){
+    return res.status(400).send('You must provide [pass] and [user]');
+  }
 
   res.send({
     username: user,

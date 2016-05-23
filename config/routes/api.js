@@ -35,6 +35,12 @@ function config(app, next){
 		api.get(path+'/:id', controller.get);
 	}
 
+  /*
+   * Authentication
+   */
+  api.get('/auth/login', app.controllers.Auth.login);
+  api.post('/auth/login', app.controllers.Auth.login);
+
 	/*
 	 * REST
 	 */
