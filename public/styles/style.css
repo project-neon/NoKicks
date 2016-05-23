@@ -88,12 +88,25 @@ html, body {
 }
 
 .leftPane {
+  top: 0;
+  left: 0;
+  width: 500px;
+  bottom: 0;
   position: absolute;
+}
+
+.content {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 500px;
-  background-color: #fff000;
+  position: absolute;
+
+  overflow: auto;
+  margin-top: 64px;
+}
+
+md-content {
+  height: 100%;
 }
 
 .rightPane {
@@ -102,7 +115,6 @@ html, body {
   top: 0;
   right: 0;
   bottom: 0;
-  background-color: #ff00ff;
 }
 
 .whiteboard {

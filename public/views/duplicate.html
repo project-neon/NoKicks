@@ -21,29 +21,43 @@
   <link rel="stylesheet" href="/components/mdi/materialdesignicons.min.css">
   <link rel="stylesheet" href="/styles/style.css">
 </head>
-<body ng-app="NoKicks">
-  <div class="leftPane">
-    <md-toolbar>
-    <div class="md-toolbar-tools">
-      <md-button class="md-icon-button" aria-label="Settings">
-        <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
-      </md-button>
-      <h2>
-        <span>Toolbar with Icon Buttons</span>
-      </h2>
-      <span flex></span>
-      <md-button class="md-icon-button" aria-label="Favorite">
-        <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
-      </md-button>
-      <md-button class="md-icon-button" aria-label="More">
-        <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
-      </md-button>
-    </div>
-  </md-toolbar>
-  </div>
-  <div class="rightPane">
+<body ng-app="NoKicks" layout="row">
+    <div class="leftPane" layout="column">
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <md-button class="md-icon-button" aria-label="Settings">
+            <i class="mdi mdi-menu"></i>
+          </md-button>
+          <h2>
+            <span>Toolbar with Icon Buttons</span>
+          </h2>
+          <span flex></span>
+        </div>
+      </md-toolbar>
+      <md-content flex layout-padding>
+        <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire mediocrem at, in lobortis conclusionemque nam. Ne deleniti appetere reprimique pro, inani labitur disputationi te sed. At vix sale omnesque, id pro labitur reformidans accommodare, cum labores honestatis eu. Nec quem lucilius in, eam praesent reformidans no. Sed laudem aliquam ne.</p>
+        <p>Lorem ipsum dolor sit amet, ne quod novum mei. SeaSea omnium invenire mediocrem at, in lobortis conclusionemque nam. Ne deleniti appetere reprimique pro, inani labitur disputationi te sed. At vix sale omnesque, id pro labitur reformidans accommodare, cum labores honestatis eu. Nec quem lucilius in, eam praesent reformidans no. Sed laudem aliquam ne.</p>
 
-  </div>
+      </md-content>
+    </div>
+    <div class="rightPane" layout="column">
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <md-button class="md-icon-button" aria-label="Settings">
+            <i class="mdi mdi-menu"></i>
+          </md-button>
+          <h2>
+            <span>Toolbar with Icon Buttons</span>
+          </h2>
+          <span flex></span>
+        </div>
+      </md-toolbar>
+      <md-content layout-padding flex>
+        <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire mediocrem at, in lobortis conclusionemque nam. Ne deleniti appetere reprimique pro, inani labitur disputationi te sed. At vix sale omnesque, id pro labitur reformidans accommodare, cum labores honestatis eu. Nec quem lucilius in, eam praesent reformidans no. Sed laudem aliquam ne.</p>
+        <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire mediocrem at, in lobortis conclusionemque nam. Ne deleniti appetere reprimique pro, inani labitur disputationi te sed. At vix sale omnesque, id pro labitur reformidans accommodare, cum labores honestatis eu. Nec quem lucilius in, eam praesent reformidans no. Sed laudem aliquam ne.</p>
+        <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium . Sea omnium invenire mediocrem at, in lobortis conclusionemque nam. Ne deleniti appetere reprimique pro, inani labitur disputationi te sed. At vix sale omnesque, id pro labitur reformidans accommodare, cum labores honestatis eu. Nec quem lucilius in, eam praesent reformidans no. Sed laudem aliquam ne.</p>
+      </md-content>
+    </div>
 
   <script src="/components/jquery/jquery.js"></script>
   <script src="/components/angular/angular.js"></script>
