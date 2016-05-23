@@ -1,6 +1,6 @@
 var env = process.env;
 var port = process.env.PORT || 8000;
-var domain = 'http://yourwebsite.com.br';
+var domain = 'http://nokick.herokuapp.com.br';
 
 module.exports = {
 	port: port,
@@ -10,6 +10,6 @@ module.exports = {
 		secret: 'somesecretstring',
 	},
 
-	db: env.MONGODB_URL || 'mongodb://yourmongodburlhere:port/...',
+	db: env.MONGODB_URI,
 
 };
