@@ -1,3 +1,4 @@
+var Authentication = app.helpers.Authentication;
 var Aluno = app.models.Aluno;
 
 exports.login = function (req, res) {
@@ -7,21 +8,38 @@ exports.login = function (req, res) {
   var user = req.body.user;
   var pass = req.body.pass;
 
-  // if(user && pass){
-  //
-  //   // Logout any user
-  //
-  //
-  // }
-  //
-  if(!user || !pass){
-    return res.status(400).send('You must provide [pass] and [user]');
+
+  if(user && pass){
+    // Logout
+    Authentication.logout(req);
+
+    // Authenticate
+    Authentication.authenticate({
+      user: user,
+      pass: pass,
+    }, (err, aluno) => {
+      if(err)
+        return res.status(401).send(err);
+
+      // Login aluno
+      Authentication.login(req, aluno);
+
+      finishRender();
+    })
+  }else{
+    finishRender();
   }
 
-  res.send({
-    username: user,
-    nome: 'Matheus de Albuquerque',
-  });
+  function finishRender () {
+
+    if(Authentication.isLogged(req)){
+      res.send(Authentication.loggedUser(req));
+    }else{
+      res.status(401).send('Usuário não logado');
+    }
+
+    console.log('\nSession: ',req.session);
+  }
 
 }
 
