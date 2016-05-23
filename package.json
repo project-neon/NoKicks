@@ -4,7 +4,7 @@
   "description": "NoKicks is the UTOPIC system for class registration management at UFABC",
   "README": "none",
   "engines": {
-    "node": "0.12.x"
+    "node": "0.6.2"
   },
   "main": "server.js",
   "scripts": {
