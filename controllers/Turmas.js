@@ -14,7 +14,14 @@ var renderFields = null;
 exports.importar = function (req, res){
 
   // Load materias
-  
+  app.helpers.Matriculas.loadMaterias((err, materias) => {
+
+    var newModels = materias.map( m => Models.Turma.fromJSON(m) );
+    res.send(newModels);
+    // Convert models into Turmas
+
+
+  });
 
 };
 
