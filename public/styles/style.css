@@ -109,16 +109,20 @@ html, body {
   margin-top: 64px;
 }
 
-md-content {
-  height: 100%;
-}
-
 .rightPane {
   position: absolute;
   left:500px;
   top: 0;
   right: 0;
   bottom: 0;
+}
+
+.classGroup {
+  border-left: solid 8px;
+}
+
+.disciplineCard {
+  margin: 16px 16px 0 16px;
 }
 
 .whiteboard {
