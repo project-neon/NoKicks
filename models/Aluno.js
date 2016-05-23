@@ -12,6 +12,8 @@ var PluginTimestamp = require('mongoose-timestamp');
  */
 
 var Model = new Schema({
+  version: Number,
+
 	nome: String,
   username: String,
 

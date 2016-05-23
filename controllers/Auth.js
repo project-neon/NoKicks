@@ -40,6 +40,8 @@ exports.login = function (req, res) {
 
 exports.logout = function (req, res) {
 
-
+  // Logout user
+  Authentication.logout(req);
+  res.send('Logged out');
 
 }

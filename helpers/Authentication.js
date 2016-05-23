@@ -8,7 +8,12 @@ var _ = require('lodash');
 exports.authenticate = function (user, next) {
   let PortalAluno = app.helpers.PortalAluno;
   let Aluno = app.models.Aluno;
-  let portalUser, dbUser;
+  let portalSession, portalUser, dbUser;
+
+  // Define a versão de importação utilizada para o usuário.
+  // Se a versão do usuário diferir desta, a importação deve ser
+  // realizada novamente.
+  let THIS_VERSION = 3;
 
   let authenticate = (next) => {
     // Tenta logar no portal do aluno
@@ -19,7 +24,7 @@ exports.authenticate = function (user, next) {
       if(!session)
         return next('Usuário ou senha inválidos');
 
-      portalUser = session;
+      portalSession = session;
       next();
     });
   };
@@ -39,34 +44,47 @@ exports.authenticate = function (user, next) {
   };
 
   let gatterStudentInfo = (next) => {
-    // Pula este passo se o usuario já existir no banco de dados
-    if(dbUser)
+    // Pula este passo se a versão do usuário for igual a versão deste processo
+    if(dbUser && dbUser.version == THIS_VERSION)
       return next();
 
-    PortalAluno.gatterStudentInfo(portalUser, next);
+    PortalAluno.gatterStudentInfo(portalSession, (err, user) => {
+      if(err)
+        return next(err);
+
+      // Save user
+      portalUser = user;
+      next();
+    });
   };
 
-  let createIfNotFound = (next) => {
-    if(dbUser)
+  let createOrUpdateIfNeeded = (next) => {
+    // Pula este passo se a versão do usuário for igual a versão deste processo
+    if(dbUser && dbUser.version == THIS_VERSION)
       return next();
 
     // Seleciona a primeira ficha (TODO: Verificar a atual...)
-    var fichaId = _.keys(portalUser)[0];
-    var ficha = portalUser[fichaId];
+    var fichaId = _.keys(portalUser.fichas)[0];
+    var ficha = portalUser.fichas[fichaId];
 
-    // Cria usuário e salva
-    dbUser = new Aluno({
-      nome: portalUser.nome,
-      username: portalUser.user,
+    // Cria usuário
+    dbUser = dbUser || new Aluno();
 
-      curso: ficha.curso,
-      grade: ficha.grade,
-      turno: ficha.turno,
-      campus: ficha.campus,
-      ingresso: ficha.ingresso,
-      coeficientes: portalUser.coeficientes,
-    });
+    // Bump Version
+    dbUser.version = THIS_VERSION;
 
+    // Atualiza campos
+    dbUser.nome = portalUser.nome;
+    dbUser.username = portalUser.user;
+
+    dbUser.curso = ficha.curso;
+    dbUser.grade = ficha.grade;
+    dbUser.turno = ficha.turno;
+    dbUser.campus = ficha.campus;
+    dbUser.ingresso = ficha.ingresso;
+    dbUser.coeficientes = portalUser.coeficientes;
+
+    // Save user
     dbUser.save(next);
   };
 
@@ -75,7 +93,7 @@ exports.authenticate = function (user, next) {
     authenticate,
     findUser,
     gatterStudentInfo,
-    createIfNotFound,
+    createOrUpdateIfNeeded,
   ], (err) => {
     if(err)
       return next(err);
