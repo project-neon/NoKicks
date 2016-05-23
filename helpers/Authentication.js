@@ -6,19 +6,20 @@ var _ = require('lodash');
 // Verifica se o usuário existe e a senha está correta
 //
 exports.authenticate = function (user, next) {
+  let PortalAluno = app.helpers.PortalAluno;
   let Aluno = app.models.Aluno;
   let portalUser, dbUser;
 
   let authenticate = (next) => {
     // Tenta logar no portal do aluno
-    app.helpers.PortalAluno.authenticate(user, (err, user) => {
+    PortalAluno.authenticate(user, (err, session) => {
       if(err)
         return next(err);
 
-      if(!portalUser)
-        return next('Usuário e senha inválidos');
+      if(!session)
+        return next('Usuário ou senha inválidos');
 
-      portalUser = user;
+      portalUser = session;
       next();
     });
   };
@@ -35,6 +36,14 @@ exports.authenticate = function (user, next) {
       dbUser = user;
       next();
     })
+  };
+
+  let gatterStudentInfo = (next) => {
+    // Pula este passo se o usuario já existir no banco de dados
+    if(dbUser)
+      return next();
+
+    PortalAluno.gatterStudentInfo(portalUser, next);
   };
 
   let createIfNotFound = (next) => {
@@ -65,9 +74,14 @@ exports.authenticate = function (user, next) {
   async.series([
     authenticate,
     findUser,
+    gatterStudentInfo,
     createIfNotFound,
-  ], next);
+  ], (err) => {
+    if(err)
+      return next(err);
 
+    next(null, dbUser);
+  });
 }
 
 //

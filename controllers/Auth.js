@@ -8,7 +8,6 @@ exports.login = function (req, res) {
   var user = req.body.user;
   var pass = req.body.pass;
 
-
   if(user && pass){
     // Logout
     Authentication.logout(req);
@@ -31,14 +30,10 @@ exports.login = function (req, res) {
   }
 
   function finishRender () {
-
-    if(Authentication.isLogged(req)){
+    if(Authentication.isLogged(req))
       res.send(Authentication.loggedUser(req));
-    }else{
+    else
       res.status(401).send('Usuário não logado');
-    }
-
-    console.log('\nSession: ',req.session);
   }
 
 }

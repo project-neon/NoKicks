@@ -68,23 +68,11 @@ portal.authenticate = function (options, next) {
 //
 portal.gatterStudentInfo = function (student, next){
 
-  let loginStudent = (next) => {
-    if(student._jar)
-      return next();
 
-    console.log('doing: loginStudent');
-    portal.authenticate(student, (err, user) => {
-      if(err)
-        return next(err);
-
-      student = user;
-      next();
-    })
-  };
-
+  if(!student._jar)
+    return next('Invalid student. Must provide a session object [_jar]');
 
   let loadFichas = (next) => {
-    console.log('doing: loadCourseInfo');
 
     request.get({
       url: portal.URL.BASE + portal.URL.FICHAS,
@@ -109,10 +97,7 @@ portal.gatterStudentInfo = function (student, next){
     })
   };
 
-
   let loadCoeficientes = (next) => {
-    console.log('doing: loadCoeficientes');
-
     // Find out witch ficha to use
     var id = null;
     for(var k in student.fichas){
@@ -125,14 +110,14 @@ portal.gatterStudentInfo = function (student, next){
 
   // Execute steps
   async.series([
-    loginStudent,
+    // loginStudent,
     loadFichas,
     loadCoeficientes,
   ], (err) => {
     if(err)
       return next(err);
 
-    return next(student);
+    return next(null, student);
   });
 }
 
@@ -215,8 +200,6 @@ portal.parse.fichas = (res) => {
   let $fichas = table.find('tr');
 
   // Go through each course
-  console.log($fichas.length);
-
   $fichas.each( (i, ficha) => {
     var $datas = $(ficha).find('td');
 
