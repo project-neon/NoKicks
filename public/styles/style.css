@@ -87,6 +87,24 @@ html, body {
   padding: 0 15px;
 }
 
+.leftPane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 500px;
+  background-color: #fff000;
+}
+
+.rightPane {
+  position: absolute;
+  left:500px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ff00ff;
+}
+
 .whiteboard {
   -webkit-box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);
   box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);
