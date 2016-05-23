@@ -13,6 +13,7 @@ var PluginTimestamp = require('mongoose-timestamp');
 
 var Model = new Schema({
 
+  id: Number,
   nome: String,
   codigo: String,
   codigoNome: String,
@@ -87,6 +88,7 @@ Model.static({
       campus = 'SB';
 
     let data = {
+      id: json.id,
       nome: json.nome,
       codigo: json.codigo,
       codigoNome: codigoNome,
