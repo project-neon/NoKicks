@@ -120,9 +120,70 @@ html, body {
 .classGroup {
   border-left: solid 8px;
 }
-
+/*
 .disciplineCard {
   margin: 16px 16px 0 16px;
+}*/
+
+.disciplineTitle {
+  padding: 20px 5px;
+  background-color: #ff00ff;
+}
+
+.disciplineContent {
+  border: solid 2px #eee;
+  padding: 20px 5px;
+  border-top: none;
+}
+
+.horario {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.diaAula, .quinzenaAula {
+  width: 50px;
+}
+
+.diaAula{
+  height: 32px;
+  margin-right: 5px;
+  border: dashed 1px #303030;
+  border-radius: 4px;
+}
+
+.checkbox > md-checkbox {
+  margin: 0;
+}
+
+.checkbox {
+  margin-left: 8px;
+  margin-right: 0px;
+}
+
+.quinzenaAula {
+  height: 50%;
+  border-radius: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.quinzenaAula:first-child{
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.quinzenaAula:last-child{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.vagasAula {
+  top: 6px;
+  right: 10px;
+  position: absolute;
 }
 
 .whiteboard {
