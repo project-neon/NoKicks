@@ -32,7 +32,8 @@
     "mongoose-timestamp": "0.4.0",
     "mongoose-user": "0.0.1",
     "morgan": "1.6.0",
-    "request": "^2.72.0"
+    "request": "^2.72.0",
+    "winston": "^2.2.0"
   },
   "devDependencies": {
     "bower": "latest",
