@@ -1,24 +1,59 @@
 <!doctype html>
-<html>
+<html lang="pt-br">
 <head>
-	<title>NodePlate</title>
-	<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
+  <title>Sistema de Matrículas | NoKicks</title>
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
 
-	<meta charset="utf-8">
-	<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta charset="utf-8">
+  <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-	<link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,700' type='text/css'>
-	<link rel="stylesheet" href="/components/bootstrap/bootstrap.css">
+  <!-- Facebook Meta Tags -->
+  <meta property="og:title" content="Sistema de Matrículas | NoKicks">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <!-- End of Facebook Meta Tags -->
 
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/components/angular-material/angular-material.css">
+  <link rel="stylesheet" href="/components/mdi/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/styles/style.css">
 </head>
-<body>
-		<!--[if lt IE 9]>
-		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-		<![endif]-->
-
-    Hellow World!
-
+<body ng-app="NoKicks">
+  <div id="greenBanner" class="md-whiteframe-2dp">
+  	<div id="loginBox" class="md-whiteframe-8dp">
+        <div id="loginBoxHeader" class="md-whiteframe-2dp">
+          <div id="loginBoxLogo" class="md-whiteframe-2dp"></div>
+        </div>
+        <div id="loginBoxContent">
+          <form >
+            <md-input-container class="md-block">
+              <label>Login</label>
+              <input ng-model="user.login" type="text" name="login">
+            </md-input-container>
+            <md-input-container class="md-block">
+              <label>Senha</label>
+              <input ng-model="user.password" type="password" name="password">
+            </md-input-container>
+            <div layout="row" layout-align="end center"><md-button class="md-raised md-primary" type="submit">Entrar</md-button></div>
+          </form>
+        </div>
+  	</div>
+    <div id="textTitle">
+      <h1>Olá Alunos da UFABC,</h1>
+    </div>
+  </div>
+  <div id="textContent">
+    <p>Sejam bem vindos a SIMULAÇÃO do NoKick! A plataforma de matrícula nas matérias da UFABC criada por alunos da UFABC! Cansados de serem chutados das matérias sem saber o motivo, ou nem a posição em que estavam, nós desenvolvedores dessa ferramenta decidimos tentar mostrar como pode ser melhorado e simplificado o processo de matrícula.</p>
+    <p><span>ATENÇÃO:</span> Essa SIMULAÇÃO utiliza os seus dados reais (do portal do aluno) de CP, CR, curso, turno e ingresso. O sistema adquire essa informação automaticamente ao efetuar login. Sua senha, entretando, <span>não será armazenada em momento algum</span>. Precisamos destas informações para que a SIMULAÇÃO aconteça da forma mais real possível.</p>
+  </div>
+  <script src="/components/jquery/jquery.js"></script>
+  <script src="/components/angular/angular.js"></script>
+  <script src="/components/angular-aria/angular-aria.js"></script>
+  <script src="/components/angular-animate/angular-animate.js"></script>
+  <script src="components/angular-material/angular-material.js"></script>
+  <script src="/scripts/app.js"></script>
 </body>
 </html>

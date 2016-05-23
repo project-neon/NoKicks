@@ -21,5 +21,9 @@
   "install": {
     "path": "public/components",
     "sources": {}
+  },
+  "resolutions": {
+    "angular": "1.4.3",
+    "angular-material": "0.11.0"
   }
 }
