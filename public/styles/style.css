@@ -49,30 +49,34 @@ html, body {
 }
 
 #loginBox {
-  max-width: 31.25%;
-  width: 330px;
-  background-color: #fff;
-  position: absolute;
-  right: 0;
-  margin-right: 80px;
   top: 100%;
+  right: 0;
+  width: 330px;
+  position: absolute;
+  max-width: 31.25%;
   margin-top: -64px;
+  margin-right: 80px;
+
+  border-radius: 6px;
+  background-color: #fff;
 }
 
 #loginBoxHeader {
-  position: relative;
   height: 64px;
-  background-color: #ECF0F1; /*#005C01*/
+  position: relative;
+
+  border-radius: 6px 6px 0 0;
+  background-color: #e8e8e8; /*#005C01*/
 }
 
 #loginBoxLogo {
   position: absolute;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   background-image: url(../assets/images/logo_ufabc.png);
   background-repeat: no-repeat;
   background-color: #fff;
-  background-size: 70px;
+  background-size: 50px;
   background-position: center;
   border-radius: 100%;
   top: 25%;
