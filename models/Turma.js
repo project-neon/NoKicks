@@ -13,19 +13,20 @@ var PluginTimestamp = require('mongoose-timestamp');
 
 var Model = new Schema({
 
-  position: Number,
+  nome: String,
+  codigo: String,
+  codigoNome: String,
 
-  _aluno: {
-    type: ObjectId,
-    ref: 'Aluno',
-    required: true,
-  },
+  vagas: Number,
+  vagasIngressantes: Number,
 
-  _turma: {
-    type: ObjectId,
-    ref: 'Turma',
-    required: true,
-  },
+  tpi: Array,
+  turno: String,
+  campus: Number,
+  horarios: Array,
+  campusNome: String,
+  obrigatoriedade: Array,
+
 });
 
 /**
@@ -61,4 +62,4 @@ Model.static({
  * Register
  */
 
-mongoose.model('Matricula', Model);
+mongoose.model('Turma', Model);

@@ -38,7 +38,9 @@ function config(app, next){
 	/*
 	 * REST
 	 */
-	restify('Pets');
+  api.get('/turmas/importar', app.controllers.Turmas.importar);
+	restify('Turmas');
+
 
 	next();
 }
