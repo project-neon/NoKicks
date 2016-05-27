@@ -23,7 +23,7 @@
 </head>
 <body ng-app="NoKicks" layout="row">
 
-    <div class="leftPane" layout="column">
+    <div class="leftPane md-whiteframe-4dp" layout="column">
       <md-toolbar class="md-primary md-hue-2">
         <div class="md-toolbar-tools">
 
@@ -39,6 +39,7 @@
           </md-button> -->
         </div>
       </md-toolbar>
+
       <md-content flex layout-padding>
         <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire
           mediocrem at, in lobortis conclusionemque nam. Ne deleniti
@@ -52,7 +53,25 @@
           At vix sale omnesque, id pro labitur reformidans accommodare,
           cum labores honestatis eu. Nec quem lucilius in, eam praesent
           reformidans no. Sed laudem aliquam ne.</p>
+        <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire
+          mediocrem at, in lobortis conclusionemque nam. Ne deleniti
+          appetere reprimique pro, inani labitur disputationi te sed.
+          At vix sale omnesque, id pro labitur reformidans accommodare,
+          cum labores honestatis eu. Nec quem lucilius in, eam praesent
+          reformidans no. Sed laudem aliquam ne.</p>
+        <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire
+          mediocrem at, in lobortis conclusionemque nam. Ne deleniti
+          appetere reprimique pro, inani labitur disputationi te sed.
+          At vix sale omnesque, id pro labitur reformidans accommodare,
+          cum labores honestatis eu. Nec quem lucilius in, eam praesent
+          reformidans no. Sed laudem aliquam ne.</p>
       </md-content>
+
+      <div layout="row" layout-align="end center" style="padding: 16px;">
+        <span>Créditos: <strong>32/45</strong></span>
+        <span flex></span>
+        <md-button class="md-raised md-accent" type="submit">Salvar</md-button>
+      </div>
     </div>
 
     <div class="rightPane" layout="column">
@@ -77,8 +96,8 @@
 
         <h3>Obrigatórias</h3>
 
-        <div class="disciplineCard">
 
+        <div class="disciplineCard" ng-repeat="n in [].constructor(600) track by $index">
           <div layout="row"layout-align="space-between center" class="disciplineTitle">
             <span>BCXXXX</span>
             <span>Bases do Início para Começar</span>
@@ -90,7 +109,8 @@
 
             <div class="horario noturno">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1" class="md-accent"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1" class="md-accent"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="turma">A2</div>
               <div class="diaAula">
@@ -112,7 +132,8 @@
 
             <div class="horario matutino">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="turma">B2</div>
               <div class="diaAula">
@@ -134,7 +155,8 @@
 
             <div class="horario matutino">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="turma">B3</div>
               <div class="diaAula">
@@ -156,7 +178,8 @@
 
             <div class="horario noturno">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="turma">B4</div>
               <div class="diaAula"></div>
@@ -178,7 +201,8 @@
 
             <div class="horario noturno">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="turma">B5</div>
               <div class="diaAula">
@@ -217,7 +241,8 @@
 
             <div class="horario">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="diaAula">
                 <div class="quinzenaAula"></div>
@@ -248,7 +273,8 @@
 
             <div class="horario">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="diaAula">
                 <div class="quinzenaAula"></div>
@@ -279,7 +305,8 @@
 
             <div class="horario">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="diaAula">
                 <div class="quinzenaAula"></div>
@@ -321,7 +348,8 @@
 
             <div class="horario">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="diaAula">
                 <div class="quinzenaAula"></div>
@@ -352,7 +380,8 @@
 
             <div class="horario">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="diaAula">
                 <div class="quinzenaAula"></div>
@@ -383,7 +412,8 @@
 
             <div class="horario">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="diaAula">
                 <div class="quinzenaAula"></div>
@@ -434,7 +464,8 @@
 
             <div class="horario">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="diaAula">
                 <div class="quinzenaAula"></div>
@@ -465,7 +496,8 @@
 
             <div class="horario">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="diaAula">
                 <div class="quinzenaAula"></div>
@@ -496,7 +528,8 @@
 
             <div class="horario">
               <span class="checkbox">
-                <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                <input type="checkbox">
               </span>
               <div class="diaAula">
                 <div class="quinzenaAula"></div>

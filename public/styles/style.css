@@ -97,6 +97,8 @@ html, body {
   width: 460px;
   bottom: 0;
   position: absolute;
+  z-index: 1;
+  /*background-color: #FAFAFA;*/
 }
 
 .content {
@@ -263,7 +265,7 @@ html, body {
 
 .horario > .checkbox {
   margin-left: 8px;
-  margin-right: 0px;
+  margin-right: 8px;
 }
 
 .quinzenaAula {
