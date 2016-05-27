@@ -156,13 +156,14 @@ html, body {
 .disciplineCard {
   margin: 16px;
   border-radius: 6px;
-  box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);
+  /*box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);*/
 }
 
 .disciplineTitle {
   padding: 20px 20px;
   background-color: #F0F0F0;
   border-radius: 6px 6px 0 0;
+  height: 32px;
 }
 
 .disciplineContent {
@@ -198,6 +199,27 @@ html, body {
 
 }
 
+.horario > .turma {
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  margin-right: 12px;
+
+  border-radius: 2px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.horario.matutino > .turma {
+  color: #FFF;
+  background-color: #ffbf00;
+}
+
+.horario.noturno > .turma {
+  color: #FFF;
+  background-color: #666;
+}
+
 .diaAula:empty {
   border: dashed 1px #F0F0F0;
   box-sizing: border-box;
@@ -227,18 +249,11 @@ html, body {
   line-height: 28px;
 }
 
-.matutino > .diaAula > .semanal,
-.matutino > .diaAula > .quinzenal {
+.diaAula > .semanal,
+.diaAula > .quinzenal {
   background-color: #FAFAFA;
   border-color: #F0F0F0;
   color: #888;
-}
-
-.noturno > .diaAula > .semanal,
-.noturno > .diaAula > .quinzenal {
-  background-color: #909090;
-  border-color: #808080;
-  color: #EEE;
 }
 
 
@@ -248,7 +263,7 @@ html, body {
 
 .horario > .checkbox {
   margin-left: 8px;
-  margin-right: 8px;
+  margin-right: 0px;
 }
 
 .quinzenaAula {
@@ -272,6 +287,8 @@ html, body {
   top: 6px;
   right: 10px;
   position: absolute;
+  font-size: 14px;
+  color: #666;
 }
 
 .whiteboard {
