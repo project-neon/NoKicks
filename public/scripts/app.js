@@ -4,5 +4,5 @@ angular.module('NoKicks', ['ngMaterial'])
     .primaryPalette('green', {
       'default': '700'
     })
-    .accentPalette('yellow');
+    .accentPalette('red');
 });

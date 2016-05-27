@@ -94,7 +94,7 @@ html, body {
 .leftPane {
   top: 0;
   left: 0;
-  width: 500px;
+  width: 460px;
   bottom: 0;
   position: absolute;
 }
@@ -111,29 +111,72 @@ html, body {
 
 .rightPane {
   position: absolute;
-  left:500px;
+  left:460px;
   top: 0;
   right: 0;
   bottom: 0;
 }
 
 .classGroup {
-  border-left: solid 8px;
+  border-left: solid 2px;
+
+  margin-top: 32px;
 }
-/*
+
+.classGroup > h3 {
+  font-weight: 400;
+  margin-top: 6px;
+  margin-left: 16px;
+}
+
+
+/* Specific for class groups */
+.classGroup.obrigatorias {
+  border-left-color: #e3512d;
+}
+.classGroup.obrigatorias > h3{
+  color: #e3512d;
+}
+
+.classGroup.limitadas {
+  border-left-color: #ff9700;
+}
+.classGroup.limitadas > h3{
+  color: #ff9700;
+}
+
+.classGroup.livres {
+  border-left-color: #45c34a;
+}
+.classGroup.livres > h3{
+  color: #45c34a;
+}
+
+
 .disciplineCard {
-  margin: 16px 16px 0 16px;
-}*/
+  margin: 16px;
+  border-radius: 6px;
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);
+}
 
 .disciplineTitle {
-  padding: 20px 5px;
-  background-color: #ff00ff;
+  padding: 20px 20px;
+  background-color: #F0F0F0;
+  border-radius: 6px 6px 0 0;
 }
 
 .disciplineContent {
-  border: solid 2px #eee;
-  padding: 20px 5px;
+  border: solid 1px #eee;
+  padding: 8px 8px;
   border-top: none;
+  border-radius: 0 0 6px 6px;
+}
+
+.disciplineContent > h5 {
+  margin: 16px 8px 0px 8px;
+
+  font-weight: 400;
+  color: #666;
 }
 
 .horario {
@@ -143,24 +186,69 @@ html, body {
   margin: 5px 0;
 }
 
-.diaAula, .quinzenaAula {
-  width: 50px;
+.horario .quinzenaAula {
+  width: 48px;
 }
 
-.diaAula{
-  height: 32px;
-  margin-right: 5px;
-  border: dashed 1px #303030;
+.horario > .diaAula{
+  width: 48px;
+  height: 28px;
+
+  margin-right: 2px;
+
+}
+
+.diaAula:empty {
+  border: dashed 1px #F0F0F0;
+  box-sizing: border-box;
   border-radius: 4px;
 }
 
-.checkbox > md-checkbox {
+/* Specifico para quinzenal e semanal */
+.diaAula > .quinzenal,
+.diaAula > .semanal {
+  font-size: 8px;
+  text-align: center;
+
+  border: solid 1px #F0F0F0;
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.diaAula > .quinzenal {
+  /*margin-top: 2px;*/
+  height: 14px;
+  line-height: 14px;
+}
+
+.diaAula > .semanal {
+  /*margin-top: 2px;*/
+  height: 28px;
+  line-height: 28px;
+}
+
+.matutino > .diaAula > .semanal,
+.matutino > .diaAula > .quinzenal {
+  background-color: #FAFAFA;
+  border-color: #F0F0F0;
+  color: #888;
+}
+
+.noturno > .diaAula > .semanal,
+.noturno > .diaAula > .quinzenal {
+  background-color: #909090;
+  border-color: #808080;
+  color: #EEE;
+}
+
+
+.horario > .checkbox > md-checkbox {
   margin: 0;
 }
 
-.checkbox {
+.horario > .checkbox {
   margin-left: 8px;
-  margin-right: 0px;
+  margin-right: 8px;
 }
 
 .quinzenaAula {
