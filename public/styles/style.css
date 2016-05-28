@@ -222,6 +222,11 @@ html, body {
   background-color: #666;
 }
 
+.horario.vespertino > .turma {
+  color: #FFF;
+  background-color: #45c34a;
+}
+
 .diaAula:empty {
   border: dashed 1px #F0F0F0;
   box-sizing: border-box;

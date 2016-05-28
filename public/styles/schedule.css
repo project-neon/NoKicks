@@ -1,0 +1,113 @@
+
+.leftPane h3 {
+  font-weight: 400;
+  color: #333;
+  margin: 0;
+}
+
+/* Base height for each cell: 24px */
+schedule {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 238px;
+  padding: 0px !important;
+
+  /*background-color: #E0E0E0;*/
+}
+
+
+/* Times */
+schedule > .times {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+schedule > .times > .header {
+  position: relative;
+  height: 14px;
+  width: 100%;
+}
+
+schedule > .times > .time{
+  box-sizing: border-box;
+  position: relative;
+  height: 14px;
+  width: 100%;
+
+  border-top: solid 1px #F0F0F0;
+}
+
+schedule > .times > .time > div {
+  display: inline-block;
+  position: relative;
+  line-height: 14px;
+  top: -13px;
+  width: 32px;
+
+  color: #666;
+  font-size: 8px;
+  text-align: center;
+  background-color: #FFF;
+}
+
+/* Days */
+
+schedule > .days{
+  position: absolute;
+  left: 32px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  /*background-color: rgba(255, 0, 0, 0.2);*/
+}
+
+schedule > .days > day{
+  position: relative;
+  height: 100%;
+  width: 16.66%;
+  float: left;
+
+}
+
+schedule > .days > day > .header {
+  line-height: 14px;
+  height: 14px;
+
+  color: #666;
+  font-size: 10px;
+  text-align: center;
+}
+
+schedule > .days > day > .classes {
+  position: absolute;
+  top: 14px;
+  right: 2px;
+  left: 2px;
+  bottom: 0;
+}
+
+day > .classes > class {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: auto;
+  width: 100%;
+
+  position: absolute;
+  border-radius: 3px;
+
+  font-size: 8px;
+  text-align: center;
+  border-top: 4px solid #ff9700;
+  box-sizing: border-box;
+  background-color: rgba(255, 151, 0, 0.2);
+}
+
+day > .classes > class > p {
+  margin: 0;
+  padding: 8px;
+}

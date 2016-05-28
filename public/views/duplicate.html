@@ -19,7 +19,10 @@
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="/components/angular-material/angular-material.css">
   <link rel="stylesheet" href="/components/mdi/materialdesignicons.min.css">
+
+  <!-- App specific -->
   <link rel="stylesheet" href="/styles/style.css">
+  <link rel="stylesheet" href="/styles/schedule.css">
 </head>
 <body ng-app="NoKicks" layout="row">
 
@@ -41,30 +44,143 @@
       </md-toolbar>
 
       <md-content flex layout-padding>
-        <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire
-          mediocrem at, in lobortis conclusionemque nam. Ne deleniti
-          appetere reprimique pro, inani labitur disputationi te sed.
-          At vix sale omnesque, id pro labitur reformidans accommodare,
-          cum labores honestatis eu. Nec quem lucilius in, eam praesent
-          reformidans no. Sed laudem aliquam ne.</p>
-        <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire
-          mediocrem at, in lobortis conclusionemque nam. Ne deleniti
-          appetere reprimique pro, inani labitur disputationi te sed.
-          At vix sale omnesque, id pro labitur reformidans accommodare,
-          cum labores honestatis eu. Nec quem lucilius in, eam praesent
-          reformidans no. Sed laudem aliquam ne.</p>
-        <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire
-          mediocrem at, in lobortis conclusionemque nam. Ne deleniti
-          appetere reprimique pro, inani labitur disputationi te sed.
-          At vix sale omnesque, id pro labitur reformidans accommodare,
-          cum labores honestatis eu. Nec quem lucilius in, eam praesent
-          reformidans no. Sed laudem aliquam ne.</p>
-        <p>Lorem ipsum dolor sit amet, ne quod novum mei. Sea omnium invenire
-          mediocrem at, in lobortis conclusionemque nam. Ne deleniti
-          appetere reprimique pro, inani labitur disputationi te sed.
-          At vix sale omnesque, id pro labitur reformidans accommodare,
-          cum labores honestatis eu. Nec quem lucilius in, eam praesent
-          reformidans no. Sed laudem aliquam ne.</p>
+
+        <h3>Semana 1</h3>
+
+        <schedule>
+          <div class="times">
+            <div class="header"></div>
+            <div class="time"><div>08:00</div></div>
+            <div class="time"><div>09:00</div></div>
+            <div class="time"><div>10:00</div></div>
+            <div class="time"><div>11:00</div></div>
+            <div class="time"><div>12:00</div></div>
+            <div class="time"><div>13:00</div></div>
+            <div class="time"><div>14:00</div></div>
+            <div class="time"><div>15:00</div></div>
+            <div class="time"><div>16:00</div></div>
+            <div class="time"><div>17:00</div></div>
+            <div class="time"><div>18:00</div></div>
+            <div class="time"><div>19:00</div></div>
+            <div class="time"><div>20:00</div></div>
+            <div class="time"><div>21:00</div></div>
+            <div class="time"><div>22:00</div></div>
+            <div class="time"><div>23:00</div></div>
+          </div>
+
+          <div class="days">
+            <day class="day-1">
+              <div class="header">Segunda</div>
+              <div class="classes">
+                <class style="top: 28px; height: 28px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+
+            <day class="day-2">
+              <div class="header">Terça</div>
+              <div class="classes">
+                <class style="top: 56px; height: 28px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+
+            <day class="day-3">
+              <div class="header">Quarta</div>
+              <div class="classes">
+                <class style="top: 28px; height: 28px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+
+            <day class="day-4">
+              <div class="header">Quinta</div>
+              <div class="classes">
+                <class style="top: 84px; height: 28px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+
+            <day class="day-5">
+              <div class="header">Sexta</div>
+              <div class="classes">
+                <class style="top: 14px; height: 28px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+
+            <day class="day-6">
+              <div class="header">Sábado</div>
+              <div class="classes">
+                <class style="top: 126px; height: 56px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+          </div>
+        </schedule>
+
+        <h3>Semana 2</h3>
+
+        <schedule>
+          <div class="times">
+            <div class="header"></div>
+            <div class="time"><div>08:00</div></div>
+            <div class="time"><div>09:00</div></div>
+            <div class="time"><div>10:00</div></div>
+            <div class="time"><div>11:00</div></div>
+            <div class="time"><div>12:00</div></div>
+            <div class="time"><div>13:00</div></div>
+            <div class="time"><div>14:00</div></div>
+            <div class="time"><div>15:00</div></div>
+            <div class="time"><div>16:00</div></div>
+            <div class="time"><div>17:00</div></div>
+            <div class="time"><div>18:00</div></div>
+            <div class="time"><div>19:00</div></div>
+            <div class="time"><div>20:00</div></div>
+            <div class="time"><div>21:00</div></div>
+            <div class="time"><div>22:00</div></div>
+            <div class="time"><div>23:00</div></div>
+          </div>
+
+          <div class="days">
+            <day class="day-1">
+              <div class="header">Segunda</div>
+              <div class="classes">
+                <class style="top: 28px; height: 28px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+
+            <day class="day-2">
+              <div class="header">Terça</div>
+              <div class="classes">
+                <class style="top: 70px; height: 28px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+
+            <day class="day-3">
+              <div class="header">Quarta</div>
+              <div class="classes">
+                <class style="top: 28px; height: 28px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+
+            <day class="day-4">
+              <div class="header">Quinta</div>
+              <div class="classes">
+                <class style="top: 64px; height: 28px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+
+            <day class="day-5">
+              <div class="header">Sexta</div>
+              <div class="classes">
+                <class style="top: 16px; height: 28px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+
+            <day class="day-6">
+              <div class="header">Sábado</div>
+              <div class="classes">
+                <class style="top: 112px; height: 56px;"><p>Fundamentos de robótica</p></class>
+              </div>
+            </day>
+          </div>
+        </schedule>
+
       </md-content>
 
       <div layout="row" layout-align="end center" style="padding: 16px;">
@@ -97,7 +213,7 @@
         <h3>Obrigatórias</h3>
 
 
-        <div class="disciplineCard" ng-repeat="n in [].constructor(600) track by $index">
+        <div class="disciplineCard" ng-repeat="n in [].constructor(20) track by $index">
           <div layout="row"layout-align="space-between center" class="disciplineTitle">
             <span>BCXXXX</span>
             <span>Bases do Início para Começar</span>
@@ -176,7 +292,7 @@
               <div class="vagasAula">8 / 32 / 64</div>
             </div>
 
-            <div class="horario noturno">
+            <div class="horario vespertino">
               <span class="checkbox">
                 <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
                 <input type="checkbox">
