@@ -99,6 +99,11 @@ Model.static({
       semanaI = semanaI || periodo.indexOf('(I)') > 0;
       semanaII = semanaII || periodo.indexOf('(II)') > 0;
 
+      // Change turno if is between 13h-18h
+      var startSample = parseInt(horas[0].split(':'));
+      if(startSample > 13 && startSample < 18)
+        turno = 'VES';
+
       return {
         inicio: horas[0],
         final: horas[horas.length - 1],
