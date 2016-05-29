@@ -166,7 +166,7 @@ portal.parse = {};
 //
 portal.parse.text = (t) => {
   t = t || '';
-  t = t.replace('\n', '').trim();
+  t = t.replace('\n', '').replace('\\n', '').trim();
   return t;
 };
 
@@ -212,6 +212,9 @@ portal.parse.fichas = (res) => {
     var link = $link.attr('href') || '';
     var id = link.replace('/ficha_individual/', '').split('/')[0];
 
+    // Fix for 'novo' in curso Name
+    var curso = $($datas.get(0)).text().replace('Novo', '');
+
     // Validate
     if(!id)
       return;
@@ -219,7 +222,7 @@ portal.parse.fichas = (res) => {
     var ficha = {
       id: id,
       link: link,
-      curso: portal.parse.text( $($datas.get(0)).text() ),
+      curso: portal.parse.text( curso ),
       grade: portal.parse.text( $($datas.get(2)).text() ),
       turno: portal.parse.text( $($datas.get(3)).text() ),
       campus: portal.parse.text( $($datas.get(4)).text() ),
