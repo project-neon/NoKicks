@@ -22,39 +22,8 @@
   <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body ng-app="NoKicks">
-  <div id="greenBanner">
-  	<div id="loginBox" class="md-whiteframe-8dp">
-        <div id="loginBoxHeader">
-          <div id="loginBoxLogo" class="md-whiteframe-2dp"></div>
-        </div>
-        <div id="loginBoxContent">
-          <form >
-            <md-input-container class="md-block">
-              <label>Login</label>
-              <input ng-model="user.login" type="text" name="login">
-            </md-input-container>
-            <md-input-container class="md-block">
-              <label>Senha</label>
-              <input ng-model="user.password" type="password" name="password">
-            </md-input-container>
-            <div layout="row" layout-align="end center">
-              <md-button class="md-raised md-primary" type="submit">Entrar</md-button>
-            </div>
-          </form>
-        </div>
-  	</div>
-    <div id="textTitle">
-      <h1>Olá Alunos da UFABC,</h1>
-    </div>
-  </div>
-  <div id="textContent">
-    <p>Sejam bem vindos a SIMULAÇÃO do NoKick! A plataforma de matrícula nas matérias da UFABC criada por alunos da UFABC! Cansados de serem chutados das matérias sem saber o motivo, ou nem a posição em que estavam, nós desenvolvedores dessa ferramenta decidimos tentar mostrar como pode ser melhorado e simplificado o processo de matrícula.</p>
-    <p><span>ATENÇÃO:</span> Essa SIMULAÇÃO utiliza os seus dados reais (do portal do aluno) de CP, CR, curso, turno e ingresso. O sistema adquire essa informação automaticamente ao efetuar login. Sua senha, entretando, <span>não será armazenada em momento algum</span>. Precisamos destas informações para que a SIMULAÇÃO aconteça da forma mais real possível.</p>
+  <ui-view layout="column"></ui-view>
 
-    <div layout="row" layout-align="end none">
-      <small>Made with <span style="color:#e74c3c;">❤</span> by a bunch of geeks from UFABC.</small>
-    </div>
-  </div>
   <script src="/components/jquery/jquery.js"></script>
   <script src="/components/angular/angular.js"></script>
   <script src="/components/angular-aria/angular-aria.js"></script>
