@@ -320,6 +320,23 @@ html, body {
   color: #666;
 }
 
+.rightPane md-toolbar > .md-toolbar-tools {
+  display: block;
+}
+
+.rightPane md-toolbar {
+  height: 110px;
+}
+
+.filterCourseBar {
+  width: 50%;
+}
+
+.filterCheckBoxes {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
 .whiteboard {
   -webkit-box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);
   box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);

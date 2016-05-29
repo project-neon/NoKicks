@@ -1,13 +1,47 @@
 <md-toolbar class="md-primary">
-  <div class="md-toolbar-tools">
+  <div class="md-toolbar-tools" ng-controller="SearchBarCtrl">
 
     <!-- <md-button class="md-icon-button" aria-label="Settings">
       <i class="mdi mdi-menu"></i>
     </md-button> -->
+    <div class="filterCheckBoxes">
+      <md-checkbox ng-model="checkBox.campusSAN" aria-label="Campus Santo André">
+        Santo André
+      </md-checkbox>
 
-    <h2>
-      <span>Filtros</span>
-    </h2>
+      <md-checkbox ng-model="checkBox.campusSBC" aria-label="Campus São Bernardo">
+        São Bernardo
+      </md-checkbox>
+
+      <md-checkbox ng-model="checkBox.turnoMAT" aria-label="Turno Matutino">
+        Matutino
+      </md-checkbox>
+
+      <md-checkbox ng-model="checkBox.turnoNOT" aria-label="Turno Noturno">
+        Noturno
+      </md-checkbox>
+
+      <md-checkbox ng-model="checkBox.tipoOBG" aria-label="Disciplinas Obrigatórias">
+        Obrigatórias
+      </md-checkbox>
+
+      <md-checkbox ng-model="checkBox.tipoLIM" aria-label="Disciplinas de Opção Limitada">
+        Limitadas
+      </md-checkbox>
+
+      <md-checkbox ng-model="checkBox.tipoLIV" aria-label="Disciplinas Livres">
+        Livres
+      </md-checkbox>
+    </div>
+
+    <div class="filterCourseBar">
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Curso</label>
+        <md-select ng-model="selectedCourse">
+          <md-option ng-repeat="course in courses" ng-value="{{ course.value }}">{{ course.name }}</md-option>
+        </md-select>
+      </md-input-container>
+    </div>
 
     <span flex></span>
   </div>
