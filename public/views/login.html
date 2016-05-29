@@ -1,23 +1,30 @@
 <div id="greenBanner">
   <div id="loginBox" class="md-whiteframe-8dp">
+
       <div id="loginBoxHeader">
         <div id="loginBoxLogo" class="md-whiteframe-2dp"></div>
       </div>
+
       <div id="loginBoxContent">
-        <form >
+        <form ng-submit="login">
           <md-input-container class="md-block">
             <label>Login</label>
             <input ng-model="user.login" type="text" name="login">
           </md-input-container>
+
           <md-input-container class="md-block">
             <label>Senha</label>
             <input ng-model="user.password" type="password" name="password">
           </md-input-container>
+
           <div layout="row" layout-align="end center">
-            <md-button class="md-raised md-primary" type="submit">Entrar</md-button>
+            <md-button class="md-raised md-primary" type="submit">
+              Entrar
+            </md-button>
           </div>
         </form>
       </div>
+
   </div>
   <div id="textTitle">
     <h1>Olá Alunos da UFABC,</h1>
