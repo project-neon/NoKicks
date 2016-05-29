@@ -1,5 +1,6 @@
 angular.module('NoKicks', [
   'MatriculaHelper',
+  'SearchBar',
   'common.Auth',
 
   'ngMaterial',
@@ -99,7 +100,7 @@ angular.module('NoKicks', [
 
 })
 
-.controller('DashboardCtrl', function ($scope, $state, AuthService, Creditos) {
+.controller('DashboardCtrl', function ($scope, $state, AuthService, Creditos, Turmas) {
   // Check if user is Logged In
   if(!AuthService.isLoggedIn()){
     console.log('Not Logged in...');
@@ -110,6 +111,11 @@ angular.module('NoKicks', [
     console.log('Loggin out...');
     AuthService.logout();
   }
+
+  // Give access to Turmas Api
+  $scope.turmas = Turmas.turmas;
+  $scope.cursos = Turmas.cursos;
+  Turmas.query();
 
   // Save current user
   $scope.user = AuthService.getUser();
