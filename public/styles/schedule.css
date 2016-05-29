@@ -91,20 +91,27 @@ schedule > .days > day > .classes {
 }
 
 day > .classes > class {
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: auto;
   width: 100%;
-
-  position: absolute;
   border-radius: 3px;
+
+  opacity: 0.8;
 
   font-size: 8px;
   text-align: center;
   border-top: 4px solid #ff9700;
   box-sizing: border-box;
   background-color: rgba(255, 151, 0, 0.8);
+  transition: opacity 0.2s;
+}
+
+day > .classes > class:hover {
+  opacity: 1.0;
+  cursor: pointer;
 }
 
 day > .classes > class > p {
