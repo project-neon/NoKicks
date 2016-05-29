@@ -10,7 +10,7 @@
   "scripts": {
     "test": "make test",
     "start": "./node_modules/.bin/forever --minUptime=5000 --spinSleepTime=5000 server.js",
-    "postinstall": "bower install && bower-installer"
+    "postinstall": "./node_modules/.bin/bower install && ./node_modules/.bin/bower-installer"
   },
   "author": "",
   "license": "ISC",
