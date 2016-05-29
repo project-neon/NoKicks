@@ -114,10 +114,14 @@ angular.module('NoKicks', [
 
   // Give access to Turmas Api
   $scope.cursos = null;
+  $scope.progress = 0;
+  $scope.loaded = false;
   Turmas.subscribe($scope, function (){
     $scope.cursos = Turmas.cursos;
+    $scope.progress = Turmas.progress;
+    $scope.loaded = Turmas.loaded;
   })
-  Turmas.query();
+  Turmas.loadInBatch(200);
 
   // Save current user
   $scope.user = AuthService.getUser();

@@ -106,7 +106,7 @@ var module = angular.module('MatriculaHelper', [
   service.query = function (params, next) {
     $http
       .get('/api/turmas', {
-        params: {
+        params: params || {
           $limit: 2000,
           $sort: 'turno'
         }
@@ -116,7 +116,7 @@ var module = angular.module('MatriculaHelper', [
           return next && next('Não pode carregar dados', response.data);
 
         // Update progress
-        service.progress = response.page / response.pages;
+        service.progress = response.data.page / response.data.pages;
         service.loaded = service.progress >= 1.0;
 
         // Update list
@@ -144,13 +144,17 @@ var module = angular.module('MatriculaHelper', [
     }
 
     service.query({
-      $limit: 200,
+      $limit: _batchSize,
       $sort: 'turno',
       $page: _page,
-    }, function () {
-      $timeout(function (){
-        service.loadInBatch();
-      }, 400);
+    }, function (err) {
+      if(err)
+        return console.error(err);
+      console.log(service.progress, service.loaded);
+      if(!service.loaded)
+        $timeout(function (){
+          service.loadInBatch();
+        }, 500);
     })
   }
 
