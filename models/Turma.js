@@ -24,7 +24,7 @@ var Model = new Schema({
   tpi: Array,
   turno: String,
   turma: String,
-  campus: Number,
+  campus: String,
   horarios: Array,
   campusNome: String,
   obrigatoriedade: Array,

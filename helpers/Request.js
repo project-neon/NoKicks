@@ -38,7 +38,7 @@ exports.get = function (Model, options){
 
 		// Build where clause
 		var where = {};
-		where[options.idKey] = req.params.id;		
+		where[options.idKey] = req.params.id;
 
 		Model.findOne(where)
 			.populate(options.populate, options.populateFields)
@@ -54,7 +54,7 @@ exports.get = function (Model, options){
 
 			// Filter out a few fields
 			if(_.isArray(options.renderFields))
-				model = _.pick(model, options.renderFields);
+				model = _.pickBy(model, options.renderFields);
 			else if(_.isFunction(options.renderFields))
 				model = options.renderFields(model, req);
 
@@ -88,19 +88,19 @@ exports.find = function (Model, options){
 		var params = _.merge({}, req.params, req.query);
 
 		// Filter out query properties (starting with $)
-		params = _.omit(params, function (val, key){
+		params = _.omitBy(params, function (val, key){
 			return _.startsWith(key, '$');
 		});
 
 		// Filter query params if any
 		if(options.queryFields)
-			fields = _.pick(params, options.queryFields);
+			fields = _.pickBy(params, options.queryFields);
 
 		// Build Query
 		var query = Model.find(params);
 
 		// Select query params
-		var queryParams = _.pick(req.query, function (val, key){
+		var queryParams = _.pickBy(req.query, function (val, key){
 			return _.startsWith(key, '$');
 		});
 
@@ -115,7 +115,7 @@ exports.find = function (Model, options){
 		queryParams.$page = Math.max(queryParams.$page * 1, 1);
 		queryParams.$page = Math.min(queryParams.$page * 1, 1000);
 		queryParams.$limit = Math.max(queryParams.$limit * 1, 1);
-		
+
 		// if(_.isString(queryParams.$sort)){
 		// 	console.log(queryParams.$sort);
 		// 	queryParams.$sort = {};
@@ -129,7 +129,7 @@ exports.find = function (Model, options){
 
 		// Build count query
 		var queryCount = Model.count(params);
-		
+
 		// Build queries (and adds count if needed)
 		var queries = {
 			models: query.exec.bind(query),
@@ -147,7 +147,7 @@ exports.find = function (Model, options){
 			// Filter out a few fields
 			if(_.isArray(options.renderFields)){
 				models = _.map(models, function(m) {
-					return _.pick(m, options.renderFields);
+					return _.pickBy(m, options.renderFields);
 				});
 			}else if(_.isFunction(options.renderFields)){
 				models = options.renderFields(models, req);
@@ -161,9 +161,9 @@ exports.find = function (Model, options){
 				pages: Math.ceil(data.count / queryParams.$limit),
 				models: models,
 			};
-		
+
 			res.send(out);
-		
+
 		});
 	}
 }
@@ -191,7 +191,7 @@ exports.create = function (Model, options){
 
 		// Filter create fields if any
 		if(options.createFields)
-			params = _.pick(params, options.createFields);
+			params = _.pickBy(params, options.createFields);
 
 		var model = new Model(params);
 
@@ -203,7 +203,7 @@ exports.create = function (Model, options){
 
 			// Filter out a few fields
 			if(_.isArray(options.renderFields))
-				model = _.pick(model, options.renderFields);
+				model = _.pickBy(model, options.renderFields);
 			else if(_.isFunction(options.renderFields))
 				model = options.renderFields(model, req);
 
@@ -240,7 +240,7 @@ exports.update = function (Model, options){
 
 		// Filter create fields if any
 		if(options.updateFields)
-			params = _.pick(params, options.updateFields);
+			params = _.pickBy(params, options.updateFields);
 
 		Model.findOneAndUpdate(where, params, {new: true})
 			.populate(options.populate, options.populateFields)
@@ -256,7 +256,7 @@ exports.update = function (Model, options){
 
 			// Filter out a few fields
 			if(_.isArray(options.renderFields))
-				model = _.pick(model, options.renderFields);
+				model = _.pickBy(model, options.renderFields);
 			else if(_.isFunction(options.renderFields))
 				model = options.renderFields(model, req);
 
@@ -302,7 +302,7 @@ exports.destroy = function (Model, options){
 
 			// Filter out a few fields
 			if(_.isArray(options.renderFields))
-				model = _.pick(model, options.renderFields);
+				model = _.pickBy(model, options.renderFields);
 			else if(_.isFunction(options.renderFields))
 				model = options.renderFields(model, req);
 

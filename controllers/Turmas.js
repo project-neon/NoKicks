@@ -16,13 +16,30 @@ exports.importar = function (req, res){
   // Load materias
   app.helpers.Matriculas.loadMaterias((err, materias) => {
 
-    var newModels = materias.map( m => Models.Turma.fromJSON(m) );
-    res.send(newModels);
     // Convert models into Turmas
+    var newModels = materias.map( m => Models.Turma.fromJSON(m) );
+
+    // Import each model into DB
+    async.mapSeries(newModels, insertOrUpdateTurma, (err) => {
+      if(err)
+        return res.status(500).send(err);
+
+      res.send(`Imported ${newModels.length} turmas.`);
+    });
+
+    //
+    // res.send(newModels);
 
 
   });
 
+  function insertOrUpdateTurma(data, next) {
+    console.log('insertOrUpdateTurma', data);
+    Model.update({ufabc_id: data.ufabc_id}, data, {
+      upsert: true,
+      // setDefaultsOnInsert: true
+    }, next);
+  }
 };
 
 //
