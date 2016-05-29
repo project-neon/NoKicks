@@ -118,7 +118,7 @@ angular.module('NoKicks', [
   $scope.loaded = false;
   Turmas.subscribe($scope, function (){
     $scope.cursos = Turmas.cursos;
-    $scope.progress = Turmas.progress;
+    $scope.progress = Math.round(Turmas.progress * 100);
     $scope.loaded = Turmas.loaded;
   })
   Turmas.loadInBatch(200);
