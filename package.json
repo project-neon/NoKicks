@@ -9,7 +9,8 @@
   "main": "server.js",
   "scripts": {
     "test": "make test",
-    "start": "./node_modules/.bin/forever --minUptime=5000 --spinSleepTime=5000 server.js"
+    "start": "./node_modules/.bin/forever --minUptime=5000 --spinSleepTime=5000 server.js",
+    "postinstall": "bower install && bower-installer"
   },
   "author": "",
   "license": "ISC",

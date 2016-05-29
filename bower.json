@@ -16,7 +16,8 @@
   "dependencies": {
     "bootstrap": "~3.3.5",
     "mdi": "^1.6.50",
-    "angular-material": "^1.0.9"
+    "angular-material": "^1.0.9",
+    "angular-ui-router": "^0.3.0"
   },
   "install": {
     "path": "public/components",
