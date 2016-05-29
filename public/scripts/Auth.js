@@ -2,62 +2,81 @@ var module = angular.module('common.Auth', [
 
 ])
 
-.provider('auth', function (){
-  var interceptors = [];
-  return{
-    interceptors: interceptors,
 
-    $get: function (){
-      var auth = {};
+.service('AuthService', function ($rootScope, $http) {
+  var service = this;
+  service._user = null;
 
-      auth.user = null;
+  service.setUser = function (user){
+    console.log('Set User:', user);
+    service._user = user;
+    return service.getUser();
+  }
 
-      auth.logout = function (){
-        // Erase cache
-        auth.user = null;
+  service.getUser = function () {
+    return service._user;
+  }
 
-        // Notify logout
-        auth._notify('logout');
-      };
+  service.logout = function () {
 
-      auth.login = function (credentials){
-        $http.post('/api/auth/login', credentials).then(function (err, res){
-          console.log(err, res);
-        });
-      };
+    $http
+      .post('/api/auth/logout')
+      .then(function (response){
+        service.setUser(null);
+        $rootScope.$broadcast('Auth:logout');
+      })
 
-      // Call actions on all intercaptors
-      auth._notify = function (action){
-        for(interceptor in interceptors)
-          interceptor[action] && interceptor[action]();
-      }
+  }
 
-      return auth;
+  service.isLoggedIn = function () {
+    return !!service.getUser();
+  }
+
+  service.verifySession = function (next) {
+    service.login(null, next);
+  }
+
+  service.login = function (user, next) {
+    // Set defaults
+    user = user || {};
+
+    $http
+      .post('/api/auth/login', user)
+      .then(function (response){
+        // Verify success in login in
+        if(response.status >= 400)
+          return next && next(response.data || 'Error');
+
+        // Set current user
+        service.setUser(response.data);
+
+        // Broadcast success
+        $rootScope.$broadcast('Auth:authorized');
+
+        next && next(null);
+      });
+  }
+
+})
+
+
+.service('AuthInterceptor', function ($rootScope) {
+  var service = this;
+
+  service.request = function (config) {
+    return config;
+  }
+
+  service.responseError = function (response) {
+    if(response.status == 401){
+      $rootScope.$broadcast('Auth:unauthorized');
     }
+
+    return response;
   }
 })
 
-.factory('authInterceptor', ['auth', function (auth) {
-  return {
-    request: function (config) {
-      // config.headers = config.headers || {};
-
-      // if (auth.getAuthKey()) {
-      //   config.headers.Authorization = 'Bearer ' + auth.getAuthKey();
-      // }
-
-      return config;
-    },
-
-    response: function (response) {
-      if (response.status === 401) {
-        auth.logout();
-      }
-      return response || $q.when(response);
-    }
-  };
-}])
 
 .config(['$httpProvider', function ($httpProvider) {
-  $httpProvider.interceptors.push('authInterceptor');
-}]);
+  $httpProvider.interceptors.push('AuthInterceptor');
+}])

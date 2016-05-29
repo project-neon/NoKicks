@@ -59,6 +59,7 @@ html, body {
 
   border-radius: 6px;
   background-color: #fff;
+
 }
 
 #loginBoxHeader {
@@ -87,8 +88,29 @@ html, body {
 
 #loginBoxContent {
   position: relative;
-  margin: 90px 30px 25px 30px;
-  padding: 0 15px;
+  margin: 40px 30px 25px 30px;
+  padding: 20px 15px 0px 15px;
+}
+
+#loginBoxContent > form{
+  transition: opacity 0.5s;
+}
+
+#loginBoxContent.loading > form{
+  opacity: 0.4;
+}
+
+#loginBoxContent > .boxLoading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: none;
+}
+
+#loginBoxContent.loading > .boxLoading {
+  display: flex;
 }
 
 .leftPane {

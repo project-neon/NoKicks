@@ -5,25 +5,38 @@
         <div id="loginBoxLogo" class="md-whiteframe-2dp"></div>
       </div>
 
-      <div id="loginBoxContent">
-        <form ng-submit="login">
+      <div id="loginBoxContent" ng-class="{loading: lock}">
+        <form ng-submit="login()">
+
+          <p class="md-caption md-warn" ng-show="errorMessage">
+            {{errorMessage}}
+          </p>
+
           <md-input-container class="md-block">
             <label>Login</label>
-            <input ng-model="user.login" type="text" name="login">
+            <input ng-model="loginForm.user" type="text" name="login">
           </md-input-container>
 
           <md-input-container class="md-block">
             <label>Senha</label>
-            <input ng-model="user.password" type="password" name="password">
+            <input ng-model="loginForm.pass" type="password" name="password">
           </md-input-container>
 
+
           <div layout="row" layout-align="end center">
-            <md-button class="md-raised md-primary" type="submit">
-              Entrar
-            </md-button>
+            <input value="Entrar" class="md-button md-raised md-primary"
+              type="submit"/>
           </div>
         </form>
+
+
+        <div class="boxLoading" layout="row" layout-align="center center">
+          <md-progress-circular md-mode="indeterminate" md-diameter="96"
+            class="md-warn">
+          </md-progress-circular>
+        </div>
       </div>
+
 
   </div>
   <div id="textTitle">
