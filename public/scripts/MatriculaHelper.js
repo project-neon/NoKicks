@@ -10,14 +10,27 @@ var module = angular.module('MatriculaHelper', [
   }
 })
 
-.service('Turmas', function ($http) {
+.service('Turmas', function ($http, $rootScope, $timeout) {
   var service = this;
   var _indexByKey = '_id';
   var _turmasIndexed = {};
 
   service._turmasIndexed = _turmasIndexed;
   service.turmas = [];
-  service.cursos = {};
+  service.filtered = {};
+  service.loaded = false;
+  service.progress = 0;
+
+  // Subscribe for changes
+  service.subscribe = function (scope, callback){
+    var handler = $rootScope.$on('Turmas:update', callback);
+    scope.$on('$destroy', handler);
+  }
+
+  // Publish change notification
+  service.notify = function () {
+    $rootScope.$emit('Turmas:update');
+  }
 
   // Adiciona novas turmas ao array
   service.updateTurmas = function (turmas) {
@@ -39,34 +52,106 @@ var module = angular.module('MatriculaHelper', [
 
   // Aplica filtros na busca local (cache)
   service.applySearch = function (params) {
-    // Limpa cursos
-    for(var k in service.cursos)
-      delete service.cursos[k];
+    // Salva tempo de inicio
+    var startTime = Date.now();
+
+    // Aplica filtros default
+    params = params || {
+      curso: 19,
+    };
+
+    // Filtra turmas
+    var turmas = _.filter(service.turmas, needsSelection);
 
     // Agrupa por curso
-    var cursos = _.groupBy(service.turmas, 'codigo');
+    var cursosCodigo = _.groupBy(service.turmas, 'codigo');
 
-    // 
+    // Agrupa por obrigatoriedade
+    var cursos = {
+      obrigatoria: {},
+      limitada: {},
+      livre: {},
+    };
+
+    for(var id in cursosCodigo){
+      var curso = cursosCodigo[id][0];
+      cursos[obrigatoriedade(curso)][id] = cursosCodigo[id];
+    }
 
     console.log(cursos);
+
+    service.cursos = cursos;
+
+    // Função que seleciona turmas baseada na euristica escolhida
+    function needsSelection(turma) {
+      // TODO: Filter turma por Turno|Campus|...
+      return true;
+    }
+
+    // Retorna tipo de obrigatoriedade dado a turma (e curso via params)
+    function obrigatoriedade(turma) {
+      return turma.obrigatoriedade[params.curso] || 'livre';
+    }
+
+    // Calcula tempo levado
+    var took = Date.now() - startTime;
+    console.log('applySearch took', took + 'ms');
+
+    // Publish notification
+    service.notify();
   }
 
   // Encontra turmas no banco de dados que batem com a query.
   // Atualiza array e adiciona novos elementos
-  service.query = function (params) {
+  service.query = function (params, next) {
     $http
       .get('/api/turmas', {
         params: {
           $limit: 2000,
+          $sort: 'turno'
         }
       })
       .then(function (response) {
         if(response.status >= 400)
-          return console.error('Não pode carregar dados', response.data);
+          return next && next('Não pode carregar dados', response.data);
+
+        // Update progress
+        service.progress = response.page / response.pages;
+        service.loaded = service.progress >= 1.0;
 
         // Update list
         service.updateTurmas(response.data.models);
+
+        next && next();
       })
+  }
+
+  // Carrega dados em batches
+  var _batchTimeout = null;
+  var _page = 1;
+  var _batchSize = 0;
+  service.loadInBatch = function (batchSize) {
+
+    // Reset Batch process
+    if(batchSize){
+      // Reset Timeout
+      _batchTimeout && _batchTimeout();
+      _batchTimeout = null;
+      _page = 1;
+      _batchSize = batchSize;
+    }else{
+      _page++;
+    }
+
+    service.query({
+      $limit: 200,
+      $sort: 'turno',
+      $page: _page,
+    }, function () {
+      $timeout(function (){
+        service.loadInBatch();
+      }, 400);
+    })
   }
 
 })

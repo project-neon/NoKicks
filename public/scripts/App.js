@@ -113,8 +113,10 @@ angular.module('NoKicks', [
   }
 
   // Give access to Turmas Api
-  $scope.turmas = Turmas.turmas;
-  $scope.cursos = Turmas.cursos;
+  $scope.cursos = null;
+  Turmas.subscribe($scope, function (){
+    $scope.cursos = Turmas.cursos;
+  })
   Turmas.query();
 
   // Save current user
@@ -125,3 +127,16 @@ angular.module('NoKicks', [
 
   console.log('DashboardCtrl load');
 })
+
+// Filtra por campus
+.filter('campus', function() {
+  return function(items, campus) {
+    var filtered = [];
+
+    angular.forEach(items, function(item) {
+      item.campus == campus && filtered.push(item);
+    });
+
+    return filtered;
+  };
+});

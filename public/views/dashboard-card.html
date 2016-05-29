@@ -1,0 +1,28 @@
+<h3>{{titulo}}</h3>
+
+<div class="disciplineCard" ng-repeat="(id, turmas) in cursos[tipo] track by id">
+  <div layout="row" layout-align="space-between center"
+    class="disciplineTitle">
+    <span>{{turmas[0].codigo}}</span>
+    <span>{{turmas[0].codigoNome}}</span>
+    <span>{{turmas[0].tpi}}</span>
+  </div>
+
+  <div class="disciplineContent">
+
+    <h5 ng-show="filteredSA">Campus Santo André</h5>
+    <div class="horario"
+      ng-repeat="turma in turmas | filter:{campus: 'SA'} as filteredSA"
+      ng-class="turma.turno"
+      ng-include="'/views/dashboard-card-turma.html'">
+    </div>
+
+    <h5 ng-show="filteredSB">Campus São Bernardo</h5>
+
+    <div class="horario"
+      ng-repeat="turma in turmas | filter:{campus: 'SB'} as filteredSB"
+      ng-class="turma.turno"
+      ng-include="'/views/dashboard-card-turma.html'">
+    </div>
+  </div>
+</div>

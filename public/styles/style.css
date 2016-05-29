@@ -188,6 +188,8 @@ html, body {
   background-color: #F0F0F0;
   border-radius: 6px 6px 0 0;
   height: 32px;
+  color: #555;
+  font-size: 12px;
 }
 
 .disciplineContent {
@@ -234,17 +236,17 @@ html, body {
   font-size: 16px;
 }
 
-.horario.matutino > .turma {
+.horario.aMAT > .turma {
   color: #FFF;
   background-color: #ffbf00;
 }
 
-.horario.noturno > .turma {
+.horario.cNOT > .turma {
   color: #FFF;
   background-color: #666;
 }
 
-.horario.vespertino > .turma {
+.horario.bVES > .turma {
   color: #FFF;
   background-color: #45c34a;
 }
