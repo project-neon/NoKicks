@@ -27,14 +27,9 @@ exports.importar = function (req, res){
       res.send(`Imported ${newModels.length} turmas.`);
     });
 
-    //
-    // res.send(newModels);
-
-
   });
 
   function insertOrUpdateTurma(data, next) {
-    console.log('insertOrUpdateTurma', data);
     Model.update({ufabc_id: data.ufabc_id}, data, {
       upsert: true,
       // setDefaultsOnInsert: true
