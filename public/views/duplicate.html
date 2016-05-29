@@ -45,7 +45,7 @@
 
       <md-content flex layout-padding>
 
-        <h3>Semana 1</h3>
+        <small>Semana 1</small>
 
         <schedule>
           <div class="times">
@@ -125,7 +125,7 @@
           </div>
         </schedule>
 
-        <h3>Semana 2</h3>
+        <small>Semana 2</small>
 
         <schedule>
           <div class="times">
@@ -207,11 +207,6 @@
 
       </md-content>
 
-      <div layout="row" layout-align="end center" style="padding: 16px;">
-        <span>Créditos: <strong>32/45</strong></span>
-        <span flex></span>
-        <md-button class="md-raised md-accent" type="submit">Salvar</md-button>
-      </div>
     </div>
 
     <div class="rightPane" layout="column">
@@ -232,478 +227,480 @@
       </md-toolbar>
       <md-content layout-padding flex>
 
-      <div class="classGroup obrigatorias">
+        <div class="classGroup obrigatorias">
 
-        <h3>Obrigatórias</h3>
+          <h3>Obrigatórias</h3>
 
 
-        <div class="disciplineCard" ng-repeat="n in [].constructor(20) track by $index">
-          <div layout="row"layout-align="space-between center" class="disciplineTitle">
-            <span>BCXXXX</span>
-            <span>Bases do Início para Começar</span>
-            <span>(T - P - I)</span>
-          </div>
-          <div class="disciplineContent">
-
-            <h5>Santo André</h5>
-
-            <div class="horario noturno">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1" class="md-accent"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="turma">A2</div>
-              <div class="diaAula">
-                <div class="quinzenal noturno">19h - 21h</div>
-                <div class="quinzenal noturno">19h - 23h</div>
-              </div>
-              <div class="diaAula">
-                <div class="semanal noturno">19h - 21h</div>
-              </div>
-              <div class="diaAula"></div>
-              <div class="diaAula"></div>
-              <div class="diaAula"></div>
-              <div class="diaAula"></div>
-              <div class="vagasAula">8 / 32 / 64</div>
+          <div class="disciplineCard" ng-repeat="n in [].constructor(20) track by $index">
+            <div layout="row"layout-align="space-between center" class="disciplineTitle">
+              <span>BCXXXX</span>
+              <span>Bases do Início para Começar</span>
+              <span>(T - P - I)</span>
             </div>
+            <div class="disciplineContent">
+
+              <h5>Santo André</h5>
+
+              <div class="horario noturno">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1" class="md-accent"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="turma">A2</div>
+                <div class="diaAula">
+                  <div class="quinzenal noturno">19h - 21h</div>
+                  <div class="quinzenal noturno">19h - 23h</div>
+                </div>
+                <div class="diaAula">
+                  <div class="semanal noturno">19h - 21h</div>
+                </div>
+                <div class="diaAula"></div>
+                <div class="diaAula"></div>
+                <div class="diaAula"></div>
+                <div class="diaAula"></div>
+                <div class="vagasAula">8 / 32 / 64</div>
+              </div>
 
 
-            <h5>São Bernardo</h5>
+              <h5>São Bernardo</h5>
 
-            <div class="horario matutino">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="turma">B2</div>
-              <div class="diaAula">
-                <div class="quinzenal">08h - 10h</div>
-                <div class="quinzenal">08h - 12h</div>
+              <div class="horario matutino">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="turma">B2</div>
+                <div class="diaAula">
+                  <div class="quinzenal">08h - 10h</div>
+                  <div class="quinzenal">08h - 12h</div>
+                </div>
+                <div class="diaAula">
+                  <div class="semanal">10h - 12h</div>
+                </div>
+                <div class="diaAula"></div>
+                <div class="diaAula">
+                  <div class="quinzenal">-</div>
+                  <div class="quinzenal">10h - 12h</div>
+                </div>
+                <div class="diaAula"></div>
+                <div class="diaAula"></div>
+                <div class="vagasAula">8 / 32 / 64</div>
               </div>
-              <div class="diaAula">
-                <div class="semanal">10h - 12h</div>
+
+              <div class="horario matutino">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="turma">B3</div>
+                <div class="diaAula">
+                  <div class="semanal">10h - 12h</div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenal">-</div>
+                  <div class="quinzenal">10h - 12h</div>
+                </div>
+                <div class="diaAula"></div>
+                <div class="diaAula"></div>
+                <div class="diaAula">
+                  <div class="quinzenal">08h - 10h</div>
+                  <div class="quinzenal">08h - 12h</div>
+                </div>
+                <div class="diaAula"></div>
+                <div class="vagasAula">8 / 32 / 64</div>
               </div>
-              <div class="diaAula"></div>
-              <div class="diaAula">
-                <div class="quinzenal">-</div>
-                <div class="quinzenal">10h - 12h</div>
+
+              <div class="horario vespertino">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="turma">B4</div>
+                <div class="diaAula"></div>
+                <div class="diaAula">
+                  <div class="semanal">19h - 22h</div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenal">-</div>
+                  <div class="quinzenal">19h - 23h</div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenal">19h - 21h</div>
+                  <div class="quinzenal">19h - 23h</div>
+                </div>
+                <div class="diaAula"></div>
+                <div class="diaAula"></div>
+                <div class="vagasAula">8 / 32 / 64</div>
               </div>
-              <div class="diaAula"></div>
-              <div class="diaAula"></div>
-              <div class="vagasAula">8 / 32 / 64</div>
+
+              <div class="horario noturno">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="turma">B5</div>
+                <div class="diaAula">
+                  <div class="semanal">21h - 23h</div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenal">19h - 23h</div>
+                  <div class="quinzenal">19h - 21h</div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenal">-</div>
+                  <div class="quinzenal">21h - 23h</div>
+                </div>
+                <div class="diaAula"></div>
+                <div class="diaAula"></div>
+                <div class="diaAula"></div>
+                <div class="vagasAula">8 / 32 / 64</div>
+              </div>
+
             </div>
-
-            <div class="horario matutino">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="turma">B3</div>
-              <div class="diaAula">
-                <div class="semanal">10h - 12h</div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenal">-</div>
-                <div class="quinzenal">10h - 12h</div>
-              </div>
-              <div class="diaAula"></div>
-              <div class="diaAula"></div>
-              <div class="diaAula">
-                <div class="quinzenal">08h - 10h</div>
-                <div class="quinzenal">08h - 12h</div>
-              </div>
-              <div class="diaAula"></div>
-              <div class="vagasAula">8 / 32 / 64</div>
-            </div>
-
-            <div class="horario vespertino">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="turma">B4</div>
-              <div class="diaAula"></div>
-              <div class="diaAula">
-                <div class="semanal">19h - 22h</div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenal">-</div>
-                <div class="quinzenal">19h - 23h</div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenal">19h - 21h</div>
-                <div class="quinzenal">19h - 23h</div>
-              </div>
-              <div class="diaAula"></div>
-              <div class="diaAula"></div>
-              <div class="vagasAula">8 / 32 / 64</div>
-            </div>
-
-            <div class="horario noturno">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="turma">B5</div>
-              <div class="diaAula">
-                <div class="semanal">21h - 23h</div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenal">19h - 23h</div>
-                <div class="quinzenal">19h - 21h</div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenal">-</div>
-                <div class="quinzenal">21h - 23h</div>
-              </div>
-              <div class="diaAula"></div>
-              <div class="diaAula"></div>
-              <div class="diaAula"></div>
-              <div class="vagasAula">8 / 32 / 64</div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
-      <div class="classGroup limitadas">
-
-        <h3>Limitadas</h3>
-
-        <div class="disciplineCard">
-          <div layout="row"layout-align="space-between center" class="disciplineTitle">
-            <span>BCXXXX</span>
-            <span>Bases do Início para Começar</span>
-            <span>(T - P - I)</span>
-          </div>
-          <div class="disciplineContent">
-
-            <div class="horario">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="vagasAula">8 / 32 / 64</div>
-            </div>
-
-            <div class="horario">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="vagasAula">8 / 32 / 64</div>
-            </div>
-
-            <div class="horario">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="vagasAula">8 / 32 / 64</div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="disciplineCard">
-          <div layout="row"layout-align="space-between center" class="disciplineTitle">
-            <span>BCXXXX</span>
-            <span>Bases do Início para Começar</span>
-            <span>(T - P - I)</span>
-          </div>
-          <div class="disciplineContent">
-
-            <div class="horario">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="vagasAula">8 / 32 / 64</div>
-            </div>
-
-            <div class="horario">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="vagasAula">8 / 32 / 64</div>
-            </div>
-
-            <div class="horario">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="vagasAula">8 / 32 / 64</div>
-            </div>
-
           </div>
         </div>
 
 
-      </div>
+        <div class="classGroup limitadas">
 
+          <h3>Limitadas</h3>
 
-      <div class="classGroup livres">
+          <div class="disciplineCard">
+            <div layout="row"layout-align="space-between center" class="disciplineTitle">
+              <span>BCXXXX</span>
+              <span>Bases do Início para Começar</span>
+              <span>(T - P - I)</span>
+            </div>
+            <div class="disciplineContent">
 
-        <h3>Livres</h3>
+              <div class="horario">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="vagasAula">8 / 32 / 64</div>
+              </div>
 
-        <div class="disciplineCard">
+              <div class="horario">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="vagasAula">8 / 32 / 64</div>
+              </div>
 
-          <div layout="row"layout-align="space-between center" class="disciplineTitle">
-            <span>BCXXXX</span>
-            <span>Bases do Início para Começar</span>
-            <span>(T - P - I)</span>
+              <div class="horario">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="vagasAula">8 / 32 / 64</div>
+              </div>
+
+            </div>
           </div>
-          <div class="disciplineContent">
 
-            <div class="horario">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="vagasAula">8 / 32 / 64</div>
+          <div class="disciplineCard">
+            <div layout="row"layout-align="space-between center" class="disciplineTitle">
+              <span>BCXXXX</span>
+              <span>Bases do Início para Começar</span>
+              <span>(T - P - I)</span>
             </div>
+            <div class="disciplineContent">
 
-            <div class="horario">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
+              <div class="horario">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="vagasAula">8 / 32 / 64</div>
               </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
+
+              <div class="horario">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="vagasAula">8 / 32 / 64</div>
               </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
+
+              <div class="horario">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="vagasAula">8 / 32 / 64</div>
               </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="vagasAula">8 / 32 / 64</div>
+
             </div>
-
-            <div class="horario">
-              <span class="checkbox">
-                <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
-                <input type="checkbox">
-              </span>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="diaAula">
-                <div class="quinzenaAula"></div>
-                <div class="quinzenaAula"></div>
-              </div>
-              <div class="vagasAula">8 / 32 / 64</div>
-            </div>
-
           </div>
         </div>
-      </div>
 
 
+        <div class="classGroup livres">
+
+          <h3>Livres</h3>
+
+          <div class="disciplineCard">
+
+            <div layout="row"layout-align="space-between center" class="disciplineTitle">
+              <span>BCXXXX</span>
+              <span>Bases do Início para Começar</span>
+              <span>(T - P - I)</span>
+            </div>
+            <div class="disciplineContent">
+
+              <div class="horario">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="vagasAula">8 / 32 / 64</div>
+              </div>
+
+              <div class="horario">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="vagasAula">8 / 32 / 64</div>
+              </div>
+
+              <div class="horario">
+                <span class="checkbox">
+                  <!-- <md-checkbox aria-label="Checkbox 1"></md-checkbox> -->
+                  <input type="checkbox">
+                </span>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="diaAula">
+                  <div class="quinzenaAula"></div>
+                  <div class="quinzenaAula"></div>
+                </div>
+                <div class="vagasAula">8 / 32 / 64</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
       </md-content>
+
+      <div layout="row" layout-align="end center" style="padding: 4px 16px;">
+        <span>Créditos: <strong>32/45</strong></span>
+        <span flex></span>
+        <md-button class="md-raised md-accent" type="submit">Salvar</md-button>
+      </div>
     </div>
 
   <script src="/components/jquery/jquery.js"></script>

@@ -7,9 +7,10 @@
 
 /* Base height for each cell: 24px */
 schedule {
+  margin: 8px;
   display: block;
   position: relative;
-  width: 100%;
+  /*width: 100%;*/
   height: 238px;
   padding: 0px !important;
 
