@@ -37,5 +37,6 @@
     "winston": "^2.2.0",
     "bower": "latest",
     "bower-installer": "latest"
-  }
+  },
+  "cacheDirectories": ["node_modules", "public/_components" ]
 }
