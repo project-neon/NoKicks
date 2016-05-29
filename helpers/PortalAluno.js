@@ -48,7 +48,7 @@ portal.authenticate = function (options, next) {
 
     // Checks if it redirected to login
     if(res.request.path == portal.URL.LOGIN){
-      return next('Username or Password incorrect');
+      return next('Usuário ou senha incorretos');
     }
 
     return next(null, {

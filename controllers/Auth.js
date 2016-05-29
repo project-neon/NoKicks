@@ -33,7 +33,7 @@ exports.login = function (req, res) {
     if(Authentication.isLogged(req))
       res.send(Authentication.loggedUser(req));
     else
-      res.status(401).send('Usuário não logado');
+      res.status(401).send('Usuário ou senha inválidos');
   }
 
 }
