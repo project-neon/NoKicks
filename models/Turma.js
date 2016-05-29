@@ -27,7 +27,7 @@ var Model = new Schema({
   campus: String,
   horarios: Array,
   campusNome: String,
-  obrigatoriedade: Array,
+  obrigatoriedade: Object,
 
 });
 
@@ -68,9 +68,9 @@ Model.static({
     // Find out turno
     let turno;
     if(json.nome.indexOf('Noturno') >= 0)
-      turno = 'NOT';
+      turno = 'cNOT';
     else
-      turno = 'MAT';
+      turno = 'aMAT';
 
     // Encontra o Nome da turma
     let regTurma = /[A-Z]{1}[0-9]*(?=-Matutino|-Noturno)/g;
@@ -102,7 +102,7 @@ Model.static({
       // Change turno if is between 13h-18h
       var startSample = parseInt(horas[0].split(':'));
       if(startSample > 13 && startSample < 18)
-        turno = 'VES';
+        turno = 'bVES';
 
       return {
         inicio: horas[0],
