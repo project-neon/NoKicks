@@ -1,11 +1,11 @@
 <div class="leftPane md-whiteframe-4dp" layout="column">
   <md-toolbar class="md-primary md-hue-2">
-    <div class="md-toolbar-tools">
+    <div class="dashboard-toolbar md-toolbar-tools">
 
-
-      <h2>
-        <span>NoKick</span>
-      </h2>
+      <div class="user-info">
+        <h2>{{user.nome}}</h2>
+        <p>{{user.curso}} - {{user.turno}}</p>
+      </div>
 
       <span flex></span>
 
@@ -670,7 +670,8 @@
   </md-content>
 
   <div layout="row" layout-align="end center" style="padding: 4px 16px;">
-    <span>Créditos: <strong>32/45</strong></span>
+
+    <span>Créditos: <strong>{{0}}/{{creditos}}</strong></span>
     <span flex></span>
     <md-button class="md-raised md-accent" type="submit">Salvar</md-button>
   </div>

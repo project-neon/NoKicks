@@ -1,4 +1,5 @@
 angular.module('NoKicks', [
+  'MatriculaHelper',
   'common.Auth',
 
   'ngMaterial',
@@ -29,7 +30,7 @@ angular.module('NoKicks', [
 
 	.state('dashboard', {
 		url: '/dashboard',
-		templateUrl: '/views/duplicate.html',
+		templateUrl: '/views/dashboard.html',
     controller: 'DashboardCtrl',
 	});
 
@@ -98,7 +99,7 @@ angular.module('NoKicks', [
 
 })
 
-.controller('DashboardCtrl', function ($scope, $state, AuthService) {
+.controller('DashboardCtrl', function ($scope, $state, AuthService, Creditos) {
   // Check if user is Logged In
   if(!AuthService.isLoggedIn()){
     console.log('Not Logged in...');
@@ -110,7 +111,11 @@ angular.module('NoKicks', [
     AuthService.logout();
   }
 
+  // Save current user
   $scope.user = AuthService.getUser();
+
+  // Calculate Creditos
+  $scope.creditos = Creditos.calcular($scope.user.coeficientes.cr);
 
   console.log('DashboardCtrl load');
 })
