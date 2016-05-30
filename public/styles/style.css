@@ -201,6 +201,7 @@ html, body {
 
 .disciplineContent > h5 {
   margin: 16px 8px 0px 8px;
+  height: 15px;
 
   font-weight: 400;
   color: #666;
@@ -211,6 +212,7 @@ html, body {
   position: relative;
   align-items: center;
   margin: 5px 0;
+  height: 28px !important;
 }
 
 .horario .quinzenaAula {
@@ -301,6 +303,8 @@ html, body {
 .horario > .checkbox {
   margin-left: 8px;
   margin-right: 8px;
+  width: 24px;
+  height: 28px;
 }
 
 .quinzenaAula {
