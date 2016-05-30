@@ -3,15 +3,9 @@
   <input type="checkbox">
 </span>
 <div class="turma">{{turma.turma}}</div>
-<div class="diaAula">
-  <div class="quinzenal noturno">19h - 21h</div>
-  <div class="quinzenal noturno">19h - 23h</div>
+<div class="diaAula" ng-repeat="day in [1, 2, 3, 4, 5, 6]"
+  ng-class="diaAulaClass(turma.schedule[day])">
+  <div class="q1">{{turma.schedule[day].q1}}</div>
+  <div class="q2">{{turma.schedule[day].q2}}</div>
 </div>
-<div class="diaAula">
-  <div class="semanal noturno">19h - 21h</div>
-</div>
-<div class="diaAula"></div>
-<div class="diaAula"></div>
-<div class="diaAula"></div>
-<div class="diaAula"></div>
 <div class="vagasAula">{{turma.vagas}}</div>

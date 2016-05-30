@@ -132,18 +132,10 @@ angular.module('NoKicks', [
   // Calculate Creditos
   $scope.creditos = Creditos.calcular($scope.user.coeficientes.cr);
 
+  // Get css classes needed for this day of the week
+  $scope.diaAulaClass = function (day) {
+    return day ? (day.equal ? 'equal' : '') : 'empty';
+  }
+
   console.log('DashboardCtrl load');
 })
-
-// Filtra por campus
-.filter('campus', function() {
-  return function(items, campus) {
-    var filtered = [];
-
-    angular.forEach(items, function(item) {
-      item.campus == campus && filtered.push(item);
-    });
-
-    return filtered;
-  };
-});

@@ -193,15 +193,15 @@
   <md-content layout-padding flex>
     <div  class="classGroup obrigatorias"
           ng-include="'/views/dashboard-card.html'"
-          ng-init="tipo='obrigatoria';titulo='Obrigatórias'"></div>
+          onload="tipo='obrigatoria';titulo='Obrigatórias'"></div>
 
     <div  class="classGroup limitadas"
           ng-include="'/views/dashboard-card.html'"
-          ng-init="tipo='limitada';titulo='Limitadas'"></div>
+          onload="tipo='limitada';titulo='Limitadas'"></div>
 
     <div  class="classGroup livres"
           ng-include="'/views/dashboard-card.html'"
-          ng-init="tipo='livre';titulo='Lives'"></div>
+          onload="tipo='livre';titulo='Lives'"></div>
   </md-content>
 
   <div layout="row" layout-align="end center" style="padding: 4px 16px;">

@@ -251,15 +251,15 @@ html, body {
   background-color: #45c34a;
 }
 
-.diaAula:empty {
+.diaAula.empty {
   border: dashed 1px #F0F0F0;
   box-sizing: border-box;
   border-radius: 4px;
 }
 
 /* Specifico para quinzenal e semanal */
-.diaAula > .quinzenal,
-.diaAula > .semanal {
+.diaAula > .q1,
+.diaAula > .q2 {
   font-size: 8px;
   text-align: center;
 
@@ -268,20 +268,26 @@ html, body {
   box-sizing: border-box;
 }
 
-.diaAula > .quinzenal {
+.diaAula > .q1,
+.diaAula > .q2 {
   /*margin-top: 2px;*/
   height: 14px;
   line-height: 14px;
 }
 
-.diaAula > .semanal {
+.diaAula.equal > .q1 {
   /*margin-top: 2px;*/
   height: 28px;
   line-height: 28px;
 }
+.diaAula.equal > .q2,
+.diaAula.empty > .q1,
+.diaAula.empty > .q2 {
+  display: none;
+}
 
-.diaAula > .semanal,
-.diaAula > .quinzenal {
+.diaAula > .q1,
+.diaAula > .q2 {
   background-color: #FAFAFA;
   border-color: #F0F0F0;
   color: #888;
