@@ -18,7 +18,7 @@ var module = angular.module('MatriculaHelper', [
 
   service.getTurmas = function () {
     // Retorna lista de turmas
-    return service.materias.map(t => Turmas.getTurmaById(t));
+    return service.materias.map( function (t) { return Turmas.getTurmaById(t) });
   }
 
   // Remove turmas da lista
