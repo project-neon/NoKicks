@@ -25,6 +25,7 @@ var Model = new Schema({
   turno: String,
   turma: String,
   campus: String,
+  creditos: Number,
   horarios: Array,
   campusNome: String,
   obrigatoriedade: Object,
@@ -43,6 +44,49 @@ Model.plugin(PluginTimestamp);
  * - validations
  * - virtuals
  */
+Model.virtual('schedule').get(function (){
+
+  // Agrupa horários pelos dias
+  var horariosDias = _.groupBy(this.horarios, 'dia');
+
+  // Mapeia cada dia, e encontra inicio/fim por quinzena
+  var horarios = _.mapValues(horariosDias, (values) => {
+    // Seleciona Q1 e Q2
+    var q1 = _.filter(values, {semanaI: true});
+    var q2 = _.filter(values, {semanaII: true});
+
+    // Para cada horário do dia, verifica minimo e máximo
+    var q1s = sanitizeTime(_.minBy(q1, t => { return t.inicio }), 'inicio');
+    var q1e = sanitizeTime(_.maxBy(q1, t => { return t.final }), 'final');
+
+    var q2s = sanitizeTime(_.minBy(q2, t => { return t.inicio }), 'inicio');
+    var q2e = sanitizeTime(_.maxBy(q2, t => { return t.final }), 'final');
+
+    return {
+      // Set flag indicating if both weeks are the same
+      equal: q1s == q2s && q1e == q2e,
+
+      // Process text
+      q1: q1s ? q1s + ' - ' + q1e : null,
+      q2: q2s ? q2s + ' - ' + q2e : null,
+    }
+  });
+
+  function sanitizeTime(time, key){
+    if(!time)
+      return null;
+
+    return time[key].replace(':', 'h').replace('00', '');
+  }
+
+  function timeToNumber(time){
+    return time;
+    // var times = time.split(':');
+    // return times[0]*1 + times[1] / 100*1;
+  }
+
+  return horarios;
+});
 
 /**
  * Methods
@@ -138,6 +182,7 @@ Model.static({
       turno: turno,
       turma: turma,
       campus: campus,
+      creditos: json.creditos,
       horarios: horarios,
       obrigatoriedade: obrigatoriedades,
     }
