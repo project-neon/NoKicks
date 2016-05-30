@@ -100,7 +100,7 @@ angular.module('NoKicks', [
 
 })
 
-.controller('DashboardCtrl', function ($scope, $state, $timeout, AuthService, Creditos, Turmas) {
+.controller('DashboardCtrl', function ($scope, $state, $timeout, AuthService, Turmas) {
   // Check if user is Logged In
   if(!AuthService.isLoggedIn()){
     console.log('Not Logged in...');
@@ -129,16 +129,149 @@ angular.module('NoKicks', [
   // Save current user
   $scope.user = AuthService.getUser();
 
-  // Calculate Creditos
-  $scope.creditos = Creditos.calcular($scope.user.coeficientes.cr);
-
   // Get css classes needed for this day of the week
   $scope.diaAulaClass = function (day) {
     return day ? (day.equal ? 'equal' : '') : 'empty';
   }
 
+})
+
+.controller('TurmasCtrl', function ($scope, Schedule, Turmas) {
+
+  $scope.selectedTurmas = null;
+
+  // Index turmas by id to use in checkbox
+  function updateSelectedTurmas() {
+    var indexed = {};
+    for(var k in Schedule.turmas){
+      indexed[Schedule.turmas[k]] = true;
+    }
+    $scope.selectedTurmas = indexed;
+  }
+
+  Schedule.subscribe($scope, function (){
+    updateSelectedTurmas();
+  });
+
+  // Remove/Add turma from list
+  $scope.toggleTurma = function (turmaId) {
+    Schedule.toggle(turmaId)
+  }
+})
+
+.controller('ScheduleCtrl', function ($scope, Schedule) {
+
+  var colors = [
+    '233, 30, 99',
+    '244, 67, 54',
+    '156, 39, 176',
+    '103, 58, 183',
+    '233, 30, 99',
+    '244, 67, 54',
+    '156, 39, 176',
+    '103, 58, 183',
+  ];
+
+  // Guarda o schedule processado
   //
-  // Handles class selection
-  //
-  // $scope.toggleClass(classId)
+  // Formato:
+  // {
+  //   q1_1: [
+  //       {inicio: x, duracao: y, nome: z, cor: a},
+  //       {<turma>}
+  //   ],
+  //   q1_2: [...]
+  //   ...
+  //   q2_6: [...]
+  // }
+  $scope.schedule = null;
+
+  // Atualiza objeto de schedule, setando cores e deixando
+  // no formato de processamento da view
+  function updateSchedule(turmas){
+
+    var schedule = {};
+    var _included = 0;
+
+    // Generate names and initialize data
+    for(var k = 1; k <= 6; k++){
+      schedule['q1_'+k] = [];
+      schedule['q2_'+k] = [];
+    }
+
+    // Add turmas to schedule
+    _.forEach(turmas, includeTurma);
+
+    // Save to store
+    $scope.schedule = schedule;
+
+    console.log(schedule);
+
+    // Map each class and
+    function includeTurma(turma){
+      _.forEach(turma.horarios, function (horario){
+        // Parse inicio e final
+        var inicio = timeToNumber(horario.inicio);
+        var duracao = timeToNumber(horario.final) - inicio;
+
+        var parsed = {
+          inicio: inicio,
+          duracao: duracao,
+          nome: turma.codigo.split('-')[0],
+          cor: colors[_included],
+        };
+
+        // Processa estilo
+        parsed.style = styleForHorario(parsed);
+
+        if(horario.semanaI)
+          schedule['q1_'+horario.dia].push(parsed);
+        if(horario.semanaII)
+          schedule['q2_'+horario.dia].push(parsed);
+      })
+      _included++;
+    }
+
+    function timeToNumber(time){
+      if(!time)
+        return 0;
+
+      var t = time.split(':');
+      return t[0] * 1 + t[1] * 1 / 100;
+    }
+
+    function styleForHorario(horario){
+      var h = 14;
+      var s = 8; //  Hora de inicio
+      var style = {
+        'top': ((horario.inicio - s) * h) + 'px',
+        'height': (horario.duracao * h) + 'px',
+        'border-top-color': 'rgb(' + (horario.cor) + ')',
+        'background-color': 'rgba(' + (horario.cor) + ', 0.7)',
+      };
+      return style;
+
+    }
+  }
+
+  // Atualiza Schedule
+  Schedule.subscribe($scope, function (){
+    updateSchedule(Schedule.getTurmas());
+  });
+})
+
+.controller('CreditosCtrl', function ($scope, AuthService, Creditos, Schedule) {
+  var user = AuthService.getUser();
+
+  if(!user)
+    return;
+
+  // Calculate Creditos máximo
+  $scope.creditos = Creditos.calcular(user.coeficientes.cr);
+  $scope.usedCreditos = 0;
+
+  Schedule.subscribe($scope, function (){
+    var creditos = _.pluck(Schedule.getTurmas(), 'creditos');
+    $scope.usedCreditos = _.reduce(creditos, function(m, n){ return m + n; }, 0);
+  });
 })

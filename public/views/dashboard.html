@@ -16,7 +16,7 @@
     </div>
   </md-toolbar>
 
-  <md-content flex layout-padding>
+  <md-content flex layout-padding ng-controller="ScheduleCtrl">
 
     <small>Semana 1</small>
 
@@ -42,56 +42,11 @@
       </div>
 
       <div class="days">
-        <day class="day-1">
+        <day ng-repeat="day in [1, 2, 3, 4, 5, 6]">
           <div class="header">Segunda</div>
           <div class="classes">
-            <class style="top: 28px; height: 28px; border-top-color: rgba(233, 30, 99, 1); background: rgba(233, 30, 99, 0.7)">
-              <p><strong>A2</strong> - BC0207</p>
-            </class>
-          </div>
-        </day>
-
-        <day class="day-2">
-          <div class="header">Terça</div>
-          <div class="classes">
-            <class style="top: 56px; height: 28px; border-top-color: rgba(244, 67, 54, 1); background: rgba(244, 67, 54, 0.7)">
-              <p><strong>C</strong> - END5600</p>
-            </class>
-          </div>
-        </day>
-
-        <day class="day-3">
-          <div class="header">Quarta</div>
-          <div class="classes">
-            <class style="top: 28px; height: 28px; border-top-color: rgba(156, 39, 176, 1); background: rgba(156, 39, 176, 0.7)">
-              <p><strong>B3</strong> - BCE3990</p>
-            </class>
-          </div>
-        </day>
-
-        <day class="day-4">
-          <div class="header">Quinta</div>
-          <div class="classes">
-            <class style="top: 84px; height: 28px; border-top-color: rgba(103, 58, 183, 1); background: rgba(103, 58, 183, 0.7)">
-              <p><strong>A1</strong> - BC0207</p>
-            </class>
-          </div>
-        </day>
-
-        <day class="day-5">
-          <div class="header">Sexta</div>
-          <div class="classes">
-            <class style="top: 14px; height: 28px;">
-              <p><strong>A1</strong> - BC0207</p>
-            </class>
-          </div>
-        </day>
-
-        <day class="day-6">
-          <div class="header">Sábado</div>
-          <div class="classes">
-            <class style="top: 126px; height: 56px;">
-              <p><strong>A1</strong> - BC0207</p>
+            <class ng-repeat="class in schedule['q1_'+day]" ng-style="class.style">
+              <p>{{class.nome}}</p>
             </class>
           </div>
         </day>
@@ -122,56 +77,11 @@
       </div>
 
       <div class="days">
-        <day class="day-1">
+        <day ng-repeat="day in [1, 2, 3, 4, 5, 6]">
           <div class="header">Segunda</div>
           <div class="classes">
-            <class style="top: 28px; height: 28px;">
-              <p><strong>A1</strong> - BC0207</p>
-            </class>
-          </div>
-        </day>
-
-        <day class="day-2">
-          <div class="header">Terça</div>
-          <div class="classes">
-            <class style="top: 70px; height: 28px;">
-              <p><strong>A1</strong> - BC0207</p>
-            </class>
-          </div>
-        </day>
-
-        <day class="day-3">
-          <div class="header">Quarta</div>
-          <div class="classes">
-            <class style="top: 28px; height: 28px;">
-              <p><strong>A1</strong> - BC0207</p>
-            </class>
-          </div>
-        </day>
-
-        <day class="day-4">
-          <div class="header">Quinta</div>
-          <div class="classes">
-            <class style="top: 64px; height: 28px;">
-              <p><strong>A1</strong> - BC0207</p>
-            </class>
-          </div>
-        </day>
-
-        <day class="day-5">
-          <div class="header">Sexta</div>
-          <div class="classes">
-            <class style="top: 16px; height: 28px;">
-              <p><strong>A1</strong> - BC0207</p>
-            </class>
-          </div>
-        </day>
-
-        <day class="day-6">
-          <div class="header">Sábado</div>
-          <div class="classes">
-            <class style="top: 112px; height: 56px;">
-              <p><strong>A1</strong> - BC0207</p>
+            <class ng-repeat="class in schedule['q2_'+day]" ng-style="class.style">
+              <p>{{class.nome}}</p>
             </class>
           </div>
         </day>
@@ -190,16 +100,24 @@
     value="{{progress}}">
   </md-progress-linear>
 
-  <md-content layout-padding flex>
+  <md-content layout-padding flex ng-controller="TurmasCtrl">
+
     <div  class="classGroup"
           ng-class="tipo"
           ng-include="'/views/dashboard-card.html'"
-          ng-repeat="(tipo, titulo) in {obrigatoria: 'Obrigatórias',limitada: 'Limitadas',livre: 'Livres'}"></div>
+          ng-repeat="(tipo, titulo) in {obrigatoria: 'Obrigatórias',limitada: 'Limitadas',livre: 'Livres'}">
+    </div>
+
   </md-content>
 
-  <div layout="row" layout-align="end center" style="padding: 4px 16px;">
+  <div layout="row" layout-align="end center" style="padding: 4px 16px;"
+    ng-controller="CreditosCtrl">
 
-    <span>Créditos: <strong>{{0}}/{{creditos}}</strong></span>
+    <span>Créditos:
+      <strong ng-class="{warn: usedCreditos > creditos}">
+        {{usedCreditos}}/{{creditos}}
+      </strong>
+    </span>
     <span flex></span>
     <md-button class="md-raised md-accent" type="submit">Salvar</md-button>
   </div>

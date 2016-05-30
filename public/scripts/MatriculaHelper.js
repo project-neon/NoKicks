@@ -16,19 +16,32 @@ var module = angular.module('MatriculaHelper', [
   // Guarda Id's das turmas
   service.turmas = [];
 
+  // Subscribe for changes
+  service.subscribe = function (scope, callback){
+    var handler = $rootScope.$on('Schedule:changed', callback);
+    scope.$on('$destroy', handler);
+  }
+
   service.getTurmas = function () {
     // Retorna lista de turmas
-    return service.materias.map( function (t) { return Turmas.getTurmaById(t) });
+    var turmas = [];
+    for(var k in service.turmas){
+      var turma = Turmas.getTurmaById(service.turmas[k])
+      turma && turmas.push(turma);
+    }
+    return turmas;
   }
 
   // Remove turmas da lista
   service.remove = function (turmas){
     service.turmas = _.difference(service.turmas, turmas || []);
+
     $rootScope.$emit('Schedule:changed');
   }
 
   service.add = function (turmas){
     service.turmas = _.union(service.turmas, turmas || []);
+
     $rootScope.$emit('Schedule:changed');
   }
 
@@ -123,8 +136,6 @@ var module = angular.module('MatriculaHelper', [
       cursos[obrigatoriedade(curso)][id] = cursosCodigo[id];
     }
 
-    console.log(cursos);
-
     service.cursos = cursos;
 
     // Função que seleciona turmas baseada na euristica escolhida
@@ -140,7 +151,7 @@ var module = angular.module('MatriculaHelper', [
 
     // Calcula tempo levado
     var took = Date.now() - startTime;
-    console.log('applySearch took', took + 'ms');
+    // console.log('applySearch took', took + 'ms');
 
     // Publish notification
     service.notify();
@@ -214,7 +225,6 @@ var module = angular.module('MatriculaHelper', [
     // Update progress
     service.progress = 1.0 - (_data.length * 1.0 / _length);
     service.loaded = service.progress >= 1.0;
-    console.log(_data.length, service.progress, service.loaded);
 
     // Update store
     service.updateTurmas(newData);
