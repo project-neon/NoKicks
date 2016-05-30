@@ -100,7 +100,7 @@ angular.module('NoKicks', [
 
 })
 
-.controller('DashboardCtrl', function ($scope, $state, AuthService, Creditos, Turmas) {
+.controller('DashboardCtrl', function ($scope, $state, $timeout, AuthService, Creditos, Turmas) {
   // Check if user is Logged In
   if(!AuthService.isLoggedIn()){
     console.log('Not Logged in...');
@@ -121,7 +121,10 @@ angular.module('NoKicks', [
     $scope.progress = Math.round(Turmas.progress * 100);
     $scope.loaded = Turmas.loaded;
   })
-  Turmas.loadInBatch(200);
+
+  $timeout(function () {
+    Turmas.loadInBatch(100);
+  }, 2000)
 
   // Save current user
   $scope.user = AuthService.getUser();

@@ -128,34 +128,59 @@ var module = angular.module('MatriculaHelper', [
 
   // Carrega dados em batches
   var _batchTimeout = null;
-  var _page = 1;
   var _batchSize = 0;
+  var _data = null;
+  var _length = 0;
   service.loadInBatch = function (batchSize) {
-
-    // Reset Batch process
     if(batchSize){
-      // Reset Timeout
-      _batchTimeout && _batchTimeout();
-      _batchTimeout = null;
-      _page = 1;
-      _batchSize = batchSize;
-    }else{
-      _page++;
-    }
+      // Clear timeout
+      if(_batchTimeout)
+        $timeout.cancel(_batchTimeout);
 
-    service.query({
-      $limit: _batchSize,
-      $sort: 'turno',
-      $page: _page,
-    }, function (err) {
-      if(err)
-        return console.error(err);
-      console.log(service.progress, service.loaded);
-      if(!service.loaded)
-        $timeout(function (){
-          service.loadInBatch();
-        }, 500);
-    })
+      _batchSize = batchSize;
+
+      // Load data once
+      $http.get('/api/turmas', {
+        params: {
+          $limit: 2000,
+          $sort: 'turno'
+        }
+      })
+      .then(function (response) {
+        if(response.status >= 400)
+          return next && next('Não pode carregar dados', response.data);
+
+        _data = response.data.models;
+        _length = _data.length;
+
+        processLoadedBatch();
+      })
+    }
+  }
+
+  function processLoadedBatch() {
+    // Stop timeout if needed
+    if(_batchTimeout)
+      $timeout.cancel(_batchTimeout)
+
+    // Cut data
+    var newData = _data.splice(0, _batchSize);
+
+    // Update progress
+    service.progress = 1.0 - (_data.length * 1.0 / _length);
+    service.loaded = service.progress >= 1.0;
+    console.log(_data.length, service.progress, service.loaded);
+
+    // Update store
+    service.updateTurmas(newData);
+
+    // Stop calling if ended data
+    if(_data.length <= 0)
+      return;
+
+    _batchTimeout = $timeout(function (){
+      processLoadedBatch();
+    }, 300);
   }
 
 })
