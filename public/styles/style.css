@@ -155,24 +155,24 @@ html, body {
 
 
 /* Specific for class groups */
-.classGroup.obrigatorias {
+.classGroup.obrigatoria {
   border-left-color: #e3512d;
 }
-.classGroup.obrigatorias > h3{
+.classGroup.obrigatoria > h3{
   color: #e3512d;
 }
 
-.classGroup.limitadas {
+.classGroup.limitada {
   border-left-color: #ff9700;
 }
-.classGroup.limitadas > h3{
+.classGroup.limitada > h3{
   color: #ff9700;
 }
 
-.classGroup.livres {
+.classGroup.livre {
   border-left-color: #45c34a;
 }
-.classGroup.livres > h3{
+.classGroup.livre > h3{
   color: #45c34a;
 }
 

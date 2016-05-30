@@ -191,17 +191,10 @@
   </md-progress-linear>
 
   <md-content layout-padding flex>
-    <div  class="classGroup obrigatorias"
+    <div  class="classGroup"
+          ng-class="tipo"
           ng-include="'/views/dashboard-card.html'"
-          onload="tipo='obrigatoria';titulo='Obrigatórias'"></div>
-
-    <div  class="classGroup limitadas"
-          ng-include="'/views/dashboard-card.html'"
-          onload="tipo='limitada';titulo='Limitadas'"></div>
-
-    <div  class="classGroup livres"
-          ng-include="'/views/dashboard-card.html'"
-          onload="tipo='livre';titulo='Lives'"></div>
+          ng-repeat="(tipo, titulo) in {obrigatoria: 'Obrigatórias',limitada: 'Limitadas',livre: 'Livres'}"></div>
   </md-content>
 
   <div layout="row" layout-align="end center" style="padding: 4px 16px;">

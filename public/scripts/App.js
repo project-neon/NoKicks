@@ -137,5 +137,8 @@ angular.module('NoKicks', [
     return day ? (day.equal ? 'equal' : '') : 'empty';
   }
 
-  console.log('DashboardCtrl load');
+  //
+  // Handles class selection
+  //
+  // $scope.toggleClass(classId)
 })

@@ -10,6 +10,43 @@ var module = angular.module('MatriculaHelper', [
   }
 })
 
+.service('Schedule', function ($http, $rootScope, Turmas) {
+  var service = this;
+
+  // Guarda Id's das turmas
+  service.turmas = [];
+
+  service.getTurmas = function () {
+    // Retorna lista de turmas
+    return service.materias.map(t => Turmas.getTurmaById(t));
+  }
+
+  // Remove turmas da lista
+  service.remove = function (turmas){
+    service.turmas = _.difference(service.turmas, turmas || []);
+    $rootScope.$emit('Schedule:changed');
+  }
+
+  service.add = function (turmas){
+    service.turmas = _.union(service.turmas, turmas || []);
+    $rootScope.$emit('Schedule:changed');
+  }
+
+  service.toggle = function (turma){
+    var idx = service.turmas.indexOf(turma);
+    if (idx > -1)
+      service.turmas.splice(idx, 1);
+    else
+      service.turmas.push(turma);
+      
+    $rootScope.$emit('Schedule:changed');
+  }
+
+  $rootScope.$on('Auth:unauthorized', function (){
+    //
+  })
+})
+
 .service('Turmas', function ($http, $rootScope, $timeout) {
   var service = this;
   var _indexByKey = '_id';
@@ -30,6 +67,14 @@ var module = angular.module('MatriculaHelper', [
   // Publish change notification
   service.notify = function () {
     $rootScope.$emit('Turmas:update');
+  }
+
+  // Encontra turma por id (Indexado)
+  service.getTurmaById = function (id) {
+    if(id in _turmasIndexed)
+      return service.turmas[_turmasIndexed[id]];
+
+    return null;
   }
 
   // Adiciona novas turmas ao array
@@ -184,7 +229,3 @@ var module = angular.module('MatriculaHelper', [
   }
 
 })
-
-.config(['$httpProvider', function ($httpProvider) {
-  $httpProvider.interceptors.push('AuthInterceptor');
-}])
