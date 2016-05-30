@@ -123,7 +123,7 @@ angular.module('NoKicks', [
   })
 
   $timeout(function () {
-    Turmas.loadInBatch(100);
+    Turmas.loadInBatch(50);
   }, 2000)
 
   // Save current user

@@ -38,7 +38,7 @@ var module = angular.module('MatriculaHelper', [
       service.turmas.splice(idx, 1);
     else
       service.turmas.push(turma);
-      
+
     $rootScope.$emit('Schedule:changed');
   }
 
@@ -225,7 +225,7 @@ var module = angular.module('MatriculaHelper', [
 
     _batchTimeout = $timeout(function (){
       processLoadedBatch();
-    }, 300);
+    }, 600);
   }
 
 })
