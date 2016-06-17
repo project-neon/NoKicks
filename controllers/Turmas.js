@@ -38,6 +38,36 @@ exports.importar = function (req, res){
 };
 
 //
+// A Cached version of all the turmas
+//
+var _cachedLastCall = 0;
+var _cachedCache;
+exports.cached = function (req, res){
+  // Verify if it can be served with cached
+  let age = Date.now() - _cachedLastCall
+  let cacheIsValid = _cachedCache && age < app.config.turmasCacheAge
+  if(cacheIsValid)
+    return res.send(_cachedCache);
+
+  // Find all turmas
+  app.models.Turma.find({})
+    .sort('turno')
+    .exec((err, turmas) => {
+      if(err)
+        return res.status(500).send(err);
+
+      // Maps and calls toJSON in each object
+      turmas = turmas.map(t => t.toObject({minimize: false, virtuals: true}))
+
+      // Save cache
+      _cachedLastCall = Date.now();
+      _cachedCache = turmas;
+
+      res.send(turmas);
+    })
+}
+
+//
 // REST Api
 //
 exports.get = Request.get(Model, {

@@ -161,7 +161,7 @@ var module = angular.module('MatriculaHelper', [
   // Atualiza array e adiciona novos elementos
   service.query = function (params, next) {
     $http
-      .get('/api/turmas', {
+      .get('/api/turmas/cached', {
         params: params || {
           $limit: 2000,
           $sort: 'turno'
@@ -172,11 +172,11 @@ var module = angular.module('MatriculaHelper', [
           return next && next('Não pode carregar dados', response.data);
 
         // Update progress
-        service.progress = response.data.page / response.data.pages;
-        service.loaded = service.progress >= 1.0;
+        service.progress = 1.0;//response.data.page / response.data.pages;
+        service.loaded = true;//service.progress >= 1.0;
 
         // Update list
-        service.updateTurmas(response.data.models);
+        service.updateTurmas(response.data);
 
         next && next();
       })
@@ -196,7 +196,7 @@ var module = angular.module('MatriculaHelper', [
       _batchSize = batchSize;
 
       // Load data once
-      $http.get('/api/turmas', {
+      $http.get('/api/turmas/cached', {
         params: {
           $limit: 2000,
           $sort: 'turno'
@@ -206,7 +206,7 @@ var module = angular.module('MatriculaHelper', [
         if(response.status >= 400)
           return next && next('Não pode carregar dados', response.data);
 
-        _data = response.data.models;
+        _data = response.data;
         _length = _data.length;
 
         processLoadedBatch();
