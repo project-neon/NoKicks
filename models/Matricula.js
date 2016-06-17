@@ -15,6 +15,13 @@ var Model = new Schema({
 
   position: Number,
 
+  // cr: Number,
+  // cp: Number,
+  // turno: String,
+  // curso: String,
+  // campus: String,
+  // ingressante: Boolean,
+
   _aluno: {
     type: ObjectId,
     ref: 'Aluno',
