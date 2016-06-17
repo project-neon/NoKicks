@@ -155,22 +155,34 @@ angular.module('NoKicks', [
 
   // Remove/Add turma from list
   $scope.toggleTurma = function (turmaId) {
-    Schedule.toggle(turmaId)
+    // Only add if less then 10 matérias
+    // if(Turmas.turmas.length < 10)
+      Schedule.toggle(turmaId)
   }
 })
 
 .controller('ScheduleCtrl', function ($scope, Schedule) {
 
   var colors = [
-    '233, 30, 99',
-    '244, 67, 54',
-    '156, 39, 176',
-    '103, 58, 183',
-    '233, 30, 99',
-    '244, 67, 54',
-    '156, 39, 176',
-    '103, 58, 183',
+    '33, 150, 243', // Blue
+    '244, 67, 54', // Red
+    '156, 39, 176', // Purble
+    '41, 98, 139', // Dark Blue
+    '72, 135, 58', // Dark Green
+    '255, 193, 7', // Amber
+    '255, 61, 0', // Deep Orange
+    '121, 85, 72', // Brown
+    '96, 125, 139', // Grey
   ];
+
+  $scope.diasSemana = {
+    1: 'Segunda',
+    2: 'Terça',
+    3: 'Quarta',
+    4: 'Quinta',
+    5: 'Sexta',
+    6: 'Sábado',
+  };
 
   // Guarda o schedule processado
   //
@@ -189,9 +201,11 @@ angular.module('NoKicks', [
   // Atualiza objeto de schedule, setando cores e deixando
   // no formato de processamento da view
   function updateSchedule(turmas){
+    console.log('Updating schedule.');
 
     var schedule = {};
     var _included = 0;
+    var _conflictTable = {};
 
     // Generate names and initialize data
     for(var k = 1; k <= 6; k++){
@@ -205,10 +219,11 @@ angular.module('NoKicks', [
     // Save to store
     $scope.schedule = schedule;
 
-    console.log(schedule);
-
-    // Map each class and
+    // Adiciona horarios da turma ao calendário
     function includeTurma(turma){
+
+      var inConflict = {};
+
       _.forEach(turma.horarios, function (horario){
         // Parse inicio e final
         var inicio = timeToNumber(horario.inicio);
@@ -217,19 +232,93 @@ angular.module('NoKicks', [
         var parsed = {
           inicio: inicio,
           duracao: duracao,
-          nome: turma.codigo.split('-')[0],
-          cor: colors[_included],
+          nome: turma.turma + '-' + turma.codigo.split('-')[0],
+          nomeSimples: turma.codigoNome,
+          nomeCompleto: turma.nome,
+          cor: colors[_included % colors.length],
+          id: turma.id,
         };
 
         // Processa estilo
         parsed.style = styleForHorario(parsed);
 
+        // Verifies conflicts
+        var conflitos = [];
+        // var conflitoQ2 = [];
+
+        for(var k = inicio; k < inicio + duracao; k += 0.5){
+          var _id = horario.dia+'.'+k;
+
+          // Verifica conflito na semana I
+          if(horario.semanaI && 'q1'+_id in _conflictTable){
+            var conflict = _conflictTable['q1'+_id];
+
+            if(conflitos.indexOf(conflict.id) < 0){
+              createConflict(conflict, parsed);
+              conflitos.push(conflict.id);
+            }
+          }
+
+          // Verifica conflito na semana II
+          if(horario.semanaII && 'q2'+_id in _conflictTable){
+            conflict = _conflictTable['q2'+_id];
+
+            if(conflitos.indexOf(conflict.id) < 0){
+              createConflict(conflict, parsed);
+              conflitos.push(conflict.id);
+            }
+            // if(!conflitoQ1)
+              // createConflict(conflitoQ2, parsed);
+          }
+
+          // Para de verificar próximos conflitos se já existe algum
+          // if(conflitoQ1 || conflitoQ2)
+            // break;
+        }
+
+        // Preenche horários apenas se não está em conflito
+        if(conflitos.length > 0)
+          return;
+
+        if(horario.semanaI)
+          for(var k = inicio; k < inicio + duracao; k += 0.5)
+            _conflictTable['q1' + horario.dia + '.' + k] = parsed;
+
+        if(horario.semanaII)
+          for(var k = inicio; k < inicio + duracao; k += 0.5)
+            _conflictTable['q2' + horario.dia + '.' + k] = parsed;
+
+        // Adiciona horário somente se não houver conflito
         if(horario.semanaI)
           schedule['q1_'+horario.dia].push(parsed);
+
         if(horario.semanaII)
           schedule['q2_'+horario.dia].push(parsed);
       })
+
+      // Incrementa contador para alterar a cor da próxima vez
       _included++;
+    }
+
+    // Cria conflito alterando cor, e dando merge nas informações de t2 em t1
+    function createConflict(t1, t2){
+      console.log('Conflito: ', t1.nome, t2.nome);
+      // Inicio: Menor das duas; final: Maior das duas
+      var inicio = Math.min(t1.inicio, t2.inicio);
+      var final = Math.max(t1.inicio + t1.duracao, t2.inicio + t2.duracao);
+      // duracao: Maximo menos inicio
+      var duracao = final - inicio;
+
+      // Necessita mudar ID para que o Angular identifique a mudança
+      t1.id = t1.id + ':'+ t2.id;
+      t1.cor = '255, 0, 0'; // RED
+      t1.nome = t1.nome + ' ' + t2.nome;
+      t1.inicio = inicio;
+      t1.duracao = duracao;
+
+      // Aplica estilos novamente
+      t1.style = styleForHorario(t1);
+      t1.nomeCompleto = t1.nomeSimples + ' + ' + t2.nomeSimples;
     }
 
     function timeToNumber(time){
@@ -247,7 +336,7 @@ angular.module('NoKicks', [
         'top': ((horario.inicio - s) * h) + 'px',
         'height': (horario.duracao * h) + 'px',
         'border-top-color': 'rgb(' + (horario.cor) + ')',
-        'background-color': 'rgba(' + (horario.cor) + ', 0.7)',
+        'background-color': 'rgba(' + (horario.cor) + ', 0.8)',
       };
       return style;
 

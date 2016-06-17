@@ -18,7 +18,7 @@
 
   <md-content flex layout-padding ng-controller="ScheduleCtrl">
 
-    <small>Semana 1</small>
+    <p style="text-align: center;padding: 0;margin: 0;"><small>Semana 1</small></p>
 
     <schedule>
       <div class="times">
@@ -42,18 +42,22 @@
       </div>
 
       <div class="days">
-        <day ng-repeat="day in [1, 2, 3, 4, 5, 6]">
-          <div class="header">Segunda</div>
+        <day ng-repeat="(dayN, name) in diasSemana">
+          <div class="header">{{::name}}</div>
           <div class="classes">
-            <class ng-repeat="class in schedule['q1_'+day]" ng-style="class.style">
-              <p>{{class.nome}}</p>
+            <class ng-repeat="class in schedule['q1_'+dayN] track by class.id"
+                   ng-style="class.style">
+               <md-tooltip md-direction="right">
+                 {{::class.nomeCompleto}}
+               </md-tooltip>
+              <p>{{::class.nome}}</p>
             </class>
           </div>
         </day>
       </div>
     </schedule>
 
-    <small>Semana 2</small>
+    <p style="text-align: center;padding: 0;margin: 0;"><small>Semana 2</small></p>
 
     <schedule>
       <div class="times">
@@ -77,11 +81,14 @@
       </div>
 
       <div class="days">
-        <day ng-repeat="day in [1, 2, 3, 4, 5, 6]">
-          <div class="header">Segunda</div>
+        <day ng-repeat="(dayN, name) in diasSemana">
+          <div class="header">{{::name}}</div>
           <div class="classes">
-            <class ng-repeat="class in schedule['q2_'+day]" ng-style="class.style">
-              <p>{{class.nome}}</p>
+            <class ng-repeat="class in schedule['q2_'+dayN] track by class.id" ng-style="::class.style">
+              <md-tooltip md-direction="right">
+                {{::class.nomeCompleto}}
+              </md-tooltip>
+              <p>{{::class.nome}}</p>
             </class>
           </div>
         </day>
