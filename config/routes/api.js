@@ -36,19 +36,26 @@ function config(app, next){
 	}
 
   /*
+   * Matriculas
+   */
+  api.post('/matriculas/ingressar', app.controllers.Matriculas.ingressar);
+  api.get('/matriculas/importar', app.controllers.Matriculas.importar);
+  api.get('/matriculas/erase', app.controllers.Matriculas.erase);
+
+  /*
    * Authentication
    */
   api.get('/auth/login', app.controllers.Auth.login);
   api.post('/auth/login', app.controllers.Auth.login);
-  
+
   api.post('/auth/logout', app.controllers.Auth.logout);
 
 	/*
 	 * REST
 	 */
   api.get('/turmas/importar', app.controllers.Turmas.importar);
+  restify('Matriculas');
 	restify('Turmas');
-
 	restify('Alunos');
 
 
