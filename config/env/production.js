@@ -10,6 +10,9 @@ module.exports = {
 		secret: 'somesecretstring',
 	},
 
+  vagasCacheAge: 10 * 1000,
+  turmasCacheAge: 120 * 1000,
+
 	db: env.MONGODB_URI,
 
 };

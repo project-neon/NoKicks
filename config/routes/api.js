@@ -41,6 +41,13 @@ function config(app, next){
   api.post('/matriculas/ingressar', app.controllers.Matriculas.ingressar);
   api.get('/matriculas/importar', app.controllers.Matriculas.importar);
   api.get('/matriculas/erase', app.controllers.Matriculas.erase);
+  api.get('/matriculas/vagas', app.controllers.Matriculas.vagas);
+
+  /*
+   * Turmas
+   */
+  api.get('/turmas/importar', app.controllers.Turmas.importar);
+  api.get('/turmas/cached', app.controllers.Turmas.cached);
 
   /*
    * Authentication
@@ -53,7 +60,6 @@ function config(app, next){
 	/*
 	 * REST
 	 */
-  api.get('/turmas/importar', app.controllers.Turmas.importar);
   restify('Matriculas');
 	restify('Turmas');
 	restify('Alunos');

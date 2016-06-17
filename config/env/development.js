@@ -10,6 +10,9 @@ module.exports = {
 		secret: 'somesecretstring',
 	},
 
+  vagasCacheAge: 10 * 1000,
+  turmasCacheAge: 20 * 1000,
+
 	db: env.MONGODB_URL || 'mongodb://localhost:27017/test',
 
 };

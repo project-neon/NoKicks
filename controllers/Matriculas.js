@@ -71,6 +71,39 @@ exports._vagasDisponiveis = function (turmasId, next){
 }
 
 //
+// Verifica vagas das turmas especificadas, ou, de todas por padrão
+// (Applies a caching system)
+//
+var _vagasLastCall = 0;
+var _vagasCache;
+exports.vagas = function (req, res){
+  var turmas = null;
+
+  // Make sure that if turmas is set, it's an array
+  if(_.isArray(req.query.turmas))
+    turmas = req.query.turmas;
+  else if(req.query.turmas)
+    turmas = [req.query.turmas];
+
+  // Verify if it can be served with cached
+  let age = Date.now() - _vagasLastCall
+  let cacheIsValid = _vagasCache && age < app.config.vagasCacheAge
+  if(turmas == null && cacheIsValid)
+    return res.send(_vagasCache);
+
+  exports._vagasDisponiveis(turmas, (err, turmas) => {
+    if(err)
+      return res.status(500).send(err);
+
+    // Save cache
+    _vagasLastCall = Date.now()
+    _vagasCache = turmas
+
+    res.send(turmas);
+  });
+}
+
+//
 // Salva turmas na grade
 //
 exports.ingressar = function (req, res){
@@ -118,7 +151,6 @@ exports.ingressar = function (req, res){
   // Verifica se há vagas (Apenas em turmas que estão em modo de 'firstIn');
   function checkVacancy(turmas){
     // TODO: Implement se há vagas
-    console.log('checkVacancy...?');
     exports._vagasDisponiveis(null, function (err, turmas){
       if(err)
         return res.status(500).send(err);
