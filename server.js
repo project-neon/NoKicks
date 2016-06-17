@@ -16,8 +16,8 @@ var app = {
 /**
  * Define Globals
  */
-GLOBAL.app = app;
-GLOBAL._ = require('lodash');
+global.app = app;
+global._ = require('lodash');
 
 /*
  * Bootstrap Process
