@@ -9,13 +9,26 @@ Matriculas.URL = {
 
   // List of all courses
   DISCIPLINAS: '/cache/todasDisciplinas.js',
+
+  // List of all vacancies
+  VAGAS: '/cache/contagemMatriculas.js',
+};
+
+Matriculas.loadVagas = (next) => {
+  let url = Matriculas.URL.BASE + Matriculas.URL.VAGAS;
+  Matriculas.loadJsURLAsJson(url, next);
+};
+
+Matriculas.loadMaterias = (next) => {
+  let url = Matriculas.URL.BASE + Matriculas.URL.DISCIPLINAS;
+  Matriculas.loadJsURLAsJson(url, next);
 };
 
 
-Matriculas.loadMaterias = (next) => {
+Matriculas.loadJsURLAsJson = (URL, next) => {
 
   request.get({
-    url: Matriculas.URL.BASE + Matriculas.URL.DISCIPLINAS,
+    url: URL,
   }, (err, res, body) => {
 
     if(err)
