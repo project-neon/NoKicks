@@ -67,6 +67,7 @@ var module = angular.module('MatriculaHelper', [
 
   service._turmasIndexed = _turmasIndexed;
   service.turmas = [];
+  service.vagasById = {};
   service.filtered = {};
   service.loaded = false;
   service.progress = 0;
@@ -204,7 +205,7 @@ var module = angular.module('MatriculaHelper', [
       })
       .then(function (response) {
         if(response.status >= 400)
-          return next && next('Não pode carregar dados', response.data);
+          return console.error('Não pode carregar dados', response.data);
 
         _data = response.data;
         _length = _data.length;
@@ -236,6 +237,20 @@ var module = angular.module('MatriculaHelper', [
     _batchTimeout = $timeout(function (){
       processLoadedBatch();
     }, 600);
+  }
+
+  service.loadVagas = function (){
+    $http.get('/api/matriculas/vagas', {})
+      .then(function (response){
+        if(response.status >= 400)
+          return console.error('Não pode carregar dados', response.data);
+
+        // Save data locally
+        service.vagasById = response.data;
+
+        // Notify changes
+        service.notify();
+      })
   }
 
 })
