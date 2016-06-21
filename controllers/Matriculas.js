@@ -1,6 +1,7 @@
-var async = require('async');
 var mongoose = require('mongoose');
+var async = require('async');
 
+var Authentication = app.helpers.Authentication;
 var Schedule = app.helpers.Schedule;
 var Security = app.helpers.Security;
 var Request = app.helpers.Request;
@@ -28,7 +29,8 @@ exports._vagasDisponiveis = function (turmasId, next){
   // Encontra turmas
   if(toMatchTurma)
     aggregate.match({
-      _turma: toMatchTurma
+      _turma: toMatchTurma,
+      ignore: false,
     });
 
   aggregate
@@ -38,12 +40,6 @@ exports._vagasDisponiveis = function (turmasId, next){
       _turma: 1,
       _aluno: 1,
     })
-    // Agrupa com cada Aluno
-    // .lookup({
-    //   from: 'Aluno',
-    //   localField: '_aluno',
-    //   foreignField: '_id',
-    // })
     // Agrupa por _turma, e soma vagas
     .group({
       _id: '$_turma',
@@ -103,6 +99,71 @@ exports.vagas = function (req, res){
   });
 }
 
+
+//
+// Verifica ordem em turma
+//
+exports.simular = function (req, res){
+  var turmas = null;
+
+  // Make sure that if turmas is set, it's an array
+  if(_.isArray(req.body.turmas))
+    turmas = req.body.turmas;
+  else if(req.body.turmas)
+    turmas = [req.body.turmas];
+
+  if(!turmas)
+    return res.status(500).send('Parametro não encontrado: `turmas`');
+
+  // Verifica se usuario está logado
+  if(!Authentication.isLogged(req))
+    return res.status(401).send('Faça login primeiro.')
+
+  var user = Authentication.loggedUser(req);
+
+  async.mapLimit(turmas, 8, simulateTurma, (err, turmas) => {
+    if(err)
+      return res.status(500).send(err);
+
+    res.send(turmas);
+  })
+
+  function simulateTurma(turma, next){
+    // Inject matricula
+    var matricula = {
+      _aluno: user._id,
+      _turma: turma,
+      _id: 'SIMULATION',
+    }
+
+    // Encontra posição em turma
+    app.helpers.Cursos.classifyCourse(turma, (err, order, turma) => {
+      if(err)
+        return next(err)
+
+      // Verify position
+      let position = _.findIndex(order, {_aluno: matricula._aluno}) + 1;
+
+      next(null, {
+        _turma: turma._id,
+        vagas: turma.vagas,
+        ordem: position,
+        inscritos: order.length,
+      });
+    }, matricula, user._id);
+  }
+
+  // {
+  //   _turma: turmaId,
+  //   _aluno: user.id,
+  //
+  //   // Just to simulate...
+  //   ignore: true
+  // }, afterCreate);
+
+}
+
+
 //
 // Salva turmas na grade
 //
@@ -110,11 +171,15 @@ exports.ingressar = function (req, res){
   var turmas = null;
   var turmasId = req.body.turmas;
 
+  // Verifica se usuario está logado
+  if(!Authentication.isLogged(req))
+    return res.status(401).send('Faça login primeiro.')
+
+  var user = Authentication.loggedUser(req);
+
   // Verifica se parametro `turmas` foi passado
   if( !('turmas' in req.body) || !_.isArray(turmasId))
     return res.status(500).send('Parâmetro faltando ou incorreto: turmas')
-
-  console.log('Ingressar em :', turmasId)
 
   // Encontra turmas no banco de dados
   Models.Turma.find({
@@ -155,10 +220,67 @@ exports.ingressar = function (req, res){
       if(err)
         return res.status(500).send(err);
 
-      res.send(turmas);
+      emptyMatriculas()
+    })
+  }
+
+  // Remove matrículas antigas
+  function emptyMatriculas(){
+    Models.Matricula.remove({
+      _aluno: user._id
+    }, function (err, models){
+      if(err)
+        return res.status(500).send(err);
+
+      commitToDatabase();
+    })
+  }
+
+  // Cria novas matrículas
+  function commitToDatabase(){
+    var newMatriculas = turmas.map( turma => {
+      return {
+        _turma: turma._id,
+        _aluno: user._id,
+      }
+    })
+
+    // Salva
+    Models.Matricula.create(newMatriculas, function (err, models) {
+      if(err)
+        return res.status(500).send(err);
+
+      if(!models)
+        return res.send([]);
+        
+      res.send(models.map(model => model.toObject({minimize:false, virtuals: true})));
     })
   }
 };
+
+
+//
+// Encontra turmas ingressadas no BD
+//
+exports.registros = function (req, res) {
+  // Verifica se usuario está logado
+  if(!Authentication.isLogged(req))
+    return res.status(401).send('Faça login primeiro.')
+
+  var user = Authentication.loggedUser(req);
+
+  // Encontra Matriculas no BD
+  Models.Matricula.find({
+    _aluno: user._id
+  }, function (err, models){
+    if(err)
+      return res.status(500).send(err);
+
+    res.send(models.map( m => m.toObject({minimize:false, virtuals: true}) ))
+  })
+
+}
+
 
 //
 // Import data from UFABC
@@ -208,15 +330,18 @@ exports.importar = function (req, res){
         }
       }
 
-      // Import all models to DB
-      app.models.Matricula.create(newModels, err => {
-        if(err)
-          return res.status(500).send(err);
-
-        res.send(`Imported ${newModels.length} matriculas.`);
-      })
-
+      importToDb(newModels);
     });
+  }
+
+  // Import all models to DB
+  function importToDb(models){
+    app.models.Matricula.create(newModels, err => {
+      if(err)
+        return res.status(500).send(err);
+
+      res.send(`Imported ${newModels.length} matriculas.`);
+    })
   }
 };
 
