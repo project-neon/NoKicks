@@ -8,4 +8,7 @@
   <div class="q1">{{::turma.schedule[day].q1}}</div>
   <div class="q2">{{::turma.schedule[day].q2}}</div>
 </div>
-<div class="vagasAula">{{vagas[turma._id]}} / {{::turma.vagas}}</div>
+<div class="vagasAula">
+  <small ng-show="rankings[turma._id]">{{ rankings[turma._id].ordem}}º de </small>
+  {{rankings[turma._id].inscritos || vagas[turma._id] || 0}} / {{::turma.vagas}}
+</div>

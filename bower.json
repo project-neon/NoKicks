@@ -25,7 +25,33 @@
   },
   "install": {
     "path": "public/components",
-    "sources": {}
+    "sources": {
+      "mdi": {
+        "mapping": [
+          {
+            "public/_components/mdi/fonts/materialdesignicons-webfont.eot": "../fonts/materialdesignicons-webfont.eot"
+          },
+          {
+            "public/_components/mdi/fonts/materialdesignicons-webfont.svg": "../fonts/materialdesignicons-webfont.svg"
+          },
+          {
+            "public/_components/mdi/fonts/materialdesignicons-webfont.ttf": "../fonts/materialdesignicons-webfont.ttf"
+          },
+          {
+            "public/_components/mdi/fonts/materialdesignicons-webfont.woff": "../fonts/materialdesignicons-webfont.woff"
+          },
+          {
+            "public/_components/mdi/fonts/materialdesignicons-webfont.woff2": "../fonts/materialdesignicons-webfont.woff2"
+          },
+          {
+            "public/_components/mdi/css/materialdesignicons.css": "css/materialdesignicons.css"
+          },
+          {
+            "public/_components/mdi/css/materialdesignicons.min.css": "css/materialdesignicons.min.css"
+          }
+        ]
+      }
+    }
   },
   "resolutions": {
     "angular-animate": "1.5.6",

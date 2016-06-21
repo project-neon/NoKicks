@@ -100,7 +100,9 @@ angular.module('NoKicks', [
 
 })
 
-.controller('DashboardCtrl', function ($scope, $state, $timeout, AuthService, Turmas) {
+.controller('DashboardCtrl', function ($scope, $state, $timeout, AuthService,
+  Turmas, RankingLooker, Schedule, $mdDialog) {
+
   // Check if user is Logged In
   if(!AuthService.isLoggedIn()){
     console.log('Not Logged in...');
@@ -110,6 +112,36 @@ angular.module('NoKicks', [
   $scope.logout = function () {
     console.log('Loggin out...');
     AuthService.logout();
+  }
+
+  $scope.salvar = function (){
+    // TODO: Verificar corretamente se pode salvar (evitar erros no servidor)
+
+    Schedule.save(function (){
+
+       $mdDialog.show({
+         templateUrl: 'views/modal-thankyou.html',
+         parent: angular.element(document.body),
+         clickOutsideToClose:true,
+         controller: function DialogController($scope, $mdDialog) {
+           $scope.cancel = function() {$mdDialog.cancel();};
+         }
+       });
+
+      // $mdDialog.show(
+      //   $mdDialog.alert()
+      //     .parent(angular.element(document.querySelector('#popupContainer')))
+      //     .clickOutsideToClose(true)
+      //     .title('That`s it.')
+      //     .textContent(
+      //       'Este foi um demo, que surgiu de uma vontade própria de '
+      //       + 'alguns nerds de mostrar um sistema de matrículas coerente com '
+      //       + 'uma universidade do Séc XXI. Se gostou ou não, queremos saber!\n\n'
+      //       + 'Acesse este link para dar um feedback maroto ;)')
+      //     .ariaLabel('That`s it')
+      //     .ok('Got it!')
+      // );
+    });
   }
 
   // Give access to Turmas Api
@@ -124,9 +156,24 @@ angular.module('NoKicks', [
     $scope.loaded = Turmas.loaded;
   })
 
+  $scope.rankings = null;
+  RankingLooker.subscribe($scope, function (){
+    $scope.rankings = RankingLooker.rankings;
+  })
+
   $timeout(function () {
+    Schedule.load();
     Turmas.loadInBatch(50);
     Turmas.loadVagas();
+
+    $mdDialog.show({
+      templateUrl: 'views/modal-tutorial.html',
+      parent: angular.element(document.body),
+      clickOutsideToClose:true,
+      controller: function DialogController($scope, $mdDialog) {
+        $scope.cancel = function() {$mdDialog.cancel();};
+      }
+    });
   }, 2000)
 
   // Save current user
@@ -164,7 +211,7 @@ angular.module('NoKicks', [
   }
 })
 
-.controller('ScheduleCtrl', function ($scope, Schedule) {
+.controller('ScheduleCtrl', function ($scope, Schedule, Turmas) {
 
   var colors = [
     '33, 150, 243', // Blue
@@ -348,6 +395,11 @@ angular.module('NoKicks', [
 
   // Atualiza Schedule
   Schedule.subscribe($scope, function (){
+    updateSchedule(Schedule.getTurmas());
+  });
+
+  // Atualiza Schedule
+  Turmas.subscribe($scope, function (){
     updateSchedule(Schedule.getTurmas());
   });
 })

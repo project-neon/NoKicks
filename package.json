@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "NoKicks is the UTOPIC system for class registration management at UFABC",
   "README": "none",
+  "repository": "https://github.com/UFABC-NoBox/NoKicks",
   "engines": {
     "node": "6.2"
   },
@@ -15,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "async": "1.2.1",
+    "async": "2.0.0-rc.6",
     "body-parser": "1.13.1",
     "cheerio": "^0.20.0",
     "compression": "1.5.0",

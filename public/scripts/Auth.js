@@ -8,7 +8,7 @@ var module = angular.module('common.Auth', [
   service._user = null;
 
   service.setUser = function (user){
-    console.log('Log user', user.nome);
+    // console.log('Log user', user.nome);
     service._user = user;
     return service.getUser();
   }
