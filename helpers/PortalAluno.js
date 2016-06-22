@@ -169,6 +169,11 @@ portal.gatterStudentCoeficientes = (user, id, next) => {
 //
 const CAPTCHA_BASE_URL = 'http://www.google.com/recaptcha/api/'
 const CAPTCHA_TOKEN = 'noscript?k=6LcwNCMTAAAAAMOrD6L-BgI4MWNRL6ObAqqAKv7R';
+const CAPTCHA_HEADERS = {
+  'Origin': 'http://www.google.com',
+  'Referer': 'http://www.google.com/recaptcha/api/noscript?k=6LcwNCMTAAAAAMOrD6L-BgI4MWNRL6ObAqqAKv7R',
+  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.41 Safari/537.36',
+}
 portal.getCaptchaImageURL = function (next) {
 
   const REGEX_TOKEN = /(id="recaptcha_challenge_field".value=")(.*)(")/g;
@@ -178,12 +183,15 @@ portal.getCaptchaImageURL = function (next) {
     if(err)
       return next(err);
 
-    var imageToken = REGEX_TOKEN.exec(res.body)[2]
-    var imageURL = REGEX_IMG.exec(res.body)[2]
+    var imageToken = REGEX_TOKEN.exec(res.body)
+    var imageURL = REGEX_IMG.exec(res.body)
+
+    if(!imageURL || !imageToken)
+      return next('Captcha inválido.');
 
     return next && next(null, {
-      token: imageToken,
-      url: CAPTCHA_BASE_URL + imageURL
+      token: imageToken[2],
+      url: CAPTCHA_BASE_URL + imageURL[2]
     })
   })
 }
@@ -199,6 +207,7 @@ portal.getCaptchaAuthenticity = function (token, answer, next) {
   console.log();
   request.post({
     url: CAPTCHA_BASE_URL + CAPTCHA_TOKEN,
+    headers: CAPTCHA_HEADERS,
     form: {
       recaptcha_challenge_field: token,
       recaptcha_response_field: answer,
