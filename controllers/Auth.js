@@ -23,6 +23,8 @@ exports.login = function (req, res) {
     app.helpers.PortalAluno.getCaptchaAuthenticity(
       req.session.captcha.token,
       captchaValue, (err, token) => {
+        if(err)
+          return res.status(500).send(err);
 
     // Authenticate
     Authentication.authenticate({
