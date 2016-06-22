@@ -73,7 +73,7 @@ exports.captcha = function (req, res) {
       return res.status(500).send('Não pode carregar captcha!')
 
     req.session.captcha = captcha;
-
+    return res.redirect(captcha.url);
     request.get(captcha.url, { encoding: null }, function(err, resp, body) {
       if(err){
         console.log(err)

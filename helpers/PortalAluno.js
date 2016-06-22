@@ -170,8 +170,8 @@ portal.gatterStudentCoeficientes = (user, id, next) => {
 const CAPTCHA_BASE_URL = 'http://www.google.com/recaptcha/api/'
 const CAPTCHA_TOKEN = 'noscript?k=6LcwNCMTAAAAAMOrD6L-BgI4MWNRL6ObAqqAKv7R';
 const CAPTCHA_HEADERS = {
-  'Origin': 'http://www.google.com',
-  'Referer': 'http://www.google.com/recaptcha/api/noscript?k=6LcwNCMTAAAAAMOrD6L-BgI4MWNRL6ObAqqAKv7R',
+  'Origin': 'https://aluno.ufabc.edu.br',
+  'Referer': 'https://aluno.ufabc.edu.br/login',
   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.41 Safari/537.36',
 }
 portal.getCaptchaImageURL = function (next) {
