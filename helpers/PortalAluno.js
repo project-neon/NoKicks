@@ -211,7 +211,7 @@ portal.getCaptchaAuthenticity = function (token, answer, next) {
     var authenticity = REGEX_AUTHENTICITY.exec(res.body);
 
     if(!authenticity)
-      return res.send('Captcha inválido?')
+      return next && next('Captcha inválido?')
 
     return next && next(null, authenticity[2]);
   })
