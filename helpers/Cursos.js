@@ -4,7 +4,7 @@ var async = require('async');
 //
 // Busca matriculas no banco e classifica de acordo com método específico
 //
-exports.classifyCourse = function (turmaId, next, simulate = null, alunoId = null){
+exports.classifyCourse = function (turmaId, next, simulate = null, alunoId = null) {
 
   let Matricula = app.models.Matricula;
   let Turma = app.models.Turma;
@@ -13,14 +13,14 @@ exports.classifyCourse = function (turmaId, next, simulate = null, alunoId = nul
   async.autoInject({
     preMatriculas: (next) => {
       Matricula.find({
-        _turma: turmaId,
-      }, next)
+        _turma: turmaId
+      }, next);
     },
 
     matriculas: (preMatriculas, next) => {
       // Injects extra matriculas if needed (`simulate` is set AND there is
       // not matricula with the specified student ID)
-      if(simulate && _.findIndex(preMatriculas, {'_aluno': alunoId}) < 0){
+      if (simulate && _.findIndex(preMatriculas, { '_aluno': alunoId }) < 0) {
         preMatriculas.push(simulate);
       }
 
@@ -29,18 +29,18 @@ exports.classifyCourse = function (turmaId, next, simulate = null, alunoId = nul
 
     alunos: (matriculas, next) => {
       Aluno.find({
-        _id: {$in: _.map(matriculas, '_aluno')}
-      }, next)
+        _id: { $in: _.map(matriculas, '_aluno') }
+      }, next);
     },
 
     jointMatriculas: (matriculas, alunos, next) => {
       // Index alunos by Id
       let _alunosById = {};
-      for(let k in alunos)
+      for (let k in alunos)
         _alunosById[alunos[k]._id] = alunos[k];
 
       // Join to matriculas
-      for(let k in matriculas){
+      for (let k in matriculas) {
         let matricula = matriculas[k];
         matricula.aluno = _alunosById[matricula._aluno];
       }
@@ -51,12 +51,12 @@ exports.classifyCourse = function (turmaId, next, simulate = null, alunoId = nul
     turma: (next) => {
       Turma.findOne({
         _id: turmaId
-      }, next)
+      }, next);
     },
 
     classifyMethod: (turma, next) => {
       // Get a classification object
-      exports.getClassificationMethod(turma, next)
+      exports.getClassificationMethod(turma, next);
     },
 
     classify: (classifyMethod, jointMatriculas, next) => {
@@ -71,12 +71,12 @@ exports.classifyCourse = function (turmaId, next, simulate = null, alunoId = nul
 
   }, (err, results) => {
     // Verifica se turma foi encontrada
-    if(err)
+    if (err)
       return next(err);
 
     next(null, results.classify, results.turma);
   });
-}
+};
 
 
 //
@@ -91,8 +91,8 @@ exports.classifyCourse = function (turmaId, next, simulate = null, alunoId = nul
 //  sort: [Array]
 // }
 //
-exports.getClassificationMethod = function (turma, next){
+exports.getClassificationMethod = function (turma, next) {
 
   // (TODO: Implementar todas as 21309130123 de lógicas loucas da UFABC)
   return next(null, new (app.helpers.Classifiers.Turno_CR)(turma));
-}
+};

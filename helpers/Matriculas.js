@@ -11,7 +11,7 @@ Matriculas.URL = {
   DISCIPLINAS: '/cache/todasDisciplinas.js',
 
   // List of all vacancies
-  VAGAS: '/cache/contagemMatriculas.js',
+  VAGAS: '/cache/contagemMatriculas.js'
 };
 
 Matriculas.loadVagas = (next) => {
@@ -28,13 +28,13 @@ Matriculas.loadMaterias = (next) => {
 Matriculas.loadJsURLAsJson = (URL, next) => {
 
   request.get({
-    url: URL,
+    url: URL
   }, (err, res, body) => {
 
-    if(err)
+    if (err)
       return next(err);
 
-    if(res.statusCode != 200)
+    if (res.statusCode != 200)
       return next('Failed to load: ' + res.statusCode);
 
     // Find '=' sign and ';' at the end
@@ -42,15 +42,15 @@ Matriculas.loadJsURLAsJson = (URL, next) => {
     var endIndex = body.lastIndexOf(';');
 
     // Verifies token
-    if(startIndex < 0 || endIndex < 0)
+    if (startIndex < 0 || endIndex < 0)
       return next('Could not find start/end token');
 
     // Find rest of text
     var json = body.slice(startIndex + 1, endIndex);
 
-    try{
+    try {
       json = JSON.parse(json);
-    }catch(e){
+    } catch (e) {
       return next(e);
     }
 

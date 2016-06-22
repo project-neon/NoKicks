@@ -18,10 +18,10 @@ exports.authenticate = function (user, next) {
   let authenticate = (next) => {
     // Tenta logar no portal do aluno
     PortalAluno.authenticate(user, (err, session) => {
-      if(err)
+      if (err)
         return next(err);
 
-      if(!session)
+      if (!session)
         return next('Usuário ou senha inválidos');
 
       portalSession = session;
@@ -32,24 +32,24 @@ exports.authenticate = function (user, next) {
   let findUser = (next) => {
     Aluno.findOne({
       // Não usamos o pass, pois validamos com o Portal do Aluno
-      username: user.user,
+      username: user.user
     }, (err, user) => {
-      if(err)
+      if (err)
         return next(err);
 
       // Salva resultado, mas pode estar null
       dbUser = user;
       next();
-    })
+    });
   };
 
   let gatterStudentInfo = (next) => {
     // Pula este passo se a versão do usuário for igual a versão deste processo
-    if(dbUser && dbUser.version == THIS_VERSION)
+    if (dbUser && dbUser.version == THIS_VERSION)
       return next();
 
     PortalAluno.gatterStudentInfo(portalSession, (err, user) => {
-      if(err)
+      if (err)
         return next(err);
 
       // Save user
@@ -60,7 +60,7 @@ exports.authenticate = function (user, next) {
 
   let createOrUpdateIfNeeded = (next) => {
     // Pula este passo se a versão do usuário for igual a versão deste processo
-    if(dbUser && dbUser.version == THIS_VERSION)
+    if (dbUser && dbUser.version == THIS_VERSION)
       return next();
 
     // Seleciona a primeira ficha (TODO: Verificar a atual...)
@@ -93,51 +93,51 @@ exports.authenticate = function (user, next) {
     authenticate,
     findUser,
     gatterStudentInfo,
-    createOrUpdateIfNeeded,
+    createOrUpdateIfNeeded
   ], (err) => {
-    if(err)
+    if (err)
       return next(err);
 
     next(null, dbUser);
   });
-}
+};
 
 //
 // Salva o usuário na sessão
 //
 exports.login = function (req, user) {
   req.session.user = user;
-}
+};
 
 //
 // Desloga o usuário
 //
 exports.logout = function (req) {
   req.session.user = undefined;
-}
+};
 
 //
 // Verifica se o usuário está logado
 //
 exports.isLogged = function (req) {
   return !!(req.session.user);
-}
+};
 
 //
 // Retorna usuário logado
 //
-exports.loggedUser = function (req){
+exports.loggedUser = function (req) {
   return req.session.user;
-}
+};
 
 //
 // Evita que o usuário acesse esta rota
 // (apenas usuários logados)
 //
 exports.secureIsLogged = function (req, res, next) {
-  if(exports.isLogged(req)){
+  if (exports.isLogged(req)) {
     return next();
   }
 
   res.status(401).send('Você precisa logar para acessar esta rota.');
-}
+};

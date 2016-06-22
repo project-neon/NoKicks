@@ -14,7 +14,7 @@ var PluginTimestamp = require('mongoose-timestamp');
 var Model = new Schema({
   version: Number,
 
-	nome: String,
+  nome: String,
   username: String,
 
   curso: String,
@@ -22,7 +22,7 @@ var Model = new Schema({
   turno: String,
   campus: String,
   ingresso: String,
-  coeficientes: Object,
+  coeficientes: Object
 });
 
 /**

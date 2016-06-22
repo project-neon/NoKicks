@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var request = require('request');
 var cheerio = require('cheerio');
@@ -21,7 +21,7 @@ portal.URL = {
   FICHAS: '/fichas_individuais',
 
   // Visão de ficha especifica
-  FICHA: '/ficha_individual',
+  FICHA: '/ficha_individual'
 };
 
 //
@@ -42,31 +42,31 @@ portal.authenticate = function (options, next) {
       authenticity_token: 'bbbBRpShhGdnBzCQ6GJmeTxe6S/6XEJD1ECTQ1RxqTs=',
       recaptcha_response_field: options.captchaValue,
       recaptcha_challenge_field: options.captchaChallenge,
-      commit: 'Entrar',
-    },
+      commit: 'Entrar'
+    }
 
-  }, function (err, res, body){
+  }, function (err, res, body) {
 
-    if(err)
+    if (err)
       return next(err);
 
     // Checks if it redirected to login
-    if(res.request.path == portal.URL.LOGIN){
+    if (res.request.path == portal.URL.LOGIN) {
       return next('Usuário ou senha incorretos');
     }
 
-    if(res.body.indexOf('but something went wrong (500)') >= 0){
-      console.log(res.body)
+    if (res.body.indexOf('but something went wrong (500)') >= 0) {
+      console.log(res.body);
       return next('Captcha inválido');
     }
 
     return next(null, {
       _jar: jar,
-      user: options.user,
+      user: options.user
     });
 
   });
-}
+};
 
 
 //
@@ -75,10 +75,10 @@ portal.authenticate = function (options, next) {
 // Requires an objetct (student) with:
 // _jar: jar to be used as cookies in requests
 //
-portal.gatterStudentInfo = function (student, next){
+portal.gatterStudentInfo = function (student, next) {
 
 
-  if(!student._jar)
+  if (!student._jar)
     return next('Invalid student. Must provide a session object [_jar]');
 
   let loadFichas = (next) => {
@@ -87,29 +87,29 @@ portal.gatterStudentInfo = function (student, next){
       url: portal.URL.BASE + portal.URL.FICHAS,
       jar: student._jar
     }, (err, res, body) => {
-      if(err)
+      if (err)
         return next(err);
 
-      if(res.statusCode != 200)
+      if (res.statusCode != 200)
         return next('Page could not be loaded: ' + res.request.path);
 
       // Request is ok. Let's parse the data
       var fichas = portal.parse.fichas(res.body);
 
       // Verify if parse succeeded
-      if(fichas === null)
+      if (fichas === null)
         return next('Could not parse fichas');
 
       // Save to student
       student.fichas = fichas;
       next();
-    })
+    });
   };
 
   let loadCoeficientes = (next) => {
     // Find out witch ficha to use
     var id = null;
-    for(var k in student.fichas){
+    for (var k in student.fichas) {
       id = k;
       break;
     }
@@ -121,14 +121,14 @@ portal.gatterStudentInfo = function (student, next){
   async.series([
     // loginStudent,
     loadFichas,
-    loadCoeficientes,
+    loadCoeficientes
   ], (err) => {
-    if(err)
+    if (err)
       return next(err);
 
     return next(null, student);
   });
-}
+};
 
 
 
@@ -137,23 +137,23 @@ portal.gatterStudentInfo = function (student, next){
 // (CR, CA and CP)
 //
 portal.gatterStudentCoeficientes = (user, id, next) => {
-  if(!user._jar)
+  if (!user._jar)
     return next('User is not set or not logged in');
 
   request.get({
     url: portal.URL.BASE + portal.URL.FICHA + '/' + id + '/ficha',
-    jar: user._jar,
+    jar: user._jar
   }, (err, res, body) => {
 
-    if(err)
+    if (err)
       return next(err);
 
-    if(res.statusCode != 200)
-      return next('Failed. Code: '+res.statusCode);
+    if (res.statusCode != 200)
+      return next('Failed. Code: ' + res.statusCode);
 
     var parsed = portal.parse.ficha(body);
 
-    if(!parsed)
+    if (!parsed)
       return next('Failed to load coeficientes');
 
     user.coeficientes = parsed.coeficientes;
@@ -167,37 +167,37 @@ portal.gatterStudentCoeficientes = (user, id, next) => {
 //
 // Gets a captcha Image
 //
-const CAPTCHA_BASE_URL = 'http://www.google.com/recaptcha/api/'
+const CAPTCHA_BASE_URL = 'http://www.google.com/recaptcha/api/';
 const CAPTCHA_TOKEN = 'noscript?k=6LcwNCMTAAAAAMOrD6L-BgI4MWNRL6ObAqqAKv7R';
 const CAPTCHA_HEADERS = {
   'Origin': 'https://aluno.ufabc.edu.br',
   'Referer': 'https://aluno.ufabc.edu.br/login',
-  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.41 Safari/537.36',
-}
+  'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.41 Safari/537.36'
+};
 portal.getCaptchaImageURL = function (next) {
 
   const REGEX_TOKEN = /(id="recaptcha_challenge_field".value=")(.*)(")/g;
   const REGEX_IMG = /(src=")(image\?.*)(")/g;
 
   request.get({
-      url: CAPTCHA_BASE_URL + CAPTCHA_TOKEN,
-      headers: CAPTCHA_HEADERS,
-    }, (err, res) => {
-    if(err)
+    url: CAPTCHA_BASE_URL + CAPTCHA_TOKEN,
+    headers: CAPTCHA_HEADERS
+  }, (err, res) => {
+    if (err)
       return next(err);
 
-    var imageToken = REGEX_TOKEN.exec(res.body)
-    var imageURL = REGEX_IMG.exec(res.body)
+    var imageToken = REGEX_TOKEN.exec(res.body);
+    var imageURL = REGEX_IMG.exec(res.body);
 
-    if(!imageURL || !imageToken)
+    if (!imageURL || !imageToken)
       return next('Captcha inválido.');
 
     return next && next(null, {
       token: imageToken[2],
       url: CAPTCHA_BASE_URL + imageURL[2]
-    })
-  })
-}
+    });
+  });
+};
 
 
 //
@@ -214,20 +214,20 @@ portal.getCaptchaAuthenticity = function (token, answer, next) {
     form: {
       recaptcha_challenge_field: token,
       recaptcha_response_field: answer,
-      submit: 'I&#39;m a human',
+      submit: 'I&#39;m a human'
     }
   }, (err, res) => {
-    if(err)
+    if (err)
       return next('Could not resolve captcha');
 
     var authenticity = REGEX_AUTHENTICITY.exec(res.body);
 
-    if(!authenticity)
-      return next && next('Captcha inválido?')
+    if (!authenticity)
+      return next && next('Captcha inválido?');
 
     return next && next(null, authenticity[2]);
-  })
-}
+  });
+};
 
 
 //
@@ -262,7 +262,7 @@ portal.parse.text = (t) => {
 //
 portal.parse.fichas = (res) => {
 
-  if(!res)
+  if (!res)
     return null;
 
   var fichas = {};
@@ -275,14 +275,14 @@ portal.parse.fichas = (res) => {
   let $fichas = table.find('tr');
 
   // Go through each course
-  $fichas.each( (i, ficha) => {
+  $fichas.each((i, ficha) => {
     var $datas = $(ficha).find('td');
 
-    if($datas.length <= 0)
+    if ($datas.length <= 0)
       return;
 
     // Parse ID from link
-    var $links = $($datas.get(1))
+    var $links = $($datas.get(1));
     var $link = $($links.find('a').get(0));
     var link = $link.attr('href') || '';
     var id = link.replace('/ficha_individual/', '').split('/')[0];
@@ -291,18 +291,18 @@ portal.parse.fichas = (res) => {
     var curso = $($datas.get(0)).text().replace('Novo', '');
 
     // Validate
-    if(!id)
+    if (!id)
       return;
 
     var ficha = {
       id: id,
       link: link,
-      curso: portal.parse.text( curso ),
-      grade: portal.parse.text( $($datas.get(2)).text() ),
-      turno: portal.parse.text( $($datas.get(3)).text() ),
-      campus: portal.parse.text( $($datas.get(4)).text() ),
-      ingresso: portal.parse.text( $($datas.get(5)).text() ),
-      situacao: portal.parse.text( $($datas.get(6)).text() ),
+      curso: portal.parse.text(curso),
+      grade: portal.parse.text($($datas.get(2)).text()),
+      turno: portal.parse.text($($datas.get(3)).text()),
+      campus: portal.parse.text($($datas.get(4)).text()),
+      ingresso: portal.parse.text($($datas.get(5)).text()),
+      situacao: portal.parse.text($($datas.get(6)).text())
     };
 
     fichas[id] = ficha;
@@ -316,7 +316,7 @@ portal.parse.fichas = (res) => {
 // Parse coeficientes from a course page (pagina da ficha)
 //
 portal.parse.ficha = (body) => {
-  if(!body)
+  if (!body)
     return null;
 
   let $ = cheerio.load(body);
@@ -324,15 +324,15 @@ portal.parse.ficha = (body) => {
   let $coeficientes = $('.coeficientes tr td');
 
   let elementValue = (el) => {
-    return parseFloat( $(el).text().replace(',', '.') );
+    return parseFloat($(el).text().replace(',', '.'));
   };
 
   let nome = null;
   let $lines = $('#page p');
-  $lines.each( (i, el) => {
+  $lines.each((i, el) => {
 
     var txt = $(el).text();
-    if(txt.indexOf('Nome: ') < 0)
+    if (txt.indexOf('Nome: ') < 0)
       return;
 
     nome = txt.replace('Nome: ', '').trim();
@@ -342,9 +342,9 @@ portal.parse.ficha = (body) => {
     coeficientes: {
       cp: elementValue($coeficientes.get(0)),
       cr: elementValue($coeficientes.get(1)),
-      ca: elementValue($coeficientes.get(2)),
+      ca: elementValue($coeficientes.get(2))
     },
 
-    nome: nome,
+    nome: nome
   };
-}
+};

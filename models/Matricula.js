@@ -27,20 +27,20 @@ var Model = new Schema({
   // A qualquer momento, objetos com esta flag em 'true' serão apagados.
   ignore: {
     type: Boolean,
-    default: false,
+    default: false
   },
 
   _aluno: {
     type: ObjectId,
     ref: 'Aluno',
-    required: true,
+    required: true
   },
 
   _turma: {
     type: ObjectId,
     ref: 'Turma',
-    required: true,
-  },
+    required: true
+  }
 });
 
 /**

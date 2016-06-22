@@ -28,7 +28,7 @@ var Model = new Schema({
   creditos: Number,
   horarios: Array,
   campusNome: String,
-  obrigatoriedade: Object,
+  obrigatoriedade: Object
 
 });
 
@@ -44,7 +44,7 @@ Model.plugin(PluginTimestamp);
  * - validations
  * - virtuals
  */
-Model.virtual('schedule').get(function (){
+Model.virtual('schedule').get(function () {
 
   // Agrupa horários pelos dias
   var horariosDias = _.groupBy(this.horarios, 'dia');
@@ -52,15 +52,15 @@ Model.virtual('schedule').get(function (){
   // Mapeia cada dia, e encontra inicio/fim por quinzena
   var horarios = _.mapValues(horariosDias, (values) => {
     // Seleciona Q1 e Q2
-    var q1 = _.filter(values, {semanaI: true});
-    var q2 = _.filter(values, {semanaII: true});
+    var q1 = _.filter(values, { semanaI: true });
+    var q2 = _.filter(values, { semanaII: true });
 
     // Para cada horário do dia, verifica minimo e máximo
-    var q1s = sanitizeTime(_.minBy(q1, t => { return t.inicio }), 'inicio');
-    var q1e = sanitizeTime(_.maxBy(q1, t => { return t.final }), 'final');
+    var q1s = sanitizeTime(_.minBy(q1, t => { return t.inicio; }), 'inicio');
+    var q1e = sanitizeTime(_.maxBy(q1, t => { return t.final; }), 'final');
 
-    var q2s = sanitizeTime(_.minBy(q2, t => { return t.inicio }), 'inicio');
-    var q2e = sanitizeTime(_.maxBy(q2, t => { return t.final }), 'final');
+    var q2s = sanitizeTime(_.minBy(q2, t => { return t.inicio; }), 'inicio');
+    var q2e = sanitizeTime(_.maxBy(q2, t => { return t.final; }), 'final');
 
     return {
       // Set flag indicating if both weeks are the same
@@ -68,18 +68,18 @@ Model.virtual('schedule').get(function (){
 
       // Process text
       q1: q1s ? q1s + ' - ' + q1e : null,
-      q2: q2s ? q2s + ' - ' + q2e : null,
-    }
+      q2: q2s ? q2s + ' - ' + q2e : null
+    };
   });
 
-  function sanitizeTime(time, key){
-    if(!time)
+  function sanitizeTime(time, key) {
+    if (!time)
       return null;
 
     return time[key].replace(':', 'h').replace('00', '');
   }
 
-  function timeToNumber(time){
+  function timeToNumber(time) {
     return time;
     // var times = time.split(':');
     // return times[0]*1 + times[1] / 100*1;
@@ -103,7 +103,7 @@ Model.method({
 Model.static({
   fromJSON: function (json) {
 
-    if(!json)
+    if (!json)
       return new Model();
 
     // Filtra alguns campos
@@ -111,7 +111,7 @@ Model.static({
 
     // Find out turno
     let turno;
-    if(json.nome.indexOf('Noturno') >= 0)
+    if (json.nome.indexOf('Noturno') >= 0)
       turno = 'cNOT';
     else
       turno = 'aMAT';
@@ -126,13 +126,13 @@ Model.static({
 
     // Encontra Campus
     let campus;
-    if(json.nome.indexOf('Santo Andr') > 0)
+    if (json.nome.indexOf('Santo Andr') > 0)
       campus = 'SA';
     else
       campus = 'SB';
 
     // Process horarios
-    var horarios = json.horarios.map( (horario) => {
+    var horarios = json.horarios.map((horario) => {
       let horas = horario.horas;
       let periodo = horario.periodicidade_extenso;
 
@@ -145,7 +145,7 @@ Model.static({
 
       // Change turno if is between 13h-18h
       var startSample = parseInt(horas[0].split(':'));
-      if(startSample > 13 && startSample < 18)
+      if (startSample > 13 && startSample < 18)
         turno = 'bVES';
 
       return {
@@ -154,20 +154,20 @@ Model.static({
         dia: horario.semana,
         semanal: semanal,
         semanaI: semanaI,
-        semanaII: semanaII,
-      }
+        semanaII: semanaII
+      };
     });
 
     // Process obrigatoriedades and index by course Id
     var obrigatoriedades = {};
 
-    json.obrigatoriedades.forEach( (obj) => {
+    json.obrigatoriedades.forEach((obj) => {
       var type = obj.obrigatoriedade;
 
       type = type == 'obrigatoria' ? 'obrigatoria' : 'limitada';
 
       obrigatoriedades[obj.curso_id] = type;
-    })
+    });
 
     let data = {
       ufabc_id: json.id,
@@ -184,8 +184,8 @@ Model.static({
       campus: campus,
       creditos: json.creditos,
       horarios: horarios,
-      obrigatoriedade: obrigatoriedades,
-    }
+      obrigatoriedade: obrigatoriedades
+    };
 
     return data;
   }

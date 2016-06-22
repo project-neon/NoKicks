@@ -17,13 +17,13 @@ exports.Turno_CR = function (turma) {
       turno: (this.turno == matricula.aluno.turno) ? -1 : 0,
 
       // CR: próprio cr do aluno
-      cr: -matricula.aluno.coeficientes.cr,
-    }
+      cr: -matricula.aluno.coeficientes.cr
+    };
   },
 
-  this.sort = ['turno', 'cr']
+    this.sort = ['turno', 'cr'];
 
   this.canEnter = () => {
     return true;
-  }
-}
+  };
+};

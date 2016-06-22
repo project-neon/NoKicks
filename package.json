@@ -39,5 +39,11 @@
     "bower": "latest",
     "bower-installer": "latest"
   },
-  "cacheDirectories": ["node_modules", "public/_components" ]
+  "cacheDirectories": [
+    "node_modules",
+    "public/_components"
+  ],
+  "devDependencies": {
+    "eslint": "^2.13.1"
+  }
 }

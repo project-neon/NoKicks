@@ -12,9 +12,9 @@ var PluginTimestamp = require('mongoose-timestamp');
  */
 
 var Model = new Schema({
-	name: String,
-	race: String,
-	owner: String,
+  name: String,
+  race: String,
+  owner: String
 
 });
 
