@@ -38,6 +38,10 @@ portal.authenticate = function (options, next) {
     form: {
       login: options.user,
       senha: options.pass,
+
+      authenticity_token: 'bbbBRpShhGdnBzCQ6GJmeTxe6S/6XEJD1ECTQ1RxqTs=',
+      recaptcha_response_field: options.captchaValue,
+      recaptcha_challenge_field: options.captchaChallenge,
       commit: 'Entrar',
     },
 
@@ -49,6 +53,11 @@ portal.authenticate = function (options, next) {
     // Checks if it redirected to login
     if(res.request.path == portal.URL.LOGIN){
       return next('Usuário ou senha incorretos');
+    }
+
+    if(res.body.indexOf('but something went wrong (500)') >= 0){
+      console.log(res.body)
+      return next('Captcha inválido');
     }
 
     return next(null, {
@@ -153,6 +162,60 @@ portal.gatterStudentCoeficientes = (user, id, next) => {
     return next(null, user);
   });
 };
+
+
+//
+// Gets a captcha Image
+//
+const CAPTCHA_BASE_URL = 'http://www.google.com/recaptcha/api/'
+const CAPTCHA_TOKEN = 'noscript?k=6LcwNCMTAAAAAMOrD6L-BgI4MWNRL6ObAqqAKv7R';
+portal.getCaptchaImageURL = function (next) {
+
+  const REGEX_TOKEN = /(id="recaptcha_challenge_field".value=")(.*)(")/g;
+  const REGEX_IMG = /(src=")(image\?.*)(")/g;
+
+  request.get(CAPTCHA_BASE_URL + CAPTCHA_TOKEN, (err, res) => {
+    if(err)
+      return next(err);
+
+    var imageToken = REGEX_TOKEN.exec(res.body)[2]
+    var imageURL = REGEX_IMG.exec(res.body)[2]
+
+    return next && next(null, {
+      token: imageToken,
+      url: CAPTCHA_BASE_URL + imageURL
+    })
+  })
+}
+
+
+//
+// Find out the token to the manual answer
+//
+portal.getCaptchaAuthenticity = function (token, answer, next) {
+  const REGEX_AUTHENTICITY = /(<textarea.*?>)(.*?)(<\/)/g;
+  console.log();
+  console.log(token, answer);
+  console.log();
+  request.post({
+    url: CAPTCHA_BASE_URL + CAPTCHA_TOKEN,
+    form: {
+      recaptcha_challenge_field: token,
+      recaptcha_response_field: answer,
+      submit: 'I&#39;m a human',
+    }
+  }, (err, res) => {
+    if(err)
+      return next('Could not resolve captcha');
+
+    var authenticity = REGEX_AUTHENTICITY.exec(res.body);
+
+    if(!authenticity)
+      return res.send('Captcha inválido?')
+
+    return next && next(null, authenticity[2]);
+  })
+}
 
 
 //

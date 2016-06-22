@@ -10,10 +10,6 @@ exports.authenticate = function (user, next) {
   let Aluno = app.models.Aluno;
   let portalSession, portalUser, dbUser;
 
-  // Bypass login: Infelizmente colocaram Captcha, e isso impede de ler o CR...
-  // Logando com minha conta, para simulação
-  user.user = process.env.BYPASS_USER
-
   // Define a versão de importação utilizada para o usuário.
   // Se a versão do usuário diferir desta, a importação deve ser
   // realizada novamente.
@@ -94,10 +90,10 @@ exports.authenticate = function (user, next) {
 
   // Execute steps
   async.series([
-    // authenticate,
+    authenticate,
     findUser,
-    // gatterStudentInfo,
-    // createOrUpdateIfNeeded,
+    gatterStudentInfo,
+    createOrUpdateIfNeeded,
   ], (err) => {
     if(err)
       return next(err);

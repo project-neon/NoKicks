@@ -22,6 +22,11 @@
             <input ng-model="loginForm.pass" type="password" name="password">
           </md-input-container>
 
+          <img ng-src="{{'/api/auth/captcha?rand='+loginRand}}" width="100%"/>
+          <md-input-container class="md-block">
+            <label>Captcha</label>
+            <input ng-model="loginForm.captcha" type="captcha" name="captcha">
+          </md-input-container>
 
           <div layout="row" layout-align="end center">
             <input value="Entrar" class="md-button md-raised md-primary"

@@ -59,13 +59,14 @@ function config(app, next){
   api.get('/auth/login', app.controllers.Auth.login);
   api.post('/auth/login', app.controllers.Auth.login);
   api.post('/auth/logout', app.controllers.Auth.logout);
+  api.get('/auth/captcha', app.controllers.Auth.captcha);
 
 	/*
 	 * REST
 	 */
   // restify('Matriculas');
 	// restify('Turmas');
-	// restify('Alunos');
+	restify('Alunos');
 
 
 	next();

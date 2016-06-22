@@ -70,6 +70,7 @@ angular.module('NoKicks', [
   AuthService.verifySession();
 
   $scope.lock = false;
+  $scope.loginRand = Math.random();
   $scope.errorMessage = null;
 
   $scope.loginForm = {
@@ -95,6 +96,8 @@ angular.module('NoKicks', [
 
       if(err)
         $scope.errorMessage = err;
+
+      $scope.loginRand = Math.random()
     });
   };
 
