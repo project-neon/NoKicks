@@ -44,10 +44,10 @@
             "public/_components/mdi/fonts/materialdesignicons-webfont.woff2": "../fonts/materialdesignicons-webfont.woff2"
           },
           {
-            "public/_components/mdi/css/materialdesignicons.css": "css/materialdesignicons.css"
+            "public/_components/mdi/css/materialdesignicons.css": "materialdesignicons.css"
           },
           {
-            "public/_components/mdi/css/materialdesignicons.min.css": "css/materialdesignicons.min.css"
+            "public/_components/mdi/css/materialdesignicons.min.css": "materialdesignicons.min.css"
           }
         ]
       }
