@@ -179,7 +179,10 @@ portal.getCaptchaImageURL = function (next) {
   const REGEX_TOKEN = /(id="recaptcha_challenge_field".value=")(.*)(")/g;
   const REGEX_IMG = /(src=")(image\?.*)(")/g;
 
-  request.get(CAPTCHA_BASE_URL + CAPTCHA_TOKEN, (err, res) => {
+  request.get({
+      url: CAPTCHA_BASE_URL + CAPTCHA_TOKEN,
+      headers: CAPTCHA_HEADERS,
+    }, (err, res) => {
     if(err)
       return next(err);
 
