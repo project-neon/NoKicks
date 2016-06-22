@@ -4,7 +4,7 @@ exports.verifySchedule = function (turmas){
   var schedule = {};
   var _included = 0;
   var _conflictTable = {};
-  var conficts = []
+  var conflicts = []
 
   // Generate names and initialize data
   for(var k = 1; k <= 6; k++){
@@ -113,7 +113,7 @@ exports.verifySchedule = function (turmas){
     t1.nomeCompleto = t1.nomeSimples + ' + ' + t2.nomeSimples;
 
     // Adiciona a lista de conflitos
-    conficts.push(`Matéria ${t1.nomeSimples} conflita com ${t2.nomeSimples}`);
+    conflicts.push(`Matéria ${t1.nomeSimples} conflita com ${t2.nomeSimples}`);
   }
 
   function timeToNumber(time){
@@ -137,5 +137,5 @@ exports.verifySchedule = function (turmas){
   // }
 
   // Se nenhum conflito criado, retorna null
-  return conficts.length ? conflicts : null;
+  return conflicts.length ? conflicts : null;
 }
