@@ -37,20 +37,20 @@ angular.module('SearchBar', [
       { name: 'Licenciatura em Física', value: 25 },
       { name: 'Licenciatura em Matemática', value: 9 },
       { name: 'Licenciatura em Química', value: 4 }
-    ];
-    $scope.selectedCourse = null;
+    ]
+    $scope.selectedCourse = null
 
-    var actualUser = AuthService.getUser();
+    var actualUser = AuthService.getUser()
 
     // Debug User in Console
     // console.log(actualUser);
 
-    $scope.checkBox = {};
-    $scope.checkBox.campusSAN = (actualUser.campus == 'Santo André');
-    $scope.checkBox.campusSBC = (actualUser.campus == 'São Bernardo');
-    $scope.checkBox.turnoMAT = (actualUser.turno == 'Matutino');
-    $scope.checkBox.turnoNOT = (actualUser.turno == 'Noturno');
-    $scope.checkBox.tipoOBG = false;
-    $scope.checkBox.tipoLIM = false;
-    $scope.checkBox.tipoLIV = false;
-  });
+    $scope.checkBox = {}
+    $scope.checkBox.campusSAN = (actualUser.campus === 'Santo André')
+    $scope.checkBox.campusSBC = (actualUser.campus === 'São Bernardo')
+    $scope.checkBox.turnoMAT = (actualUser.turno === 'Matutino')
+    $scope.checkBox.turnoNOT = (actualUser.turno === 'Noturno')
+    $scope.checkBox.tipoOBG = false
+    $scope.checkBox.tipoLIM = false
+    $scope.checkBox.tipoLIV = false
+  })

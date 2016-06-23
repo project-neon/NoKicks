@@ -2,10 +2,10 @@
  * Module dependencies
  */
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
-var PluginTimestamp = require('mongoose-timestamp');
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var ObjectId = Schema.Types.ObjectId
+var PluginTimestamp = require('mongoose-timestamp')
 
 /**
  * User schema
@@ -41,13 +41,13 @@ var Model = new Schema({
     ref: 'Turma',
     required: true
   }
-});
+})
 
 /**
  * User plugin
  */
 
-Model.plugin(PluginTimestamp);
+Model.plugin(PluginTimestamp)
 
 /**
  * Hooks
@@ -62,7 +62,7 @@ Model.plugin(PluginTimestamp);
 
 Model.method({
 
-});
+})
 
 /**
  * Statics
@@ -70,10 +70,10 @@ Model.method({
 
 Model.static({
 
-});
+})
 
 /**
  * Register
  */
 
-mongoose.model('Matricula', Model);
+mongoose.model('Matricula', Model)

@@ -3,63 +3,63 @@ var module = angular.module('MatriculaHelper', [
 ])
 
   .service('Creditos', function () {
-    var service = this;
+    var service = this
 
     service.calcular = function (cr) {
       if (cr > 3.0)
-        return 999;
+        return 999
 
-      return Math.floor(16 + cr * 5);
-    };
+      return Math.floor(16 + cr * 5)
+    }
   })
 
   // Verificador de posição em turmas
   .service('RankingLooker', function ($http, $rootScope, Turmas, Schedule) {
-    var service = this;
-    var _allIds = [];
+    var service = this
+    var _allIds = []
 
     // Guarda posições verificadas
-    service.rankings = {};
+    service.rankings = {}
 
     // Subscribe for changes
     service.subscribe = function (scope, callback) {
-      var handler = $rootScope.$on('RankingLooker:changed', callback);
-      scope.$on('$destroy', handler);
-    };
+      var handler = $rootScope.$on('RankingLooker:changed', callback)
+      scope.$on('$destroy', handler)
+    }
 
     // Ouve pelas mudanças de Schedule, e faz a verificação das turmas faltantes
-    Schedule.subscribe(null, queryRankings);
+    Schedule.subscribe(null, queryRankings)
 
     // Atualiza rankings dando merge nos objetos
     service.updateRankings = function (newRankings) {
       // Inclui novos rankings
       for (var k in newRankings) {
-        var rank = newRankings[k];
+        var rank = newRankings[k]
 
-        service.rankings[rank._turma] = rank;
+        service.rankings[rank._turma] = rank
       }
 
-      $rootScope.$emit('RankingLooker:changed');
-    };
+      $rootScope.$emit('RankingLooker:changed')
+    }
 
     // Verifica diferença das turmas, e faz verificação
-    function queryRankings() {
-      _allIds = Schedule.turmas;
-      var missingIds = _.difference(_allIds, _.keys(service.rankings));
+    function queryRankings () {
+      _allIds = Schedule.turmas
+      var missingIds = _.difference(_allIds, _.keys(service.rankings))
 
       // Remove rankigns desnecessários
       for (var k in _allIds) {
-        var rank = _allIds[k];
+        var rank = _allIds[k]
 
         if (rank in service.rankings)
-          continue;
+          continue
 
-        delete service.rankings[rank];
+        delete service.rankings[rank]
       }
 
       // Already checked?
       if (missingIds.length <= 0)
-        return;
+        return
 
       // Request it
       $http
@@ -68,65 +68,64 @@ var module = angular.module('MatriculaHelper', [
         })
         .then(function (response) {
           if (response.status >= 400)
-            return console.error('Não pode carregar dados', _allIds, missingIds, response.data);
+            return console.error('Não pode carregar dados', _allIds, missingIds, response.data)
 
           // Update list
-          service.updateRankings(response.data);
-        });
+          service.updateRankings(response.data)
+        })
     }
-
   })
 
   .service('Schedule', function ($http, $rootScope, Turmas) {
-    var service = this;
+    var service = this
 
     // Guarda Id's das turmas
-    service.turmas = [];
+    service.turmas = []
 
     // Subscribe for changes
     service.subscribe = function (scope, callback) {
-      var handler = $rootScope.$on('Schedule:changed', callback);
-      scope && scope.$on('$destroy', handler);
-    };
+      var handler = $rootScope.$on('Schedule:changed', callback)
+      scope && scope.$on('$destroy', handler)
+    }
 
     service.getTurmas = function () {
       // Retorna lista de turmas
-      var turmas = [];
+      var turmas = []
       for (var k in service.turmas) {
-        var turma = Turmas.getTurmaById(service.turmas[k]);
-        turma && turmas.push(turma);
+        var turma = Turmas.getTurmaById(service.turmas[k])
+        turma && turmas.push(turma)
       }
-      return turmas;
-    };
+      return turmas
+    }
 
     // Remove turmas da lista
     service.remove = function (turmas) {
-      service.turmas = _.difference(service.turmas, turmas || []);
+      service.turmas = _.difference(service.turmas, turmas || [])
 
-      $rootScope.$emit('Schedule:changed');
-    };
+      $rootScope.$emit('Schedule:changed')
+    }
 
     service.set = function (turmas) {
-      service.turmas = turmas;
+      service.turmas = turmas
 
-      $rootScope.$emit('Schedule:changed');
-    };
+      $rootScope.$emit('Schedule:changed')
+    }
 
     service.add = function (turmas) {
-      service.turmas = _.union(service.turmas, turmas || []);
+      service.turmas = _.union(service.turmas, turmas || [])
 
-      $rootScope.$emit('Schedule:changed');
-    };
+      $rootScope.$emit('Schedule:changed')
+    }
 
     service.toggle = function (turma) {
-      var idx = service.turmas.indexOf(turma);
+      var idx = service.turmas.indexOf(turma)
       if (idx > -1)
-        service.turmas.splice(idx, 1);
+        service.turmas.splice(idx, 1)
       else
-        service.turmas.push(turma);
+        service.turmas.push(turma)
 
-      $rootScope.$emit('Schedule:changed');
-    };
+      $rootScope.$emit('Schedule:changed')
+    }
 
     // Carrega matrículas do banco de dados
     service.load = function (next) {
@@ -134,14 +133,14 @@ var module = angular.module('MatriculaHelper', [
         .get('/api/matriculas/registros')
         .then(function (response) {
           if (response.status >= 400)
-            return next && next('Não pode carregar dados', response.data);
+            return next && next('Não pode carregar dados', response.data)
 
           // Update list
-          service.set(_.map(response.data, '_turma'));
+          service.set(_.map(response.data, '_turma'))
 
-          next && next();
-        });
-    };
+          next && next()
+        })
+    }
 
     // Salva matrículas no BD
     service.save = function (next) {
@@ -151,113 +150,113 @@ var module = angular.module('MatriculaHelper', [
         })
         .then(function (response) {
           if (response.status >= 400)
-            return next && next('Não pode carregar dados', response.data);
+            return next && next('Não pode carregar dados', response.data)
 
           // Update list
-          service.set(_.map(response.data, '_turma'));
+          service.set(_.map(response.data, '_turma'))
 
-          next && next();
-        });
-    };
+          next && next()
+        })
+    }
   })
 
   .service('Turmas', function ($http, $rootScope, $timeout) {
-    var service = this;
-    var _indexByKey = '_id';
-    var _turmasIndexed = {};
+    var service = this
+    var _indexByKey = '_id'
+    var _turmasIndexed = {}
 
-    service._turmasIndexed = _turmasIndexed;
-    service.turmas = [];
-    service.vagasById = {};
-    service.filtered = {};
-    service.loaded = false;
-    service.progress = 0;
+    service._turmasIndexed = _turmasIndexed
+    service.turmas = []
+    service.vagasById = {}
+    service.filtered = {}
+    service.loaded = false
+    service.progress = 0
 
     // Subscribe for changes
     service.subscribe = function (scope, callback) {
-      var handler = $rootScope.$on('Turmas:update', callback);
-      scope.$on('$destroy', handler);
-    };
+      var handler = $rootScope.$on('Turmas:update', callback)
+      scope.$on('$destroy', handler)
+    }
 
     // Publish change notification
     service.notify = function () {
-      $rootScope.$emit('Turmas:update');
-    };
+      $rootScope.$emit('Turmas:update')
+    }
 
     // Encontra turma por id (Indexado)
     service.getTurmaById = function (id) {
       if (id in _turmasIndexed)
-        return service.turmas[_turmasIndexed[id]];
+        return service.turmas[_turmasIndexed[id]]
 
-      return null;
-    };
+      return null
+    }
 
     // Adiciona novas turmas ao array
     service.updateTurmas = function (turmas) {
       turmas.forEach(function (turma) {
         // Skip if already inserted
         if (turma[_indexByKey] in _turmasIndexed)
-          return;
+          return
 
         // Insert if not inserted yet
-        service.turmas.push(turma);
+        service.turmas.push(turma)
 
         // Index this element
-        _turmasIndexed[turma[_indexByKey]] = service.turmas.length - 1;
-      });
+        _turmasIndexed[turma[_indexByKey]] = service.turmas.length - 1
+      })
 
       // Aplica busca novamente
-      service.applySearch();
-    };
+      service.applySearch()
+    }
 
     // Aplica filtros na busca local (cache)
     service.applySearch = function (params) {
       // Salva tempo de inicio
-      var startTime = Date.now();
+      var startTime = Date.now()
 
       // Aplica filtros default
       params = params || {
         curso: 19
-      };
+      }
 
       // Filtra turmas
-      var turmas = _.filter(service.turmas, needsSelection);
+      var turmas = _.filter(service.turmas, needsSelection)
 
       // Agrupa por curso
-      var cursosCodigo = _.groupBy(service.turmas, 'codigo');
+      var cursosCodigo = _.groupBy(service.turmas, 'codigo')
 
       // Agrupa por obrigatoriedade
       var cursos = {
         obrigatoria: {},
         limitada: {},
         livre: {}
-      };
-
-      for (var id in cursosCodigo) {
-        var curso = cursosCodigo[id][0];
-        cursos[obrigatoriedade(curso)][id] = cursosCodigo[id];
       }
 
-      service.cursos = cursos;
+      for (var id in cursosCodigo) {
+        var curso = cursosCodigo[id][0]
+        cursos[obrigatoriedade(curso)][id] = cursosCodigo[id]
+      }
+
+      service.cursos = cursos
 
       // Função que seleciona turmas baseada na euristica escolhida
-      function needsSelection(turma) {
+      function needsSelection (turma) {
         // TODO: Filter turma por Turno|Campus|...
-        return true;
+        return true
       }
 
       // Retorna tipo de obrigatoriedade dado a turma (e curso via params)
-      function obrigatoriedade(turma) {
-        return turma.obrigatoriedade[params.curso] || 'livre';
+      function obrigatoriedade (turma) {
+        return turma.obrigatoriedade[params.curso] || 'livre'
       }
 
       // Calcula tempo levado
-      var took = Date.now() - startTime;
+      var took = Date.now() - startTime
       // console.log('applySearch took', took + 'ms');
 
       // Publish notification
-      service.notify();
-    };
+      service.notify()
+    }
 
     // Encontra turmas no banco de dados que batem com a query.
     // Atualiza array e adiciona novos elementos
@@ -271,31 +270,31 @@ var module = angular.module('MatriculaHelper', [
         })
         .then(function (response) {
           if (response.status >= 400)
-            return next && next('Não pode carregar dados', response.data);
+            return next && next('Não pode carregar dados', response.data)
 
           // Update progress
-          service.progress = 1.0;//response.data.page / response.data.pages;
-          service.loaded = true;//service.progress >= 1.0;
+          service.progress = 1.0// response.data.page / response.data.pages;
+          service.loaded = true// service.progress >= 1.0;
 
           // Update list
-          service.updateTurmas(response.data);
+          service.updateTurmas(response.data)
 
-          next && next();
-        });
-    };
+          next && next()
+        })
+    }
 
     // Carrega dados em batches
-    var _batchTimeout = null;
-    var _batchSize = 0;
-    var _data = null;
-    var _length = 0;
+    var _batchTimeout = null
+    var _batchSize = 0
+    var _data = null
+    var _length = 0
     service.loadInBatch = function (batchSize) {
       if (batchSize) {
         // Clear timeout
         if (_batchTimeout)
-          $timeout.cancel(_batchTimeout);
+          $timeout.cancel(_batchTimeout)
 
-        _batchSize = batchSize;
+        _batchSize = batchSize
 
         // Load data once
         $http.get('/api/turmas/cached', {
@@ -306,52 +305,51 @@ var module = angular.module('MatriculaHelper', [
         })
           .then(function (response) {
             if (response.status >= 400)
-              return console.error('Não pode carregar dados', response.data);
+              return console.error('Não pode carregar dados', response.data)
 
-            _data = response.data;
-            _length = _data.length;
+            _data = response.data
+            _length = _data.length
 
-            processLoadedBatch();
-          });
+            processLoadedBatch()
+          })
       }
-    };
+    }
 
-    function processLoadedBatch() {
+    function processLoadedBatch () {
       // Stop timeout if needed
       if (_batchTimeout)
-        $timeout.cancel(_batchTimeout);
+        $timeout.cancel(_batchTimeout)
 
       // Cut data
-      var newData = _data.splice(0, _batchSize);
+      var newData = _data.splice(0, _batchSize)
 
       // Update progress
-      service.progress = 1.0 - (_data.length * 1.0 / _length);
-      service.loaded = service.progress >= 1.0;
+      service.progress = 1.0 - (_data.length * 1.0 / _length)
+      service.loaded = service.progress >= 1.0
 
       // Update store
-      service.updateTurmas(newData);
+      service.updateTurmas(newData)
 
       // Stop calling if ended data
       if (_data.length <= 0)
-        return;
+        return
 
       _batchTimeout = $timeout(function () {
-        processLoadedBatch();
-      }, 600);
+        processLoadedBatch()
+      }, 600)
     }
 
     service.loadVagas = function () {
       $http.get('/api/matriculas/vagas', {})
         .then(function (response) {
           if (response.status >= 400)
-            return console.error('Não pode carregar dados', response.data);
+            return console.error('Não pode carregar dados', response.data)
 
           // Save data locally
-          service.vagasById = response.data;
+          service.vagasById = response.data
 
           // Notify changes
-          service.notify();
-        });
-    };
-
-  });
+          service.notify()
+        })
+    }
+  })
