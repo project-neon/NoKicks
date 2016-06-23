@@ -1,0 +1,17 @@
+{
+    "extends": "standard",
+    "plugins": [
+        "standard"
+    ],
+     "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "globals": {
+        "app": true,
+        "_": true,
+        "angular": true
+    }
+}

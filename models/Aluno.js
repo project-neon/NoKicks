@@ -2,10 +2,10 @@
  * Module dependencies
  */
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
-var PluginTimestamp = require('mongoose-timestamp');
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var ObjectId = Schema.Types.ObjectId
+var PluginTimestamp = require('mongoose-timestamp')
 
 /**
  * User schema
@@ -14,7 +14,7 @@ var PluginTimestamp = require('mongoose-timestamp');
 var Model = new Schema({
   version: Number,
 
-	nome: String,
+  nome: String,
   username: String,
 
   curso: String,
@@ -22,14 +22,14 @@ var Model = new Schema({
   turno: String,
   campus: String,
   ingresso: String,
-  coeficientes: Object,
-});
+  coeficientes: Object
+})
 
 /**
  * User plugin
  */
 
-Model.plugin(PluginTimestamp);
+Model.plugin(PluginTimestamp)
 
 /**
  * Hooks
@@ -44,7 +44,7 @@ Model.plugin(PluginTimestamp);
 
 Model.method({
 
-});
+})
 
 /**
  * Statics
@@ -52,10 +52,10 @@ Model.method({
 
 Model.static({
 
-});
+})
 
 /**
  * Register
  */
 
-mongoose.model('Aluno', Model);
+mongoose.model('Aluno', Model)

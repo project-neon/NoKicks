@@ -1,12 +1,11 @@
-var TAG = 'config.lift';
+var TAG = 'config.lift'
 
-function config(app, next){
-	
-	// Bind server to port
-	app.server.set('port', app.config.port);
-	app.server.listen(app.server.get('port'));
+function config (app, next) {
+  // Bind server to port
+  app.server.set('port', app.config.port)
+  app.server.listen(app.server.get('port'))
 
-	next();
+  next()
 }
 
-module.exports = config;
+module.exports = config

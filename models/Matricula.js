@@ -2,10 +2,10 @@
  * Module dependencies
  */
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
-var PluginTimestamp = require('mongoose-timestamp');
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var ObjectId = Schema.Types.ObjectId
+var PluginTimestamp = require('mongoose-timestamp')
 
 /**
  * User schema
@@ -27,27 +27,27 @@ var Model = new Schema({
   // A qualquer momento, objetos com esta flag em 'true' serão apagados.
   ignore: {
     type: Boolean,
-    default: false,
+    default: false
   },
 
   _aluno: {
     type: ObjectId,
     ref: 'Aluno',
-    required: true,
+    required: true
   },
 
   _turma: {
     type: ObjectId,
     ref: 'Turma',
-    required: true,
-  },
-});
+    required: true
+  }
+})
 
 /**
  * User plugin
  */
 
-Model.plugin(PluginTimestamp);
+Model.plugin(PluginTimestamp)
 
 /**
  * Hooks
@@ -62,7 +62,7 @@ Model.plugin(PluginTimestamp);
 
 Model.method({
 
-});
+})
 
 /**
  * Statics
@@ -70,10 +70,10 @@ Model.method({
 
 Model.static({
 
-});
+})
 
 /**
  * Register
  */
 
-mongoose.model('Matricula', Model);
+mongoose.model('Matricula', Model)

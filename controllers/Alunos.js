@@ -1,35 +1,35 @@
-var async = require('async');
+var async = require('async')
 
-var Security = app.helpers.Security;
-var Request = app.helpers.Request;
-var Model = app.models.Aluno;
+var Security = app.helpers.Security
+var Request = app.helpers.Request
+var Model = app.models.Aluno
 
-var Models = app.models;
+var Models = app.models
 
-var renderFields = null;
+var renderFields = null
 
 exports.get = Request.get(Model, {
-	deny: [],
-	renderFields: renderFields,
-});
+  deny: [],
+  renderFields: renderFields
+})
 
 exports.find = Request.find(Model, {
   deny: [],
-	queryFields: null,
-	renderFields: renderFields,
-});
+  queryFields: null,
+  renderFields: renderFields
+})
 
 exports.create = Request.create(Model, {
   deny: [],
-	renderFields: renderFields,
-});
+  renderFields: renderFields
+})
 
 exports.update = Request.update(Model, {
   deny: [],
-	renderFields: renderFields,
-});
+  renderFields: renderFields
+})
 
 exports.delete = Request.destroy(Model, {
   deny: [],
-	renderFields: renderFields,
-});
+  renderFields: renderFields
+})

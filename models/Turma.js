@@ -2,10 +2,10 @@
  * Module dependencies
  */
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.Types.ObjectId;
-var PluginTimestamp = require('mongoose-timestamp');
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var ObjectId = Schema.Types.ObjectId
+var PluginTimestamp = require('mongoose-timestamp')
 
 /**
  * User schema
@@ -28,15 +28,15 @@ var Model = new Schema({
   creditos: Number,
   horarios: Array,
   campusNome: String,
-  obrigatoriedade: Object,
+  obrigatoriedade: Object
 
-});
+})
 
 /**
  * User plugin
  */
 
-Model.plugin(PluginTimestamp);
+Model.plugin(PluginTimestamp)
 
 /**
  * Hooks
@@ -44,49 +44,48 @@ Model.plugin(PluginTimestamp);
  * - validations
  * - virtuals
  */
-Model.virtual('schedule').get(function (){
-
+Model.virtual('schedule').get(function () {
   // Agrupa horários pelos dias
-  var horariosDias = _.groupBy(this.horarios, 'dia');
+  var horariosDias = _.groupBy(this.horarios, 'dia')
 
   // Mapeia cada dia, e encontra inicio/fim por quinzena
   var horarios = _.mapValues(horariosDias, (values) => {
     // Seleciona Q1 e Q2
-    var q1 = _.filter(values, {semanaI: true});
-    var q2 = _.filter(values, {semanaII: true});
+    var q1 = _.filter(values, { semanaI: true })
+    var q2 = _.filter(values, { semanaII: true })
 
     // Para cada horário do dia, verifica minimo e máximo
-    var q1s = sanitizeTime(_.minBy(q1, t => { return t.inicio }), 'inicio');
-    var q1e = sanitizeTime(_.maxBy(q1, t => { return t.final }), 'final');
+    var q1s = sanitizeTime(_.minBy(q1, t => { return t.inicio }), 'inicio')
+    var q1e = sanitizeTime(_.maxBy(q1, t => { return t.final }), 'final')
 
-    var q2s = sanitizeTime(_.minBy(q2, t => { return t.inicio }), 'inicio');
-    var q2e = sanitizeTime(_.maxBy(q2, t => { return t.final }), 'final');
+    var q2s = sanitizeTime(_.minBy(q2, t => { return t.inicio }), 'inicio')
+    var q2e = sanitizeTime(_.maxBy(q2, t => { return t.final }), 'final')
 
     return {
       // Set flag indicating if both weeks are the same
-      equal: q1s == q2s && q1e == q2e,
+      equal: q1s === q2s && q1e === q2e,
 
       // Process text
       q1: q1s ? q1s + ' - ' + q1e : null,
-      q2: q2s ? q2s + ' - ' + q2e : null,
+      q2: q2s ? q2s + ' - ' + q2e : null
     }
-  });
+  })
 
-  function sanitizeTime(time, key){
-    if(!time)
-      return null;
+  function sanitizeTime (time, key) {
+    if (!time)
+      return null
 
-    return time[key].replace(':', 'h').replace('00', '');
+    return time[key].replace(':', 'h').replace('00', '')
   }
 
-  function timeToNumber(time){
-    return time;
+  function timeToNumber (time) {
+    return time
     // var times = time.split(':');
     // return times[0]*1 + times[1] / 100*1;
   }
 
-  return horarios;
-});
+  return horarios
+})
 
 /**
  * Methods
@@ -94,7 +93,7 @@ Model.virtual('schedule').get(function (){
 
 Model.method({
 
-});
+})
 
 /**
  * Statics
@@ -102,51 +101,50 @@ Model.method({
 
 Model.static({
   fromJSON: function (json) {
-
-    if(!json)
-      return new Model();
+    if (!json)
+      return new Model()
 
     // Filtra alguns campos
-    json.nome = json.nome.replace('\n', '');
+    json.nome = json.nome.replace('\n', '')
 
     // Find out turno
-    let turno;
-    if(json.nome.indexOf('Noturno') >= 0)
-      turno = 'cNOT';
+    let turno
+    if (json.nome.indexOf('Noturno') >= 0)
+      turno = 'cNOT'
     else
-      turno = 'aMAT';
+      turno = 'aMAT'
 
     // Encontra o Nome da turma
-    let regTurma = /[A-Z]{1}[0-9]*(?=-Matutino|-Noturno)/g;
-    let turma = json.nome.match(regTurma)[0];
+    let regTurma = /[A-Z]{1}[0-9]*(?=-Matutino|-Noturno)/g
+    let turma = json.nome.match(regTurma)[0]
 
     // Encontra o Nome da materia
-    let regCodigoNome = /.+(?=\ [A-Z]{1}[0-9]*(-Matutino|-Noturno))/g;
-    let codigoNome = json.nome.match(regCodigoNome)[0];
+    let regCodigoNome = /.+(?=\ [A-Z]{1}[0-9]*(-Matutino|-Noturno))/g
+    let codigoNome = json.nome.match(regCodigoNome)[0]
 
     // Encontra Campus
-    let campus;
-    if(json.nome.indexOf('Santo Andr') > 0)
-      campus = 'SA';
+    let campus
+    if (json.nome.indexOf('Santo Andr') > 0)
+      campus = 'SA'
     else
-      campus = 'SB';
+      campus = 'SB'
 
     // Process horarios
-    var horarios = json.horarios.map( (horario) => {
-      let horas = horario.horas;
-      let periodo = horario.periodicidade_extenso;
+    var horarios = json.horarios.map((horario) => {
+      let horas = horario.horas
+      let periodo = horario.periodicidade_extenso
 
-      let semanal = periodo.indexOf('semanal') > 0;
-      let semanaI = semanal;
-      let semanaII = semanal;
+      let semanal = periodo.indexOf('semanal') > 0
+      let semanaI = semanal
+      let semanaII = semanal
 
-      semanaI = semanaI || periodo.indexOf('(I)') > 0;
-      semanaII = semanaII || periodo.indexOf('(II)') > 0;
+      semanaI = semanaI || periodo.indexOf('(I)') > 0
+      semanaII = semanaII || periodo.indexOf('(II)') > 0
 
       // Change turno if is between 13h-18h
-      var startSample = parseInt(horas[0].split(':'));
-      if(startSample > 13 && startSample < 18)
-        turno = 'bVES';
+      var startSample = parseInt(horas[0].split(':'))
+      if (startSample > 13 && startSample < 18)
+        turno = 'bVES'
 
       return {
         inicio: horas[0],
@@ -154,19 +152,19 @@ Model.static({
         dia: horario.semana,
         semanal: semanal,
         semanaI: semanaI,
-        semanaII: semanaII,
+        semanaII: semanaII
       }
-    });
+    })
 
     // Process obrigatoriedades and index by course Id
-    var obrigatoriedades = {};
+    var obrigatoriedades = {}
 
-    json.obrigatoriedades.forEach( (obj) => {
-      var type = obj.obrigatoriedade;
+    json.obrigatoriedades.forEach((obj) => {
+      var type = obj.obrigatoriedade
 
-      type = type == 'obrigatoria' ? 'obrigatoria' : 'limitada';
+      type = type === 'obrigatoria' ? 'obrigatoria' : 'limitada'
 
-      obrigatoriedades[obj.curso_id] = type;
+      obrigatoriedades[obj.curso_id] = type
     })
 
     let data = {
@@ -184,15 +182,15 @@ Model.static({
       campus: campus,
       creditos: json.creditos,
       horarios: horarios,
-      obrigatoriedade: obrigatoriedades,
+      obrigatoriedade: obrigatoriedades
     }
 
-    return data;
+    return data
   }
-});
+})
 
 /**
  * Register
  */
 
-mongoose.model('Turma', Model);
+mongoose.model('Turma', Model)
