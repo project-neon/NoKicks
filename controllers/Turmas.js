@@ -15,7 +15,9 @@ exports.importar = function (req, res){
 
   // Load materias
   app.helpers.Matriculas.loadMaterias((err, materias) => {
-
+    if(err)
+      return res.status(500).send(err);
+      
     // Convert models into Turmas
     var newModels = materias.map( m => Models.Turma.fromJSON(m) );
 
