@@ -5,7 +5,7 @@ var request = require('request');
 var Matriculas = module.exports = {};
 
 Matriculas.URL = {
-  BASE: 'http://matricula.ufabc.edu.br',
+  BASE: 'https://matricula.ufabc.edu.br',
 
   // List of all courses
   DISCIPLINAS: '/cache/todasDisciplinas.js',
