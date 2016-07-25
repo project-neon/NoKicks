@@ -14,19 +14,28 @@
 
           <md-input-container class="md-block">
             <label>Login</label>
-            <input ng-model="loginForm.user" type="text" name="login">
+            <input ng-model="loginForm.user" type="text" name="login" required>
           </md-input-container>
 
           <md-input-container class="md-block">
-            <label>Senha</label>
-            <input ng-model="loginForm.pass" type="password" name="password">
+            <label>CR</label>
+            <input ng-model="loginForm.cr" type="number" step="0.01" name="cr" required>
           </md-input-container>
 
-          <img ng-src="{{'/api/auth/captcha?rand='+loginRand}}" width="100%"/>
+          <md-select ng-model="loginForm.turno" required>
+            <md-option value="Matutino">
+              Matutino
+            </md-option>
+            <md-option value="Noturno">
+              Noturno
+            </md-option>
+          </md-select>
+
+          <!-- <img ng-src="{{'/api/auth/captcha?rand='+loginRand}}" width="100%"/>
           <md-input-container class="md-block">
             <label>Captcha</label>
             <input ng-model="loginForm.captcha" type="captcha" name="captcha">
-          </md-input-container>
+          </md-input-container> -->
 
           <div layout="row" layout-align="end center">
             <input value="Entrar" class="md-button md-raised md-primary"
@@ -50,6 +59,8 @@
 </div>
 
 <div id="textContent">
+  <p><strong>Atualização (25/07):</strong> Não é mais necessário a utilização de sua senha. A plataforma aluno.ufabc.edu.br incorporou "captcha", e por isso ficamos impedidos de recuperar essas informações dinâmicamente. Entre com seu login, CR e Turno que iremos fazer uma simulação com estes campos.</p>
+
   <p>Sejam bem vindos a SIMULAÇÃO do NoKick! A plataforma de matrícula nas matérias da UFABC criada por alunos da UFABC! Cansados de serem chutados das matérias sem saber o motivo, ou nem a posição em que estavam, nós desenvolvedores dessa ferramenta decidimos tentar mostrar como pode ser melhorado e simplificado o processo de matrícula.</p>
   <p><span>ATENÇÃO:</span> Essa SIMULAÇÃO utiliza os seus dados reais (do portal do aluno) de CP, CR, curso, turno e ingresso. O sistema adquire essa informação automaticamente ao efetuar login. Sua senha, entretanto, <span>não será armazenada em momento algum</span>. Precisamos destas informações para que a SIMULAÇÃO aconteça da forma mais real possível.</p>
 
