@@ -51,7 +51,7 @@ function config(app, next){
    */
   api.get('/turmas/cached', app.controllers.Turmas.cached);
 
-  // api.get('/turmas/importar', app.controllers.Turmas.importar);
+  api.get('/turmas/importar', app.controllers.Turmas.importar);
 
   /*
    * Authentication

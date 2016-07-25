@@ -32,7 +32,7 @@ exports.authenticate = function (user, next) {
   let findUser = (next) => {
     Aluno.findOne({
       // Não usamos o pass, pois validamos com o Portal do Aluno
-      username: user.user,
+      username: user.user.toLowerCase(),
     }, (err, user) => {
       if(err)
         return next(err);
@@ -60,12 +60,12 @@ exports.authenticate = function (user, next) {
 
   let createOrUpdateIfNeeded = (next) => {
     // Pula este passo se a versão do usuário for igual a versão deste processo
-    if(dbUser && dbUser.version == THIS_VERSION)
-      return next();
+    // if(dbUser && dbUser.version == THIS_VERSION)
+      // return next();
 
     // Seleciona a primeira ficha (TODO: Verificar a atual...)
-    var fichaId = _.keys(portalUser.fichas)[0];
-    var ficha = portalUser.fichas[fichaId];
+    // var fichaId = _.keys(portalUser.fichas)[0];
+    // var ficha = portalUser.fichas[fichaId];
 
     // Cria usuário
     dbUser = dbUser || new Aluno();
@@ -74,15 +74,21 @@ exports.authenticate = function (user, next) {
     dbUser.version = THIS_VERSION;
 
     // Atualiza campos
-    dbUser.nome = portalUser.nome;
-    dbUser.username = portalUser.user;
+    dbUser.cr = user.cr;
+    dbUser.nome = dbUser.nome || user.user;
+    dbUser.username = dbUser.user || user.user;
 
-    dbUser.curso = ficha.curso;
-    dbUser.grade = ficha.grade;
-    dbUser.turno = ficha.turno;
-    dbUser.campus = ficha.campus;
-    dbUser.ingresso = ficha.ingresso;
-    dbUser.coeficientes = portalUser.coeficientes;
+    dbUser.curso = dbUser.curso || 'Curso Padrão (Teste)'; //ficha.curso;
+    dbUser.grade = dbUser.grade || '2009'; //ficha.grade;
+    dbUser.turno = user.turno;
+    dbUser.campus = dbUser.campus || 'Algum Campus'; //ficha.campus;
+    dbUser.ingresso = dbUser.ingresso || '2014'; //ficha.ingresso;
+    dbUser.coeficientes = {
+      cr: user.cr,
+      cp: 0.5,
+      ca: 0.5,
+      // portalUser.coeficientes;
+    };
 
     // Save user
     dbUser.save(next);
@@ -90,9 +96,9 @@ exports.authenticate = function (user, next) {
 
   // Execute steps
   async.series([
-    authenticate,
+    // authenticate,
     findUser,
-    gatterStudentInfo,
+    // gatterStudentInfo,
     createOrUpdateIfNeeded,
   ], (err) => {
     if(err)

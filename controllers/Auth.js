@@ -7,31 +7,42 @@ exports.login = function (req, res) {
 
   // Verifies if action is to login,
   // or just return logged user
-  var user = req.body.user;
+  var user = (req.body.user || '').toLowerCase();
   var pass = req.body.pass;
+  var turno = req.body.turno;
+  var cr = req.body.cr * 1;
   var captchaValue = req.body.captcha;
 
-  if(user && pass){
+  if(turno != 'Noturno' && turno != 'Matutino')
+    turno = null;
+
+  if(cr <= 0 || cr > 4)
+    cr = null;
+
+  if(user && cr && turno){
     // Logout
     Authentication.logout(req);
 
     // Check captcha
-    if(!req.session.captcha || !captchaValue)
-      return res.status(500).send('Invalid captcha');
+    // if(!req.session.captcha || !captchaValue)
+    //   return res.status(500).send('Invalid captcha');
 
     // Get autenticity token from google
-    app.helpers.PortalAluno.getCaptchaAuthenticity(
-      req.session.captcha.token,
-      captchaValue, (err, token) => {
-        if(err)
-          return res.status(500).send(err);
+    // app.helpers.PortalAluno.getCaptchaAuthenticity(
+    //   req.session.captcha.token,
+    //   captchaValue, (err, token) => {
+    //     if(err)
+    //       return res.status(500).send(err);
 
     // Authenticate
     Authentication.authenticate({
       user: user,
       pass: pass,
-      captchaChallenge: token,
-      captchaValue: 'manual_challenge',
+
+      turno: turno,
+      cr: cr,
+      // captchaChallenge: token,
+      // captchaValue: 'manual_challenge',
     }, (err, aluno) => {
       // Remove captcha from session
       req.session.captcha = null;
@@ -45,7 +56,7 @@ exports.login = function (req, res) {
       finishRender();
     })
 
-    })
+    // })
   }else{
     finishRender();
   }
@@ -54,7 +65,7 @@ exports.login = function (req, res) {
     if(Authentication.isLogged(req))
       res.send(Authentication.loggedUser(req));
     else
-      res.status(401).send('Usuário ou senha inválidos');
+      res.status(401).send('Usuário, CR ou Turno inválidos');
   }
 
 }
