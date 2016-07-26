@@ -66,7 +66,7 @@ function config(app, next){
 	 */
   // restify('Matriculas');
 	// restify('Turmas');
-	restify('Alunos');
+	// restify('Alunos');
 
 
 	next();
