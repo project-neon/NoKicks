@@ -117,11 +117,11 @@ Model.static({
       turno = 'aMAT';
 
     // Encontra o Nome da turma
-    let regTurma = /[A-Z]{1}[0-9]*(?=-Matutino|-Noturno)/g;
+    let regTurma = /[a-z|A-Z|0-9]{1}[0-9]*(?=-Matutino|-Noturno)/g;
     let turma = json.nome.match(regTurma)[0];
 
     // Encontra o Nome da materia
-    let regCodigoNome = /.+(?=\ [A-Z]{1}[0-9]*(-Matutino|-Noturno))/g;
+    let regCodigoNome = /.+(?=\ [a-z|A-Z|0-9]{1}[0-9]*(-Matutino|-Noturno))/g;
     let codigoNome = json.nome.match(regCodigoNome)[0];
 
     // Encontra Campus
